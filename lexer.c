@@ -40,7 +40,7 @@ static int	len_word(char const *str, int in_quotes)
 	return (len);
 }
 
-int	fill_word(t_data *data, char const *s)
+int	fill_word(t_data *data, char const *s, int k)
 {
 	int		in_quotes;
 	char	temp;
@@ -55,9 +55,9 @@ int	fill_word(t_data *data, char const *s)
 		exit_shell(data, 1, NULL);
 	while (*s && !(*s == ' ' && !in_quotes))
 	{
-		if ((*s == '\"' || *s == '\'') && !in_quotes && ++in_quotes)
+		if ((*s == '\"' || *s == '\'') && !in_quotes && ++in_quotes && ++k)
 			temp = *s++;
-		else if (*s == temp && s++)
+		else if (*s == temp && s++ && ++k)
 			in_quotes = 0;
 		else
 			data->tokens[data->token_count - 1].value[j++] = *s++;
@@ -65,7 +65,7 @@ int	fill_word(t_data *data, char const *s)
 	data->tokens[data->token_count - 1].value[j] = '\0';
 	if (in_quotes == 1)
 		exit_shell(data, 2, &temp);
-	return (j + 2);
+	return (j + k);
 }
 
 void	lexer(t_data *data)
@@ -83,12 +83,15 @@ void	lexer(t_data *data)
 			continue ;
 		else if (data->input[i] == '\'' || data->input[i] == '\"')
 		{
-			i += fill_word(data, &data->input[i]) - 1;
+			i += fill_word(data, &data->input[i], 0) - 1;
 			printf("input: %s\n", data->tokens[data->token_count - 1].value);
 		}
 		else if (data->input[i] == ' ')
 			continue ;
 		else
-			i += fill_word(data, &data->input[i]) - 1;
+		{
+			i += fill_word(data, &data->input[i], 0) - 1;
+			printf("input: %s\n", data->tokens[data->token_count - 1].value);
+		}
 	}
 }
