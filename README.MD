@@ -10,6 +10,9 @@ LEXER
 -	read pipes and redirs, check them(WIP)
 -	protect memory 
 -	(??)
+
+
+
 PARSER
 EXPANDER
 EXECUTOR
