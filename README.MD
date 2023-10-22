@@ -9,7 +9,7 @@ LEXER
 -	read quotes and normal text, check them(DONE(for real this time))
 -	read pipes and redirs(DONE)
 -	protect memory(DONE)
--	(??)
+-	check pipes and redirs(WIP)
 
 PARSER
 EXPANDER

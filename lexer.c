@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 18:14:26 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/22 19:28:35 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,46 @@ int	fill_redir(t_data *data, char const *s)
 const char	*g_token_type_names[] = {"WORD", "PIPE", "REDIR_IN", "REDIR_OUT",
 		"REDIR_APPEND", "REDIR_HEREDOC", "DQUOTE", "SQUOTE"};
 
+int check_syntax_dir(t_data *data, int i)
+{
+	if ((data->tokens[i].type == REDIR_APPEND
+			|| data->tokens[i].type == REDIR_HEREDOC
+			|| data->tokens[i].type == REDIR_IN
+			|| data->tokens[i].type == REDIR_OUT)
+		&& i == data->token_count - 1)
+		return (syntax_error('\n'), 1);
+	else if (data->tokens[i].type == REDIR_APPEND && (data->tokens[i - 1].type == REDIR_APPEND
+			|| data->tokens[i - 1].type == REDIR_HEREDOC
+			|| data->tokens[i - 1].type == REDIR_IN
+			|| data->tokens[i - 1].type == REDIR_OUT))
+		return (syntax_error('>'), 1);
+	return (0);
+}
+int check_syntax(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->token_count)
+	{
+		if (data->tokens[i].type == PIPE && i == data->token_count - 1)
+			return (syntax_error('|'), 1);
+		else if (data->tokens[i].type == PIPE && i == 0)
+			return (syntax_error('|'), 1);
+		else if (data->tokens[i].type == PIPE
+			&& (data->tokens[i + 1].type == PIPE
+				|| data->tokens[i - 1].type == REDIR_APPEND
+				|| data->tokens[i - 1].type == REDIR_HEREDOC
+				|| data->tokens[i - 1].type == REDIR_IN
+				|| data->tokens[i - 1].type == REDIR_OUT))
+			return (syntax_error('|'), 1);
+		else
+			if (check_syntax_dir(data, i) == 1)
+				return (1);
+	}
+	return (0);
+}
+
 int	lexer(t_data *data)
 {
 	int	i;
@@ -62,7 +102,7 @@ int	lexer(t_data *data)
 			i += fill_word(data, &data->input[i]) - 1;
 		else
 			continue ;
-		printf("token: %s\n", data->tokens[data->token_count - 1].value);
+		printf("token: {%s}\n", data->tokens[data->token_count - 1].value);
 		printf("type: %s\n", g_token_type_names[data->tokens[data->token_count
 			- 1].type]);
 		printf("no_space: %d\n", data->tokens[data->token_count - 1].no_space);
@@ -70,5 +110,6 @@ int	lexer(t_data *data)
 		printf("token_max: %d\n", data->token_max);
 		printf("--------------------\n");
 	}
+	printf("%d\n",check_syntax(data));
 	return (0);
 }
