@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 13:12:00 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/22 18:13:21 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum s_token_type
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
-	REDIR_HERE_DOC,
+	REDIR_HEREDOC,
 	DQUOTE,
 	SQUOTE
 }					t_token_type;
@@ -52,15 +52,22 @@ typedef struct s_data
 	char			*input;
 	t_token			*tokens;
 	int				token_count;
-	int				token_max_count;
+	int				token_max;
 }					t_data;
-void				exit_shell(t_data *data, int exit_code, char *temp);
+//init
 void				data_init(t_data *data, char **envp);
-void				syntax_error(t_data *data, char *msg);
 char				**get_path(t_data *data, int i);
+//errors
+void				exit_shell(t_data *data, int exit_code);
+void				syntax_error(char msg);
 void				free_double_p(char **p);
 void				exit2(t_data *data, int exit_code);
 void				free_all(t_data *data);
-void				lexer(t_data *data);
+//parser
+int					lexer(t_data *data);
+int					fill_quotes(t_data *data, char const *s, char temp);
+int					fill_word(t_data *data, char const *s);
+void				realloc_tokens(t_data *data, int token_max);
+void				free_tokens(t_token *tokens, int token_max, t_data *data);
 
 #endif

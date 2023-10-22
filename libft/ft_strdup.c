@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 18:44:46 by dgutak            #+#    #+#             */
-/*   Updated: 2023/05/01 09:58:08 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/22 17:41:37 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(char *src)
 	int		size;
 
 	size = 0;
+	if (!src)
+		return (NULL);
 	while (src[size])
 		++size;
 	dest = (char *)malloc(sizeof(char) * (size + 1));
