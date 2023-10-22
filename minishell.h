@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/21 21:03:27 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/22 13:12:00 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				no_space;
 }					t_token;
 
 typedef struct s_data
