@@ -5,22 +5,32 @@ Please help!
 
 TODO:
 
-LEXER
+LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
 -	read pipes and redirs(DONE)
 -	protect memory(DONE)
--	check pipes and redirs(WIP)
+-	check pipes and redirs(DONE)
+-   changing exit code to 2 if syntax is wrong(DONE)
+EXPANDER (postponed)
+- change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
+PARSER(WIP)
+- init command tables(WIP)
+- put cmd and args in variables(WIP)
+- figure out redirs and put the last ones in struct
+- open them if needed (> lol > kek > pop)
+- 
 
-PARSER
-EXPANDER
 EXECUTOR
 
 
 
 MISC:
+
 SIGNALS
+
 BUILTINS
-ADD HISTORY(backlog)
+
+ADD HISTORY(DONE)
 
 The shell reads its input from a file, from a string or from the user's terminal.
 

@@ -6,7 +6,7 @@
 #    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/22 18:13:45 by dgutak           ###   ########.fr        #
+#    Updated: 2023/10/23 17:35:44 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,11 @@ LDFLAGS = -L./libft -lft -lreadline
 NAME = minishell
 LIBFT	=	./libft/libft.a
 LEX = lexer.c fill_tokens.c
+PARS = parser.c
 
 
 
-SRCS = main.c init.c exit.c exit_shell.c $(LEX) error.c 
+SRCS = main.c init.c exit.c exit_shell.c $(LEX) $(PARS) error.c 
 OBJS = $(SRCS:.c=.o)
 
 

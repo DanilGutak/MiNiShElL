@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 18:25:56 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/23 17:44:03 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,13 @@ int	main(int argc, char **argv, char **envp)
 			exit2(&data, errno);
 		if (data.input[0] != '\0')
 			add_history(data.input);
-		lexer(&data);
-		free(data.input);
+		if (lexer(&data) == 0 && parser(&data) == 0)
+		{
+			free(data.input);
+			continue ;
+		}
+		else
+			free(data.input);
 	}
 	return (0);
 }

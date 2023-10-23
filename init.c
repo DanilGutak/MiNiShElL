@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 18:09:03 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/23 15:43:29 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	data_init(t_data *data, char **envp)
 	data->input = NULL;
 	data->token_max = 1;
 	data->token_count = 0;
+	data->exit_code = 0;
 	data->tokens = ft_calloc(data->token_max, sizeof(t_token));
 	if (!data->tokens)
 		exit_shell(data, 1);
