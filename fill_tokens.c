@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 18:10:30 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/24 19:22:54 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	fill_word(t_data *data, char const *s)
 	int	j;
 
 	j = 0;
+	printf("toke_count: %d\n", data->token_count);
 	data->tokens[++data->token_count - 1].value = malloc(sizeof(char)
 			* (len_word(s) + 1));
 	if (!data->tokens[data->token_count - 1].value)

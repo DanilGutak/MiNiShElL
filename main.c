@@ -6,12 +6,39 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/23 17:44:03 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/24 22:06:56 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	clean_stuff(t_data *data)
+{
+	if (data->tokens)
+	{
+		while (data->token_count > 0)
+		{
+			data->token_count--;
+			if (data->tokens[data->token_count].value)
+				free(data->tokens[data->token_count].value);
+		}
+		free(data->tokens);
+		data->tokens = NULL;
+	}
+	if (data->cmdt)
+	{
+		while (data->cmdt_count > 0)
+		{
+			data->cmdt_count--;
+			while (data->cmdt[data->cmdt_count].num_args-- > 0)
+				free(data->cmdt[data->cmdt_count]
+					.args[data->cmdt[data->cmdt_count].num_args]);
+			free(data->cmdt[data->cmdt_count].args);
+		}
+		free(data->cmdt);
+		data->cmdt = NULL;
+	}
+}
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -29,11 +56,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data.input);
 		if (lexer(&data) == 0 && parser(&data) == 0)
 		{
+			//exucute(&data);
 			free(data.input);
-			continue ;
 		}
 		else
 			free(data.input);
+		clean_stuff(&data);
 	}
 	return (0);
 }

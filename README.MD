@@ -4,9 +4,17 @@ Please help!
 
 
 TODO:
+
+SOME TESTS(VITALIK)
+
+-write descriptions for functions(backlog)
+
+
 CLEANER(??) after every rdln
--clean tokens 
--clean cmdtable
+-clean tokens(DONE)
+-clean cmdtable(DONE)
+-prepare path?
+- ??
 
 LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
@@ -14,14 +22,16 @@ LEXER(DONE?)
 -	protect memory(DONE)
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
+
 EXPANDER (postponed)
-- change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
+- change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment(VITALIK?)
+
 PARSER(WIP)
 - init command tables(DONE)
-- put args together fo no_space == 1 (WIP)
+- put args together fo no_space == 1 (DONE)
 - put cmd and args in variables(DONE)
-- figure out redirs and put the last ones in struct
-- open them if needed (> lol > kek > pop)
+- figure out redirs and them in struct, prob 2 arrays of tokens (<<&<, >&>>)(backlog)
+- open them if needed (> lol > kek > pop)(VITALIK)(in exec prob?)
 
 EXECUTOR
 

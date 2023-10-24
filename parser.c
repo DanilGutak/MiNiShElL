@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/24 11:31:34 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/24 22:08:24 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	count_pipes(t_data *data)
 
 int	is_arg(t_token_type type)
 {
-	if (type == WORD || type == DQUOTE || type == DQUOTE)
+	if (type == WORD || type == DQUOTE || type == SQUOTE)
 		return (1);
 	return (0);
 }
 
 int	is_not_redir(t_token_type type)
 {
-	if (type == WORD || type == DQUOTE || type == DQUOTE || type == PIPE)
+	if (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE)
 		return (1);
 	return (0);
 }
@@ -73,7 +73,6 @@ int	count_args(t_data *data, int i)
 	int	count;
 
 	count = 0;
-	printf("token_left: %d\n", data->token_count - i);
 	while (i < data->token_count && data->tokens[i].type != PIPE)
 	{
 		if (is_arg(data->tokens[i].type) && (i == 0
@@ -84,6 +83,56 @@ int	count_args(t_data *data, int i)
 	return (count);
 }
 
+void	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
+{
+	new_tokens[*j].type = data->tokens[*i].type;
+	if (is_arg(data->tokens[*i].type) == 1)
+	{
+		new_tokens[*j].value = ft_strdup(data->tokens[*i].value);
+		if (!new_tokens[*j].value)
+			exit_shell(data, 1);
+		while (data->tokens[*i].no_space == 1)
+		{
+			*i = *i + 1;
+			new_tokens[*j].value = ft_strjoin(new_tokens[*j].value,
+					data->tokens[*i].value);
+			if (!new_tokens[*j].value)
+				exit_shell(data, 1);
+		}
+	}
+	*j = *j + 1;
+}
+void	merge_words(t_data *data)
+{
+	t_token	*new_tokens;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = -1;
+	new_tokens = ft_calloc(data->token_count, sizeof(t_token));
+	if (!new_tokens)
+		exit_shell(data, 1);
+	while (i < data->token_count)
+	{
+		copy_token(data, new_tokens, &i, &j);
+		i++;
+	}
+	/* for (int k = 0; k < data->token_count; k++)
+		printf("token{%d}: {%s} type: {%u} no_space: {%u}\n", k, data->tokens[k].value, data->tokens[k].type, data->tokens[k].no_space);
+	for (int k = 0; k < j; k++)
+		printf("new_token{%d}: {%s}\n", k, new_tokens[k].value); */
+	while (++k < data->token_count)
+		if (data->tokens[k].value)
+			free(data->tokens[k].value);
+	free(data->tokens);
+	data->tokens = new_tokens;
+	data->token_count = j;
+	printf("token_count_new: %d\n", data->token_count);
+}
+
 int	parser(t_data *data)
 {
 	int	j;
@@ -91,6 +140,9 @@ int	parser(t_data *data)
 
 	j = 0;
 	i = 0;
+	merge_words(data);
+	for (int k = 0; k < data->token_count; k++)
+		printf("token{%d}: {%s}\n", k, data->tokens[k].value);
 	data->cmdt_count = count_pipes(data) + 1;
 	printf("~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("cmdt_count: %d\n", data->cmdt_count);
@@ -100,13 +152,18 @@ int	parser(t_data *data)
 		exit_shell(data, 1);
 	printf("*************************\n");
 	while (j < data->cmdt_count)
-	{		
+	{
 		data->cmdt[j].num_args = count_args(data, i) - 1;
 		printf("num_args: %d\n", data->cmdt[j].num_args);
-		data->cmdt[j].args = ft_calloc((data->cmdt[j].num_args),
-				sizeof(char *));
-		if (!data->cmdt[j].args)
-			exit_shell(data, 1);
+		if (data->cmdt[j].num_args > 0)
+		{
+			data->cmdt[j].args = ft_calloc((data->cmdt[j].num_args),
+					sizeof(char *));
+			if (!data->cmdt[j].args)
+				exit_shell(data, 1);
+		}
+		else
+			data->cmdt[j].args = NULL;
 		data->cmdt[j].cmd = NULL;
 		i = fill_cmd_args(data, j, i - 1) + 1;
 		data->cmdt[j].fd_in = 0;
