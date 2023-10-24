@@ -18,7 +18,7 @@ CLEANER(??) after every rdln
 
 LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
--	read pipes and redirs(DONE)
+-	read pipes and redirs(DONE) (redo the redir check logic)
 -	protect memory(DONE)
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
