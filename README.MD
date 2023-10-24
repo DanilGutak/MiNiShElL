@@ -4,6 +4,9 @@ Please help!
 
 
 TODO:
+CLEANER(??) after every rdln
+-clean tokens 
+-clean cmdtable
 
 LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
@@ -14,11 +17,11 @@ LEXER(DONE?)
 EXPANDER (postponed)
 - change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 PARSER(WIP)
-- init command tables(WIP)
-- put cmd and args in variables(WIP)
+- init command tables(DONE)
+- put args together fo no_space == 1 (WIP)
+- put cmd and args in variables(DONE)
 - figure out redirs and put the last ones in struct
 - open them if needed (> lol > kek > pop)
-- 
 
 EXECUTOR
 
