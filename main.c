@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 18:08:49 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 19:50:32 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	clean_stuff(t_data *data)
 			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
 				free(data->cmdt[data->cmdt_count]
 					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
+			free(data->cmdt[data->cmdt_count].redirs);
 			if (data->cmdt[data->cmdt_count].cmd)
 				free(data->cmdt[data->cmdt_count].cmd);
 		}
@@ -66,11 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.input[0] != '\0')
 			add_history(data.input);
 		if (lexer(&data) == 0 && parser(&data) == 0)
-		{
-			//exucute(&data);
-			clean_stuff(&data);
-		}
-		else
-			clean_stuff(&data);
+			executor(&data);
+		clean_stuff(&data);
 	}
 }

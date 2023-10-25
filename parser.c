@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 17:45:12 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 19:36:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,60 +25,7 @@ int	count_pipes(t_data *data)
 	return (j);
 }
 
-int	is_arg(t_token_type type)
-{
-	if (type == WORD || type == DQUOTE || type == SQUOTE)
-		return (1);
-	return (0);
-}
 
-int	is_not_redir(t_token_type type)
-{
-	if (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE)
-		return (1);
-	return (0);
-}
-
-int	fill_cmd_args(t_data *data, int j, int i)
-{
-	int	k;
-
-	k = 0;
-	printf("i: %d\n", i);
-	while (++i < data->token_count && data->tokens[i].type != PIPE)
-	{
-		if (is_arg(data->tokens[i].type) && (i == 0
-				|| is_not_redir(data->tokens[i - 1].type)))
-		{
-			if (data->cmdt[j].cmd == NULL)
-			{
-				data->cmdt[j].cmd = ft_strdup(data->tokens[i].value);
-				if (!data->cmdt[j].cmd)
-					exit_shell(data, 1);
-			}
-			data->cmdt[j].args[k++] = ft_strdup(data->tokens[i].value);
-			if (!data->cmdt[j].args[k - 1])
-				exit_shell(data, 1);
-		}
-	}
-	data->cmdt[j].args[k] = NULL;
-	return (i);
-}
-
-int	count_args(t_data *data, int i)
-{
-	int	count;
-
-	count = 0;
-	while (i < data->token_count && data->tokens[i].type != PIPE)
-	{
-		if (is_arg(data->tokens[i].type) && (i == 0
-				|| is_not_redir(data->tokens[i - 1].type)))
-			count++;
-		i++;
-	}
-	return (count);
-}
 
 void	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 {
@@ -131,45 +78,20 @@ void	merge_words(t_data *data)
 	data->token_count = j;
 	/* printf("token_count_new: %d\n", data->token_count); */
 }
-int	count_redirs(t_data *data, int i)
+
+int	count_args(t_data *data, int i)
 {
 	int	count;
 
 	count = 0;
 	while (i < data->token_count && data->tokens[i].type != PIPE)
 	{
-		if (is_not_redir(data->tokens[i].type) == 0)
+		if (is_arg(data->tokens[i].type) && (i == 0
+				|| is_not_redir(data->tokens[i - 1].type)))
 			count++;
 		i++;
 	}
 	return (count);
-}
-void	fill_redirs(t_data *data, int j, int i)
-{
-	int	count;
-
-	count = count_redirs(data, i);
-	data->cmdt[j].redirs = NULL;
-	data->cmdt[j].num_redirs = count;
-	if (count <= 0)
-		return ;
-	data->cmdt[j].redirs = ft_calloc(count, sizeof(t_token));
-	if (!data->cmdt[j].redirs)
-		exit_shell(data, 1);
-	count = 0;
-	while (i < data->token_count && data->tokens[i].type != PIPE)
-	{
-		if (is_not_redir(data->tokens[i].type) == 0)
-		{
-			data->cmdt[j].redirs[count].type = data->tokens[i].type;
-			data->cmdt[j].redirs[count].value
-				= ft_strdup(data->tokens[i++ + 1].value);
-			if (!data->cmdt[j].redirs[count].value)
-				exit_shell(data, 1);
-			count++;
-		}
-		i++;
-	}
 }
 int	parser(t_data *data)
 {
@@ -182,9 +104,9 @@ int	parser(t_data *data)
 	/* for (int k = 0; k < data->token_count; k++)
 		printf("token{%d}: {%s}\n", k, data->tokens[k].value); */
 	data->cmdt_count = count_pipes(data) + 1;
-	printf("~~~~~~~~~~~~~~~~~~~~~~\n");
+	/* printf("~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("cmdt_count: %d\n", data->cmdt_count);
-	printf("~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("~~~~~~~~~~~~~~~~~~~~~~\n"); */
 	data->cmdt = ft_calloc(data->cmdt_count, sizeof(t_cmd_table));
 	if (!data->cmdt)
 		exit_shell(data, 1);
@@ -203,20 +125,20 @@ int	parser(t_data *data)
 		else
 			data->cmdt[j].args = NULL;
 		data->cmdt[j].cmd = NULL;
-		printf("-------------------\n");
+		/* printf("-------------------\n"); */
 		fill_redirs(data, j, i);
-		for (int k = 0; k < data->cmdt[j].num_redirs; k++)
+		/* for (int k = 0; k < data->cmdt[j].num_redirs; k++)
 			printf("redir{%d}: {%s}, type : {%d}\n", k, data->cmdt[j].redirs[k].value,data->cmdt[j].redirs[k].type );
 		if (!data->cmdt[j].redirs)
-			printf("redirs: NULL\n");
+			printf("redirs: NULL\n"); */
 		i = fill_cmd_args(data, j, i - 1) + 1;
 		data->cmdt[j].fd_in = 0;
 		data->cmdt[j].fd_out = 1;
-		printf("cmd: {%s}\n", data->cmdt[j].cmd);
+		/* printf("cmd: {%s}\n", data->cmdt[j].cmd);
 		for (int k = 0; k <= data->cmdt[j].num_args; k++)
 			printf("arg{%d}: {%s}\n", k, data->cmdt[j].args[k]);
 		printf("-------------------\n");
-		printf("*************************\n");
+		printf("*************************\n"); */
 		j++;
 	}
 	return (0);

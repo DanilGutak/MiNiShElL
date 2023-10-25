@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 16:21:05 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 19:09:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,15 @@ int					fill_quotes(t_data *data, char const *s, char temp);
 int					fill_word(t_data *data, char const *s);
 void				realloc_tokens(t_data *data, int token_max);
 void				free_tokens(t_token *tokens, int token_max, t_data *data);
-int					is_not_redir(t_token_type type);
 
 // parser
 int					parser(t_data *data);
+int					is_arg(t_token_type type);
+int					is_not_redir(t_token_type type);
+int					fill_cmd_args(t_data *data, int j, int i);
+void				fill_redirs(t_data *data, int j, int i);
+
+// executor
+void				executor(t_data *data);
 
 #endif
