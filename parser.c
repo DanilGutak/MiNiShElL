@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 19:36:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 20:13:15 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	count_pipes(t_data *data)
 			j++;
 	return (j);
 }
-
-
 
 void	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 {
@@ -46,6 +44,7 @@ void	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 	}
 	*j = *j + 1;
 }
+
 void	merge_words(t_data *data)
 {
 	t_token	*new_tokens;
@@ -93,6 +92,7 @@ int	count_args(t_data *data, int i)
 	}
 	return (count);
 }
+
 int	parser(t_data *data)
 {
 	int	j;

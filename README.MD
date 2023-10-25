@@ -36,7 +36,12 @@ PARSER(WIP)
 EXECUTOR
 - open redirs (> lol > kek > pop)(VITALIK)
 - trigger heredocs if anywhere (do expands(dont forget about "eof" does not expand))(VITALIK)
-- set the fd for redir(last for in and last for out[not heredoc])
+- set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
+- execute different part of pipes one after another(WIP)
+- find executable for builtins(now cannot find it) (WIP)
+- configure pipes for it(WIP)
+- check exit codes of execve and set it accordingly
+- 
 
 
 
@@ -46,6 +51,20 @@ MISC:
 - signals
 
 - builts
+
+    ◦ echo with option -n
+
+    ◦ cd with only a relative or absolute path
+
+    ◦ pwd with no options
+
+    ◦ export with no options
+
+    ◦ unset with no options
+
+    ◦ env with no options or arguments
+
+    ◦ exit with no options
 
 - add history (DONE)
 
