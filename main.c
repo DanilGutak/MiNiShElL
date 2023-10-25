@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/24 22:06:56 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 18:08:49 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,22 @@ void	clean_stuff(t_data *data)
 				free(data->cmdt[data->cmdt_count]
 					.args[data->cmdt[data->cmdt_count].num_args]);
 			free(data->cmdt[data->cmdt_count].args);
+			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
+				free(data->cmdt[data->cmdt_count]
+					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
+			if (data->cmdt[data->cmdt_count].cmd)
+				free(data->cmdt[data->cmdt_count].cmd);
 		}
 		free(data->cmdt);
 		data->cmdt = NULL;
 	}
+	if (data->input)
+	{
+		free(data->input);
+		data->input = NULL;
+	}
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -51,17 +62,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.input = readline("minishell$ ");
 		if (!data.input)
-			exit2(&data, errno);
+			exit2(&data, data.exit_code);
 		if (data.input[0] != '\0')
 			add_history(data.input);
 		if (lexer(&data) == 0 && parser(&data) == 0)
 		{
 			//exucute(&data);
-			free(data.input);
+			clean_stuff(&data);
 		}
 		else
-			free(data.input);
-		clean_stuff(&data);
+			clean_stuff(&data);
 	}
-	return (0);
 }

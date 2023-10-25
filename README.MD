@@ -5,45 +5,49 @@ Please help!
 
 TODO:
 
-SOME TESTS(VITALIK)
+- some tests(VITALIK)
 
--write descriptions for functions(backlog)
+- write descriptions for functions(backlog)
 
 
 CLEANER(??) after every rdln
--clean tokens(DONE)
--clean cmdtable(DONE)
--prepare path?
+- clean tokens(DONE)
+- clean cmdtable(DONE)
+- prepare path(?)
 - ??
 
 LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
--	read pipes and redirs(DONE) (redo the redir check logic) (REDO PUTSYNTAX ERROR)
+-	read pipes and redirs(DONE) (redo the redir check logic) (REDO PUTSYNTAX ERROR) (DONE)
 -	protect memory(DONE)
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
 
-EXPANDER (postponed)
-- change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment(VITALIK?)
+EXPANDER (postponed) (VITALIK?)
+- change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 
 PARSER(WIP)
 - init command tables(DONE)
 - put args together fo no_space == 1 (DONE)
 - put cmd and args in variables(DONE)
-- figure out redirs and them in struct, prob 2 arrays of tokens (<<&<, >&>>)(backlog)
-- open them if needed (> lol > kek > pop)(VITALIK)(in exec prob?)
+- figure out redirs and them in struct(DONE)
+
 
 EXECUTOR
+- open redirs (> lol > kek > pop)(VITALIK)
+- trigger heredocs if anywhere (do expands(dont forget about "eof" does not expand))(VITALIK)
+- set the fd for redir(last for in and last for out[not heredoc])
+
 
 
 
 MISC:
 
-SIGNALS
+- signals
 
-BUILTINS
+- builts
 
-ADD HISTORY(DONE)
+- add history (DONE)
 
 The shell reads its input from a file, from a string or from the user's terminal.
 

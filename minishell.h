@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/24 18:24:14 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/25 16:21:05 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_cmd_table
 	char			**args;
 	int				fd_in;
 	int				fd_out;
-	int				fd_append;
-	int				fd_heredoc;
+	t_token			*redirs;
+	int				num_redirs;
 	int				num_args;
 }					t_cmd_table;
 
@@ -72,7 +72,7 @@ void				data_init(t_data *data, char **envp);
 char				**get_path(t_data *data, int i);
 // errors
 void				exit_shell(t_data *data, int exit_code);
-void				syntax_error(char *msg);
+void				syntax_error(int code);
 void				free_double_p(char **p);
 void				exit2(t_data *data, int exit_code);
 void				free_all(t_data *data);
