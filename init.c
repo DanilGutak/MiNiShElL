@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/24 21:39:15 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:30:26 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_tokens(t_token *tokens, int token_max, t_data *data)
 	free(tokens);
 	exit_shell(data, 1);
 }
-
+/* reallocate memory in case there are nott enough space for tokens(multiplies by 2 everytime) */
 void	realloc_tokens(t_data *data, int token_max)
 {
 	t_token	*new_tokens;
@@ -46,6 +46,7 @@ void	realloc_tokens(t_data *data, int token_max)
 	data->token_max *= 2;
 }
 
+/* searches for "PATH=" in env, then splits it by : and store it as alloced 2d array */
 char	**get_path(t_data *data, int i)
 {
 	char	**ret;
@@ -74,7 +75,7 @@ char	**get_path(t_data *data, int i)
 	}
 	return (ret);
 }
-
+/* set variables to default values, copy envp, gets path variable */
 void	data_init(t_data *data, char **envp)
 {
 	data->envp = envp;

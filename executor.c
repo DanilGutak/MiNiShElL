@@ -6,12 +6,13 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 17:19:12 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:43:00 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/* tries to find the command to execute, better explanation of bash logic is in README
+but if slash is present tries to run command as it is, otherwise tries to connect with dirs from PAtTH */
 int	find_executable(t_data *data, t_cmd_table *cmd_table)
 {
 	char	*ret;
@@ -19,8 +20,10 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	int		i;
 
 	i = 0;
-	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd, F_OK) == 0)
-		return (0);
+	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd,
+			F_OK) == 0)
+		if (access(cmd_table->cmd, X_OK) == 0)
+			printf("minishell: %s: Permission denied\n", cmd_table->cmd);
 	if (!cmd_table->cmd)
 		return (1);
 	while (data->path[i])
@@ -46,7 +49,7 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	printf("minishell: %s: command not found\n", cmd_table->cmd);
 	return (1);
 }
-void execute_command(t_data *data)
+void	execute_command(t_data *data)
 {
 	pid_t	process1;
 
@@ -59,16 +62,16 @@ void execute_command(t_data *data)
 	{
 		if (execve(data->cmdt[0].cmd, data->cmdt[0].args, data->envp) == -1)
 		{
-			printf("lol\n");
-			exit_shell(data, 1);
-			//here the custom handler for "permission denied"
+			printf("minishell: %s:", data->cmdt[0].cmd);
+			perror("");
+			exit(1);
+			// here the custom handler for "permission denied"
 		}
 	}
 }
 
 void	executor(t_data *data)
 {
-	init_pipes(data);
 	execute_command(data);
 	wait(NULL);
 }

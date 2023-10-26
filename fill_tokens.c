@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 14:16:39 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:36:41 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	len_word(char const *str)
 	}
 	return (len);
 }
-
+/* gets token based on the quotes, namely so 
+quoted text is not separated by anything, ommits quotes in the end result. Sets type and no_space*/
 int	fill_quotes(t_data *data, char const *s, char temp)
 {
 	int	j;

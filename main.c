@@ -6,12 +6,13 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 19:50:32 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:28:01 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* clean everything regarding one read of readline(tokens, cmd tables,input, etc..) */
 void	clean_stuff(t_data *data)
 {
 	if (data->tokens)
@@ -50,7 +51,7 @@ void	clean_stuff(t_data *data)
 		data->input = NULL;
 	}
 }
-
+/* entry point, initiates data, reads the input, lexer-extender-parser-executor-cleaner(repeated) */
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;

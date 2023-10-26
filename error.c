@@ -6,12 +6,12 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 20:51:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 15:02:46 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:37:15 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/* checks for type (0 is for newline) so to print the error accordingly */
 void	syntax_error(int type)
 {
 	if (type == 1)

@@ -6,12 +6,12 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 15:11:42 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:35:16 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/* if string is is arrow, searches for the second one, then set type accoringl. */
 int	fill_redir(t_data *data, char const *s)
 {
 	int	ret;
@@ -71,7 +71,11 @@ int check_syntax(t_data *data)
 	}
 	return (0);
 }
-
+/* main entry point for lexer(tokeniser). Separates input string
+ by spaces,
+quotes and special charactersm,allocate memory for tokens.Checks syntax (quotes, redirs , pipes)
+token has 3 variables: TYPE - which type, VALUE - if its not special character the text in it,
+NO_SPACE - whether the token is followed by token which can be concatenated.*/
 int	lexer(t_data *data)
 {
 	int	i;

@@ -41,8 +41,6 @@ Please help!
 - find executable for builtins(now cannot find it) (WIP)
 - configure pipe for it(WIP)
 - check exit codes of execve and set it accordingly
-- 
-
 
 
 
