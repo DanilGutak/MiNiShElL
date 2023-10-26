@@ -26,7 +26,7 @@ Please help!
 ## EXPANDER (postponed) (VITALIK?)
 - change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 
-## PARSER(WIP)
+## PARSER(DONE)
 - init command tables(DONE)
 - put args together fo no_space == 1 (DONE)
 - put cmd and args in variables(DONE)
