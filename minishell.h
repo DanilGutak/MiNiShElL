@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 19:09:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 17:19:29 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_cmd_table
 	int				num_redirs;
 	int				num_args;
 }					t_cmd_table;
-
 typedef struct s_data
 {
 	char			**envp;
@@ -65,6 +64,7 @@ typedef struct s_data
 	int				token_max;
 	t_cmd_table		*cmdt;
 	int				cmdt_count;
+	int				pip[2];
 	int				exit_code;
 }					t_data;
 // init

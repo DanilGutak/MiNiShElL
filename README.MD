@@ -39,7 +39,7 @@ EXECUTOR
 - set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
 - execute different part of pipes one after another(WIP)
 - find executable for builtins(now cannot find it) (WIP)
-- configure pipes for it(WIP)
+- configure pipe for it(WIP)
 - check exit codes of execve and set it accordingly
 - 
 
@@ -67,6 +67,15 @@ MISC:
     ◦ exit with no options
 
 - add history (DONE)
+
+
+
+## NOTES
+- bash is stupid
+# finding executable
+- searches from left to right in path variables
+- if finds check whether executable if not go further until the end. 
+- BUT if noone is executable return 1st is run and permision denied is returned
 
 The shell reads its input from a file, from a string or from the user's terminal.
 

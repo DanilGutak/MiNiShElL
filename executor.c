@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/25 19:52:07 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/26 17:19:12 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	int		i;
 
 	i = 0;
-	if (access(cmd_table->cmd, 0) == 0)
+	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd, F_OK) == 0)
 		return (0);
 	if (!cmd_table->cmd)
 		return (1);
@@ -46,7 +46,7 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	printf("minishell: %s: command not found\n", cmd_table->cmd);
 	return (1);
 }
-void	executor(t_data *data)
+void execute_command(t_data *data)
 {
 	pid_t	process1;
 
@@ -58,7 +58,17 @@ void	executor(t_data *data)
 	if (!process1)
 	{
 		if (execve(data->cmdt[0].cmd, data->cmdt[0].args, data->envp) == -1)
+		{
+			printf("lol\n");
 			exit_shell(data, 1);
+			//here the custom handler for "permission denied"
+		}
 	}
+}
+
+void	executor(t_data *data)
+{
+	init_pipes(data);
+	execute_command(data);
 	wait(NULL);
 }
