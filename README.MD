@@ -3,37 +3,37 @@ Please help!
 
 
 
-TODO:
+# TODO:
 
 - some tests(VITALIK)
 
 - write descriptions for functions(backlog)
 
 
-CLEANER(??) after every rdln
+## CLEANER(??) after every rdln
 - clean tokens(DONE)
 - clean cmdtable(DONE)
 - prepare path(?)
 - ??
 
-LEXER(DONE?)
+## LEXER(DONE?)
 -	read quotes and normal text, check them(DONE(for real this time))
 -	read pipes and redirs(DONE) (redo the redir check logic) (REDO PUTSYNTAX ERROR) (DONE)
 -	protect memory(DONE)
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
 
-EXPANDER (postponed) (VITALIK?)
+## EXPANDER (postponed) (VITALIK?)
 - change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 
-PARSER(WIP)
+## PARSER(WIP)
 - init command tables(DONE)
 - put args together fo no_space == 1 (DONE)
 - put cmd and args in variables(DONE)
 - figure out redirs and them in struct(DONE)
 
 
-EXECUTOR
+ ## EXECUTOR
 - open redirs (> lol > kek > pop)(VITALIK)
 - trigger heredocs if anywhere (do expands(dont forget about "eof" does not expand))(VITALIK)
 - set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
@@ -46,7 +46,7 @@ EXECUTOR
 
 
 
-MISC:
+## MISC:
 
 - signals
 
@@ -72,10 +72,11 @@ MISC:
 
 ## NOTES
 - bash is stupid
-# finding executable
+## finding executable
 - searches from left to right in path variables
 - if finds check whether executable if not go further until the end. 
 - BUT if noone is executable return 1st is run and permision denied is returned
+https://www.gnu.org/software/bash/manual/bash.html#Command-Search-and-Execution
 
 The shell reads its input from a file, from a string or from the user's terminal.
 
