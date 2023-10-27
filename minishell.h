@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 17:19:29 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/27 19:36:46 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,8 @@ void				fill_redirs(t_data *data, int j, int i);
 
 // executor
 void				executor(t_data *data);
+// cleaner
+void	clean_stuff(t_data *data);
+
 
 #endif

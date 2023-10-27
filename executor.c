@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/27 19:16:20 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/27 19:39:49 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 		return (1);
 	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd,
 			F_OK) == 0)
-		if (access(cmd_table->cmd, X_OK) == 0)
-			printf("minishell: %s: Permission denied\n", cmd_table->cmd);
+			return (0);
 	while (data->path[i])
 	{
 		temp = ft_strdup(data->path[i]);
@@ -62,8 +61,11 @@ void	execute_command(t_data *data)
 	{
 		if (execve(data->cmdt[0].cmd, data->cmdt[0].args, data->envp) == -1)
 		{
-			printf("minishell: %s:", data->cmdt[0].cmd);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(data->cmdt[0].cmd, 2);
 			perror("");
+			ft_putstr_fd("\n", 2);
+			clean_stuff(data);
 			exit(1);
 			// here the custom handler for "permission denied"
 		}

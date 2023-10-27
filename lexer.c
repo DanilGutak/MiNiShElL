@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/27 19:24:11 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/27 19:29:45 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,6 @@ int check_syntax(t_data *data)
 	i = -1;
 	while (++i < data->token_count)
 	{
-		printf("token: {%s} ", data->tokens[i].value);
-		printf("type: %s\n", g_token_type_names[data->tokens[i].type]);
-		printf("next token: {%s} ", data->tokens[i + 1].value);
-		printf("next type: %s\n", g_token_type_names[data->tokens[i + 1].type]);
 		if (data->tokens[i].type == PIPE && i == data->token_count - 1)
 			return (data->exit_code = 2, syntax_error(data->tokens[i].type), 1);
 		else if (data->tokens[i].type == PIPE && i == 0)
