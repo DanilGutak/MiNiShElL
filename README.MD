@@ -7,7 +7,7 @@ Please help!
 
 - some tests(VITALIK)
 
-- write descriptions for functions(backlog)
+- write descriptions for functions(DONE)
 
 
 ## CLEANER(??) after every rdln
