@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 19:43:00 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/27 19:16:20 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	int		i;
 
 	i = 0;
+	if (!cmd_table->cmd || !*cmd_table->cmd)
+		return (1);
 	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd,
 			F_OK) == 0)
 		if (access(cmd_table->cmd, X_OK) == 0)
 			printf("minishell: %s: Permission denied\n", cmd_table->cmd);
-	if (!cmd_table->cmd)
-		return (1);
 	while (data->path[i])
 	{
 		temp = ft_strdup(data->path[i]);
