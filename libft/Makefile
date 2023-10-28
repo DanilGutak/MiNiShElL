@@ -6,7 +6,7 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:02:58 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/28 14:00:55 by vfrants          ###   ########.fr        #
+#    Updated: 2023/10/28 18:26:34 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,12 @@ SRCS	= \
 		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 		ft_math_i.c ft_contains.c get_next_line.c ft_strcat.c ft_free.c \
 		ft_is_blank.c ft_free_split.c \
-		ft_printf.c ft_putnbru_fd.c ft_printhex.c ft_strstr.c
+		ft_printf.c ft_putnbru_fd.c ft_printhex.c ft_strstr.c \
+		ft_lstnew.c ft_lstadd_front.c ft_lstadd_back.c \
+		ft_lstsize.c ft_lstlast.c ft_lstdelone.c \
+		ft_lstclear.c ft_lstiter.c
 
 OBJS	= $(SRCS:.c=.o)
-
-SRCS_B	= ft_lstnew.c ft_lstadd_front.c ft_lstadd_back.c\
-		ft_lstsize.c ft_lstlast.c ft_lstdelone.c\
-		ft_lstclear.c ft_lstiter.c ft_lstmap.c
-
-OBJS_B	= $(SRCS_B:.c=.o)
 
 %.o		: %.c
 		${CC} ${CFLAGS} -c $< -o $@ -I .
@@ -44,15 +41,12 @@ $(NAME) : ${OBJS}
 		ar rcs ${NAME} ${OBJS}
 
 clean	:
-		$(RM) $(OBJS) $(OBJS_B)
+		$(RM) $(OBJS)
 
 fclean	: clean
 		$(RM) $(NAME)
 
 re		: fclean $(NAME)
 
-bonus	: $(OBJS) $(OBJS_B)
-		ar rcs $(NAME) $(OBJS) $(OBJS_B)
-
-.PHONY	: all clean fclean re bonus
+.PHONY	: all clean fclean re
 .SILENT :
