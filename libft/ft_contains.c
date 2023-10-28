@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_contains.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 17:15:03 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 13:42:25 by vfrants          ###   ########.fr       */
+/*   Created: 2023/09/21 22:24:12 by vfrants           #+#    #+#             */
+/*   Updated: 2023/10/08 18:44:38 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+int	ft_contains(const char *set, char c)
 {
-	size_t	res;
-
-	res = ft_strlen(src);
-	if (!dst || !src || !size)
-		return (res);
-	while (*src && --size > 0)
+	if (!set)
+		return (0);
+	while (*set)
 	{
-		*dst = *src;
-		dst++;
-		src++;
+		if (*set == c)
+			return (1);
+		set++;
 	}
-	*dst = '\0';
-	return (res);
+	return (0);
 }

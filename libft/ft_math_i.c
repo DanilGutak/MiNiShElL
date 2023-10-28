@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_math_i.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 17:15:03 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 13:42:25 by vfrants          ###   ########.fr       */
+/*   Created: 2023/09/11 15:12:53 by vfrants           #+#    #+#             */
+/*   Updated: 2023/09/11 15:27:40 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+int	ft_min(int a, int b)
 {
-	size_t	res;
+	if (a < b)
+		return (a);
+	return (b);
+}
 
-	res = ft_strlen(src);
-	if (!dst || !src || !size)
-		return (res);
-	while (*src && --size > 0)
-	{
-		*dst = *src;
-		dst++;
-		src++;
-	}
-	*dst = '\0';
-	return (res);
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int	ft_tr(int condition, int t, int f)
+{
+	if (condition)
+		return (t);
+	return (f);
 }

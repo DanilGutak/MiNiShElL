@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_is_blank.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 17:15:03 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 13:42:25 by vfrants          ###   ########.fr       */
+/*   Created: 2023/10/08 18:41:09 by vfrants           #+#    #+#             */
+/*   Updated: 2023/10/08 18:49:04 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+int	ft_is_blank(const char *str)
 {
-	size_t	res;
+	const char	arr[] = " \v\f\r\n\t";
 
-	res = ft_strlen(src);
-	if (!dst || !src || !size)
-		return (res);
-	while (*src && --size > 0)
-	{
-		*dst = *src;
-		dst++;
-		src++;
-	}
-	*dst = '\0';
-	return (res);
+	if (!str)
+		return (1);
+	while (ft_contains(arr, *str))
+		str++;
+	return (!*str);
 }

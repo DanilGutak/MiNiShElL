@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 17:15:03 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 13:42:25 by vfrants          ###   ########.fr       */
+/*   Created: 2023/09/30 20:36:22 by vfrants           #+#    #+#             */
+/*   Updated: 2023/09/30 22:55:13 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strcat(const char *s1, const char *s2)
 {
-	size_t	res;
+	char	*res;
+	char	*buffer;
 
-	res = ft_strlen(src);
-	if (!dst || !src || !size)
-		return (res);
-	while (*src && --size > 0)
+	if (!s1 || !s2)
+		return (NULL);
+	res = (char *)malloc(sizeof (char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+		return (NULL);
+	buffer = res;
+	while (*s1)
 	{
-		*dst = *src;
-		dst++;
-		src++;
+		*res = *s1;
+		s1++;
+		res++;
 	}
-	*dst = '\0';
-	return (res);
+	while (*s2)
+	{
+		*res = *s2;
+		s2++;
+		res++;
+	}
+	*res = '\0';
+	return (buffer);
 }
