@@ -8,7 +8,7 @@ Please help!
 - some tests(VITALIK)
 
 - write descriptions for functions(DONE)
-- replace all printf to putstr_fd 
+- replace all printf to putstr_fd
 
 
 ## CLEANER(??) after every rdln
@@ -38,8 +38,8 @@ Please help!
 - open redirs (> lol > kek > pop)(VITALIK)
 - trigger heredocs if anywhere (do expands(dont forget about "eof" does not expand))(VITALIK)
 - set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
-- execute different part of pipes one after another(WIP)
-- find executable for builtins(now cannot find it) (WIP)
+- execute different part of pipes one after another(donish)
+- find executable for builtins(DONE)
 - configure pipe for it(WIP)
 - check exit codes of execve and set it accordingly
 
@@ -73,7 +73,7 @@ Please help!
 - bash is stupid
 ## finding executable
 - searches from left to right in path variables
-- if finds check whether executable if not go further until the end. 
+- if finds check whether executable if not go further until the end.
 - BUT if noone is executable return 1st is run and permision denied is returned
 
 The shell reads its input from a file, from a string or from the user's terminal.
@@ -96,4 +96,3 @@ https://www.maizure.org/projects/decoded-gnu-coreutils/
 https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_04.html
 
 https://www.gnu.org/software/bash/manual/bash.html#Command-Search-and-Execution
-

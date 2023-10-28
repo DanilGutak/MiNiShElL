@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 18:32:02 by dgutak           ###   ########.fr       */
+/*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
+/*   Updated: 2023/10/28 22:33:13 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ void	clean_stuff(t_data *data)
 	if (data->tokens)
 	{
 		while (data->token_count > 0)
-		{
-			data->token_count--;
-			if (data->tokens[data->token_count].value)
-				free(data->tokens[data->token_count].value);
-		}
-		free(data->tokens);
-		data->tokens = NULL;
+			ft_free(data->tokens[data->token_count--].value);
+		ft_free(data->tokens);
 	}
 	if (data->cmdt)
 	{
@@ -32,25 +27,20 @@ void	clean_stuff(t_data *data)
 		{
 			data->cmdt_count--;
 			while (data->cmdt[data->cmdt_count].num_args-- > 0)
-				free(data->cmdt[data->cmdt_count]
+				ft_free(data->cmdt[data->cmdt_count]
 					.args[data->cmdt[data->cmdt_count].num_args]);
-			free(data->cmdt[data->cmdt_count].args);
+			ft_free(data->cmdt[data->cmdt_count].args);
 			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
-				free(data->cmdt[data->cmdt_count]
+				ft_free(data->cmdt[data->cmdt_count]
 					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
-			free(data->cmdt[data->cmdt_count].redirs);
-			if (data->cmdt[data->cmdt_count].cmd)
-				free(data->cmdt[data->cmdt_count].cmd);
+			ft_free(data->cmdt[data->cmdt_count].redirs);
+				ft_free(data->cmdt[data->cmdt_count].cmd);
 		}
-		free(data->cmdt);
-		data->cmdt = NULL;
+		ft_free(data->cmdt);
 	}
-	if (data->input)
-	{
-		free(data->input);
-		data->input = NULL;
-	}
+	ft_free(data->input);
 }
+
 /* entry point, initiates data, reads the input, lexer-extender-parser-executor-cleaner(repeated) */
 int	main(int argc, char **argv, char **envp)
 {

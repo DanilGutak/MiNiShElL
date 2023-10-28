@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 21:32:46 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 22:34:46 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <unistd.h>
 // for errno
 # include <errno.h>
+
+# define SUCCESS 0
+# define FAILURE 1
 
 typedef enum s_token_type
 {
@@ -107,5 +110,12 @@ void				executor(t_data *data);
 // cleaner
 
 void				clean_stuff(t_data *data);
+
+// variables api, for buildins and so on
+
+char	*get_variable(char **envp, char *name);
+int		get_variable_numb(char **envp, char *name);
+int		starts_with(char *string, char *begin);
+int		increment_shlvl_variable(char **envp);
 
 #endif

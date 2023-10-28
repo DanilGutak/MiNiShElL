@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:18:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 16:29:06 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:50:36 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	free_double_p(char **p)
 	if (p)
 	{
 		while (p[++i])
-			free(p[i]);
-		free(p);
+			ft_free(p[i]);
+		ft_free(p);
 	}
 }
 
@@ -30,12 +30,11 @@ void	free_all(t_data *data)
 	free_double_p(data->path);
 	while (data->token_count--)
 	{
-		free(data->tokens[data->token_count].value);
+		ft_free(data->tokens[data->token_count].value);
 		data->tokens[data->token_count].value = NULL;
 	}
-	free(data->tokens);
-	if (data->input)
-		free(data->input);
+	ft_free(data->tokens);
+	ft_free(data->input);
 }
 
 void	exit_shell(t_data *data, int exit_code)
