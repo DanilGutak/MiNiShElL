@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 22:28:21 by dgutak            #+#    #+#             */
-/*   Updated: 2023/06/11 12:00:16 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:54:07 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stddef.h>
 
 int	is_charset(const char c, char charset)
 {
@@ -71,7 +72,7 @@ char	**ft_split(char const *s, char c)
 	i = -1;
 	j = 0;
 	word_count = count_words(s, c);
-	result = (char **)malloc(sizeof(char *) * (word_count + 1));
+	result = (char **)ft_calloc(sizeof(char *), (size_t) (word_count + 1));
 	if (!result)
 		return (NULL);
 	while (++i < word_count)
