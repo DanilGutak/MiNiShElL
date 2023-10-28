@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:14 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 20:43:33 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/28 20:45:22 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int			ft_lstsize(t_list *lst);
 
 // printf part
 
-int	ft_printf_fd(int fd, const char *format, ...);
+int			ft_printf_fd(int fd, const char *format, ...);
 int			ft_putnbru_fd(unsigned int n, int fd);
 int			ft_printhex_fd(unsigned long n, char format, int fd);
 char		*ft_strstr(char *str, char *to_find);
