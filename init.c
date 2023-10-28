@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 15:52:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 20:19:50 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void	data_init(t_data *data, char **envp)
 	data->cmdt = NULL;
 	data->cmdt_count = 0;
 	data->path = get_path(data, -1);
+	
 }
+	

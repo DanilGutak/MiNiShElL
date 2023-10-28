@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:30:02 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 19:28:01 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:32:02 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.input = readline("minishell$ ");
 		if (!data.input)
-			exit2(&data, data.exit_code);
+			builtin_exit(&data, NULL);
 		if (data.input[0] != '\0')
 			add_history(data.input);
 		if (lexer(&data) == 0 && parser(&data) == 0)

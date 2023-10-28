@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 17:27:05 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:56:33 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_arg(char *str)
 {
-	if (*str == '-' || *str == '+' || ft_isdigit(*str) == 0)
+	if (*str == '-' || *str == '+' || ft_isdigit(*str) == 1)
 		str++;
 	else
 		return (1);
@@ -24,30 +24,34 @@ int	check_arg(char *str)
 			return (1);
 		str++;
 	}
-	ft_split(c);
 	return (0);
 }
-void	exit2(t_data *data, t_cmd_table *cmd_table)
+
+void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 {
-	free_all(data);
-	printf("exit\n");
-	if (cmd_table->num_args > 2)
+	int code;
+	
+	if (!cmd_table)
+		exit(data->exit_code);
+	if (cmd_table && cmd_table->num_args > 2)
 	{
 		printf("minishell: exit: too many arguments\n");
 		data->exit_code = 1;
 		return ;
 	}
-	else if (cmd_table->num_args == 1)
-		exit(data->exit_code);
-	else
+	if (check_arg(cmd_table->args[1]) == 1)
 	{
-		if (check_arg(cmd_table->args[1]) == 0)
-		{
-			printf("minishell: exit: %s: numeric argument required\n",
-				cmd_table->args[1]);
-			exit(255);
-		}
-		else
-			exit(ft_atoi(cmd_table->args[1]));
+		printf("minishell: exit: %s: numeric argument required\n",
+			cmd_table->args[1]);
+		clean_stuff(data);
+		exit(2);
 	}
+	printf("exit\n");
+	if (!cmd_table || cmd_table->num_args == 1)
+		exit(data->exit_code);
+	code = ft_atoi(cmd_table->args[1]);
+	clean_stuff(data);
+	if (code < 0)
+		exit(256 + code % 256);
+	exit(code % 256);
 }

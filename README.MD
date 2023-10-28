@@ -8,6 +8,7 @@ Please help!
 - some tests(VITALIK)
 
 - write descriptions for functions(DONE)
+- replace all printf to putstr_fd 
 
 
 ## CLEANER(??) after every rdln
@@ -62,7 +63,7 @@ Please help!
 
     ◦ env with no options or arguments
 
-    ◦ exit with no options
+    ◦ exit with no options (DONE, need to change output to stderror)
 
 - add history (DONE)
 

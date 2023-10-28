@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 19:36:41 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 18:52:58 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	fill_quotes(t_data *data, char const *s, char temp)
 
 	j = 0;
 	s++;
-	data->tokens[++data->token_count - 1].value = malloc(sizeof(char)
-			* (len_quotes(s, temp) + 1));
+	data->tokens[++data->token_count - 1].value
+		= ft_calloc(len_quotes(s, temp) + 1, sizeof(char));
 	if (!data->tokens[data->token_count - 1].value)
 		exit_shell(data, 1);
 	while (*s && *s != temp)
@@ -71,8 +71,8 @@ int	fill_word(t_data *data, char const *s)
 
 	j = 0;
 	/* printf("token_count: %d\n", data->token_count); */
-	data->tokens[++data->token_count - 1].value = malloc(sizeof(char)
-			* (len_word(s) + 1));
+	data->tokens[++data->token_count - 1].value = ft_calloc(
+			len_word(s) + 1, sizeof(char));
 	if (!data->tokens[data->token_count - 1].value)
 		exit_shell(data, 1);
 	while (*s && !(*s == ' ' || *s == '<' || *s == '>' || *s == '|'

@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 18:19:04 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:32:46 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 // for readline
+# include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -72,39 +73,39 @@ typedef struct s_data
 
 // init
 
-void	data_init(t_data *data, char **envp);
-char	**get_path(t_data *data, int i);
+void				data_init(t_data *data, char **envp);
+char				**get_path(t_data *data, int i);
 
 // errors
 
-void	exit_shell(t_data *data, int exit_code);
-void	syntax_error(int code);
-void	free_double_p(char **p);
-void	exit2(t_data *data, int exit_code);
-void	free_all(t_data *data);
+void				exit_shell(t_data *data, int exit_code);
+void				syntax_error(int code);
+void				free_double_p(char **p);
+void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
+void				free_all(t_data *data);
 
 // lexer
 
-int		lexer(t_data *data);
-int		fill_quotes(t_data *data, char const *s, char temp);
-int		fill_word(t_data *data, char const *s);
-void	realloc_tokens(t_data *data, int token_max);
-void	free_tokens(t_token *tokens, int token_max, t_data *data);
+int					lexer(t_data *data);
+int					fill_quotes(t_data *data, char const *s, char temp);
+int					fill_word(t_data *data, char const *s);
+void				realloc_tokens(t_data *data, int token_max);
+void				free_tokens(t_token *tokens, int token_max, t_data *data);
 
 // parser
 
-int		parser(t_data *data);
-int		is_arg(t_token_type type);
-int		is_not_redir(t_token_type type);
-int		fill_cmd_args(t_data *data, int j, int i);
-void	fill_redirs(t_data *data, int j, int i);
+int					parser(t_data *data);
+int					is_arg(t_token_type type);
+int					is_not_redir(t_token_type type);
+int					fill_cmd_args(t_data *data, int j, int i);
+void				fill_redirs(t_data *data, int j, int i);
 
 // executor
 
-void	executor(t_data *data);
+void				executor(t_data *data);
 
 // cleaner
 
-void	clean_stuff(t_data *data);
+void				clean_stuff(t_data *data);
 
 #endif

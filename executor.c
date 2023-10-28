@@ -6,11 +6,34 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 17:04:23 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 21:46:30 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
+
+int	check_with_slash(t_cmd_table *cmd_table)
+{
+	DIR	*dir;
+
+	if (access(cmd_table->cmd, F_OK) == 0)
+	{
+		dir = opendir(cmd_table->cmd);
+		if (dir)
+		{
+			printf("minishell: %s: Is a directory.\n", cmd_table->cmd);
+			closedir(dir);
+		}
+		else if (access(cmd_table->cmd, X_OK) == 0)
+			return (0);
+		else
+			printf("minishell: %s: Permission denied\n", cmd_table->cmd);
+	}
+	else
+		printf("minishell: %s: No such file or directory\n", cmd_table->cmd);
+	return (1);
+}
 
 /* tries to find the command to execute,
 	better explanation of bash logic is in README
@@ -25,9 +48,8 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	i = 0;
 	if (!cmd_table->cmd || !*cmd_table->cmd)
 		return (1);
-	if (ft_strchr(cmd_table->cmd, '/') != 0 && access(cmd_table->cmd,
-			F_OK) == 0)
-		return (0);
+	if (ft_strchr(cmd_table->cmd, '/') != 0)
+		return (check_with_slash(cmd_table));
 	while (data->path[i])
 	{
 		temp = ft_strdup(data->path[i]);
@@ -55,17 +77,15 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table)
 {
 	pid_t	process1;
 
-	if (find_executable(data, &data->cmdt[0]) == 1)
-		return ;
 	process1 = fork();
 	if (process1 < 0)
 		exit_shell(data, 1);
 	if (!process1)
 	{
-		if (execve(data->cmdt[0].cmd, data->cmdt[0].args, data->envp) == -1)
+		if (execve(cmd_table->cmd, cmd_table->args, data->envp) == -1)
 		{
 			ft_putstr_fd("minishell : ", 2);
-			ft_putstr_fd(data->cmdt[0].cmd, 2);
+			ft_putstr_fd(cmd_table->cmd, 2);
 			perror(" ");
 			clean_stuff(data);
 			exit(1);
@@ -88,8 +108,8 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 	if (ft_strcmp(cmd_table->cmd, "env") == 0)
 		return (builtin_env(data, cmd_table)); */
 	if (ft_strcmp(cmd_table->cmd, "exit") == 0)
-		return (exit2(data, cmd_table));
-	return (1);
+		return (builtin_exit(data, cmd_table), 1);
+	return (0);
 }
 
 void	executor(t_data *data)
@@ -99,7 +119,8 @@ void	executor(t_data *data)
 	i = -1;
 	while (++i < data->cmdt_count)
 	{
-		if (execute_builtin(data, &data->cmdt[i]) == 0)
+		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,
+				&data->cmdt[i]) == 1)
 			continue ;
 		execute_command(data, &data->cmdt[i]);
 	}
