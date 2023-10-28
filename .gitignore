@@ -3,6 +3,6 @@ minishell_tester-main/*
 .vscode/*
 *.o
 libft/libft.a
-./minishell
+minishell
 .vscode
 ```
