@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:18:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/22 17:43:17 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:29:06 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ void	exit_shell(t_data *data, int exit_code)
 {
 	if (exit_code == 1)
 		perror("Error");
-	free_all(data);
+	clean_stuff(data);
 	exit(exit_code);
 }

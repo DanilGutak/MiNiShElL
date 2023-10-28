@@ -1,0 +1,4 @@
+-Wall
+-Wextra
+-Werror
+-I libft

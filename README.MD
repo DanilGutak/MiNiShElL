@@ -74,7 +74,6 @@ Please help!
 - searches from left to right in path variables
 - if finds check whether executable if not go further until the end. 
 - BUT if noone is executable return 1st is run and permision denied is returned
-https://www.gnu.org/software/bash/manual/bash.html#Command-Search-and-Execution
 
 The shell reads its input from a file, from a string or from the user's terminal.
 
@@ -89,4 +88,11 @@ Redirection is performed if necessary, redirection operators and their operands 
 Commands are executed.
 
 Optionally the shell waits for the command to complete and collects its exit status.
+## Useful links
+
+https://www.maizure.org/projects/decoded-gnu-coreutils/
+
 https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_04.html
+
+https://www.gnu.org/software/bash/manual/bash.html#Command-Search-and-Execution
+
