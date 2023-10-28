@@ -1,0 +1,8 @@
+minishell_tester-main/*
+.nfs*
+.vscode/*
+*.o
+libft/libft.a
+./minishell
+.vscode
+```
