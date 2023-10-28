@@ -3,50 +3,54 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
+#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/25 19:09:46 by dgutak           ###   ########.fr        #
+#    Updated: 2023/10/28 17:00:44 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS = -L./libft -lft -lreadline
+CC		= cc
+CFLAGS	= -Wall -Wextra -Werror -g
+LDFLAGS	= -L ./libft -lft -lreadline
 
-NAME = minishell
-LIBFT	=	./libft/libft.a
-LEX = lexer.c fill_tokens.c
-PARS = parser.c parser_utils.c redirs_and_args.c
-EXEC = executor.c 
+NAME	= minishell
 
-SRCS = main.c init.c exit.c exit_shell.c $(LEX) $(PARS) $(EXEC) error.c 
-OBJS = $(SRCS:.c=.o)
+LIBDIR	= ./libft
+LIBFT	= ${LIBDIR}/libft.a
 
+LEX		= lexer.c fill_tokens.c
+PARS	= parser.c parser_utils.c redirs_and_args.c
+EXEC	= executor.c
 
-all: $(NAME)
+SRCS	= main.c init.c exit.c exit_shell.c $(LEX) $(PARS) $(EXEC) error.c
+OBJS	= ${SRCS:.c=.o}
 
-$(NAME): $(OBJS)
-	make -C ./libft/
-	$(CC) $(CFLAGS) $(LIBFT) -o $(NAME) $(OBJS) $(LDFLAGS)
+all		: $(NAME)
 
-.c.o:
-	cc $(CFLAGS) -c $< -o $(<:.c=.o)  -I ./include -I ./libft
+$(NAME)	: ${LIBFT} ${OBJS}
+	$(CC) $(CFLAGS) -o $@ ${OBJS} $(LDFLAGS)
 
-clean:
+%.o		: %.c
+	cc $(CFLAGS) -c $< -o $@ -I ./libft
+
+clean	:
 	rm -f $(OBJS)
-	make clean -C ./libft/
+	make --no-print-directory clean -C ./libft/
 
-fclean: clean
+fclean	: clean
 	rm -f $(NAME)
-	make fclean -C ./libft/
+	make --no-print-directory fclean -C ./libft/
 
-re: fclean all
+re		: fclean all
+
+${LIBFT}:
+	make --no-print-directory -C $(LIBDIR) all
 
 generate_test:
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=$(NAME).log ./$(NAME)
 
-test: all
+test	: all
 	clear; valgrind --leak-check=full --track-origins=yes --track-fds=yes --show-reachable=yes --show-leak-kinds=all --error-limit=no --suppressions=./$(NAME).supp ./$(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test generate_test
