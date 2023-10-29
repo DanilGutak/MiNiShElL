@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:14 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 22:06:56 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/29 12:37:01 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,20 @@ int					ft_strcmp(char *s1, char *s2);
 
 // Part 3
 
-t_list				*ft_lstnew(void *content);
+t_list				*ft_lstnew(char *key, char *value);
 t_list				*ft_lstlast(t_list *lst);
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
-						void (*del)(void *));
 void				ft_lstadd_front(t_list **lst, t_list *new);
 void				ft_lstadd_back(t_list **lst, t_list *new);
-void				ft_lstdelone(t_list *lst, void (*del)(void *));
-void				ft_lstclear(t_list **lst, void (*del)(void *));
-void				ft_lstiter(t_list *lst, void (*f)(void *));
+void				ft_lstdelone(t_list *lst, void (*del)(char *, char *));
+void				ft_lstclear(t_list **lst, void (*del)(char *, char *));
+void				ft_lstiter(t_list *lst, void (*f)(char *, char *));
 int					ft_lstsize(t_list *lst);
 
 // printf part
 
 int			ft_printf(const char *s, ...);
 int			ft_putnbru_fd(unsigned int n, int fd);
-int			ft_printhex(unsigned long n, char format);
+int			ft_printhex_fd(unsigned long n, char format, int fd);
 char		*ft_strstr(char *str, char *to_find);
 
 // Vitalik starter pack
