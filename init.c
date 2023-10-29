@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 20:19:50 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/29 16:07:58 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 void	free_tokens(t_token *tokens, int token_max, t_data *data)
 {
 	while (++token_max < data->token_count)
-		if (tokens[token_max].value)
-			free(tokens[token_max].value);
-	free(tokens);
+		ft_free(tokens[token_max].value);
+	ft_free(tokens);
 	exit_shell(data, 1);
 }
 /* reallocate memory in case there are nott enough space for tokens(multiplies by 2 everytime) */
@@ -75,18 +75,51 @@ char	**get_path(t_data *data, int i)
 	}
 	return (ret);
 }
+
+static char	**split_dup(char **old)
+{
+	char	**new;
+	char	*temp;
+	int		i;
+
+	i = ft_len_split(old);
+	new = (char **)ft_calloc(sizeof (char *), i + 1);
+	if (new == NULL)
+		return (NULL);
+	i = 0;
+	while (old[i] != NULL)
+	{
+		temp = ft_strdup(old[i]);
+		if (temp == NULL)
+			return (ft_free_split(new), NULL);
+		new[i] = temp;
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
 /* set variables to default values, copy envp, gets path variable */
 void	data_init(t_data *data, char **envp)
 {
-	data->envp = envp;
+	char	**new_env;
+
+	data->envp = NULL;
 	data->path = NULL;
 	data->input = NULL;
-	data->token_max = 1;
+	data->tokens = NULL;
 	data->token_count = 0;
+	data->token_max = 1;
 	data->exit_code = 0;
 	data->cmdt = NULL;
 	data->cmdt_count = 0;
+	data->pip[0] = 0;
+	data->pip[1] = 0;
+	data->exit_code = 0;
+	new_env = split_dup(envp);
+	if (new_env == NULL)
+		exit_shell(data, 1);
+	data->envp = new_env;
+	if (increment_shlvl_variable(data) == FAILURE)
+		exit_shell(data, 1); // should be malloc fail, idk the number for sure
 	data->path = get_path(data, -1);
-	
 }
-	

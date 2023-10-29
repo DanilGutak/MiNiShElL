@@ -1,4 +1,4 @@
 -Wall
 -Wextra
 -Werror
--I libft
+-I .

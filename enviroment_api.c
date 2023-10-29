@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 20:23:45 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/28 21:44:47 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/29 16:11:32 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 /* should be useful */
 int	starts_with(char *string, char *begin)
 {
-	while (*string)
-	{
-		if (!*begin || *string != *begin)
-			return (0);
-		begin++;
-		string++;
-	}
-	return (1);
+	int	i;
+
+	i = 0;
+	if (!string)
+		return (0);
+	while (begin[i] && string[i] && begin[i] == string[i])
+		i++;
+	return (begin[i] == '\0');
 }
 
 /*
-envp stands for variables, name in format 'VAR='
+envp stands for variables, name in format 'NAME'm without '=' at the end.
 is the name of the variable you want to find.
-ONLY FOR READING
+ONLY FOR READING.
 IMO useless
 */
 char	*get_variable(char **envp, char *name)
@@ -38,7 +38,7 @@ char	*get_variable(char **envp, char *name)
 	i = 0;
 	while (envp[i])
 	{
-		if (starts_with(envp[i], name))
+		if (starts_with(envp[i], name) && envp[i][ft_strlen(name)] == '=')
 			return (envp[i]);
 		i++;
 	}
@@ -46,8 +46,8 @@ char	*get_variable(char **envp, char *name)
 }
 
 /*
-envp stands for variables, name in format 'VAR='
-is the name of the variable you want to find
+envp stands for variables, name in format 'NAME', without '=' at the end.
+is the name of the variable you want to find.
 for any purpose.
 -1 in case of failure, or positive number in case of success
 */
@@ -58,7 +58,7 @@ int	get_variable_numb(char **envp, char *name)
 	i = 0;
 	while (envp[i])
 	{
-		if (starts_with(envp[i], name))
+		if (starts_with(envp[i], name) && envp[i][ft_strlen(name)] == '=')
 			return (i);
 		i++;
 	}
@@ -66,25 +66,25 @@ int	get_variable_numb(char **envp, char *name)
 }
 
 /* do you really need the description here??? */
-int	increment_shlvl_variable(char **envp)
+int	increment_shlvl_variable(t_data *data)
 {
 	char	*new_prop;
 	char	*new_value;
 	int		current;
 	int		shlvl;
 
-	shlvl = get_variable_numb(envp, "SHLVL=");
+	shlvl = get_variable_numb(data->envp, "SHLVL");
 	if (shlvl == -1)
 		return (FAILURE);
-	current = ft_atoi(envp[shlvl] + 6);
+	current = ft_atoi(data->envp[shlvl] + 6);
 	if (current == 0)
 		return (FAILURE);
-	new_value = ft_itoa(++current);
+	new_value = ft_itoa(current + 1);
 	if (new_value == NULL)
 		return (FAILURE);
 	new_prop = ft_strcat("SHLVL=", new_value);
 	if (new_prop == NULL)
 		return (ft_free(new_value), FAILURE);
-	envp[shlvl] = new_prop;
+	data->envp[shlvl] = new_prop;
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 21:46:30 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/29 16:16:45 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,13 @@ void	executor(t_data *data)
 	int	i;
 
 	i = -1;
+
+	for (int i = 0; data->envp[i]; i++) {
+		ft_printf_fd(1, "|%s|\n", data->envp[i]);
+	}
+		ft_printf_fd(1, "|%s|\n", data->envp[i]);
+
+
 	while (++i < data->cmdt_count)
 	{
 		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,

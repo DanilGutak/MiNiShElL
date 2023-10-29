@@ -6,13 +6,13 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/28 23:11:44 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/29 16:03:11 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* += operator for the variables. key in format 'VAL=' */
+/* += operator for the variables. key in format 'VAL' */
 int	append_variable(char **envp, char *key, char *value)
 {
 	char	*new;
@@ -30,37 +30,33 @@ int	append_variable(char **envp, char *key, char *value)
 }
 
 /* delete a variable from the envp */
-int	delete_variable(char ***envp, char *key)
+void	delete_variable(t_data *data, char *key)
 {
 	char	**new;
 	char	position;
 	int		size;
 	int		i;
 
-	position = get_variable_numb(*envp, key);
+	position = get_variable_numb(data->envp, key);
 	if (position == -1)
-		return (FAILURE);
-	size = 0;
-	while ((*envp)[size])
-		size++;
+		return ;
+	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size);
-	if (new)
-		return (ft_free_split(*envp), FAILURE); // same here
+	if (!new)
+		exit_shell(data, 1); // same error here related to malloc
 	i = 0;
 	while (i < size)
 	{
-		new[i] = (*envp)[ft_tr(i < position, i, i + 1)];
+		new[i] = data->envp[ft_tr(i < position, i, i + 1)];
 		i++;
 	}
-	new[i] = NULL;
-	ft_free(*envp);
-	*envp = new;
-	return (SUCCESS);
+	ft_free(data->envp);
+	data->envp = new;
 }
 
 int	is_valid_key(char *key)
 {
-	if (key || !(ft_isalpha(*key) || *key == '_'))
+	if (key == NULL || !(ft_isalpha(*key) || *key == '_'))
 		return (0);
 	while (*key)
 	{
@@ -71,8 +67,9 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-/* should add one more variable to the environment */
-int	create_variable(char ***envp, char *key, char *value)
+/* should add one more variable to the environment.
+ kinda confused about the time when you print errors */
+void	create_variable(t_data *data, char *key, char *value)
 {
 	char	**new;
 	char	*new_one;
@@ -81,22 +78,19 @@ int	create_variable(char ***envp, char *key, char *value)
 
 	new_one = ft_strcat(key, value);
 	if (new_one == NULL)
-		return (FAILURE); // should exit intead of return NULL
-	size = 0;
-	while ((*envp)[size])
-		size++;
+		exit_shell(data, 1); // probably need to put  error message later
+	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size + 2);
-	if (new)
-		return (ft_free_split(*envp), FAILURE); // same here
+	if (new == NULL)
+		exit_shell(data, 1); // same here, sm text for error
 	i = 0;
 	while (i < size)
 	{
-		new[i] = (*envp)[i];
+		new[i] = data->envp[i];
 		i++;
 	}
 	new[i++] = new_one;
 	new[i] = NULL;
-	ft_free(*envp);
-	*envp = new;
-	return (SUCCESS);
+	ft_free(data->envp); // free only **, the strings within are still needed
+	data->envp = new;
 }

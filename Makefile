@@ -6,7 +6,7 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/28 17:00:44 by vfrants          ###   ########.fr        #
+#    Updated: 2023/10/29 15:00:06 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ LIBFT	= ${LIBDIR}/libft.a
 LEX		= lexer.c fill_tokens.c
 PARS	= parser.c parser_utils.c redirs_and_args.c
 EXEC	= executor.c
+BUILDS	= enviroment_api.c enviroment_api_2.c
 
-SRCS	= main.c init.c exit.c exit_shell.c $(LEX) $(PARS) $(EXEC) error.c
+SRCS	= main.c init.c exit.c exit_shell.c $(LEX) $(PARS) $(EXEC) $(BUILDS) error.c
 OBJS	= ${SRCS:.c=.o}
 
 all		: $(NAME)
@@ -32,20 +33,20 @@ $(NAME)	: ${LIBFT} ${OBJS}
 	$(CC) $(CFLAGS) -o $@ ${OBJS} $(LDFLAGS)
 
 %.o		: %.c
-	cc $(CFLAGS) -c $< -o $@ -I ./libft
+	cc $(CFLAGS) -c $< -o $@ -I ${LIBDIR}
 
 clean	:
 	rm -f $(OBJS)
-	make --no-print-directory clean -C ./libft/
+	make --no-print-directory -C ${LIBDIR} clean
 
 fclean	: clean
 	rm -f $(NAME)
-	make --no-print-directory fclean -C ./libft/
+	make --no-print-directory -C ${LIBDIR} fclean
 
 re		: fclean all
 
 ${LIBFT}:
-	make --no-print-directory -C $(LIBDIR) all
+	make --no-print-directory -C ${LIBDIR} all
 
 generate_test:
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=$(NAME).log ./$(NAME)

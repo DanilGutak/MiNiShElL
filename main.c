@@ -6,10 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/28 22:33:13 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/29 16:14:51 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 /* clean everything regarding one read of readline(tokens, cmd tables,input, etc..) */
@@ -38,6 +39,7 @@ void	clean_stuff(t_data *data)
 		}
 		ft_free(data->cmdt);
 	}
+	ft_free_split(data->envp);
 	ft_free(data->input);
 }
 

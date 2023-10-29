@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 22:34:46 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/29 13:34:52 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ void				clean_stuff(t_data *data);
 char	*get_variable(char **envp, char *name);
 int		get_variable_numb(char **envp, char *name);
 int		starts_with(char *string, char *begin);
-int		increment_shlvl_variable(char **envp);
+int		increment_shlvl_variable(t_data *data);
 
 #endif
