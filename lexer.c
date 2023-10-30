@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/27 19:29:45 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:21:52 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ int	lexer(t_data *data)
 	i = -1;
 	data->tokens = ft_calloc(data->token_max, sizeof(t_token));
 	if (!data->tokens)
-		exit_shell(data, 1);
+		return (print_error(data, "ft_calloc", 1));
 	while (data->input[++i])
 	{
 		if (data->token_count == data->token_max)
-			realloc_tokens(data, data->token_max);
+			if (realloc_tokens(data, data->token_max) == 1)
+				return (1);
 		if (data->input[i] == '|')
 			data->tokens[++data->token_count - 1].type = PIPE;
 		else if (data->input[i] == '>' || data->input[i] == '<')
@@ -99,21 +100,21 @@ int	lexer(t_data *data)
 		else if (data->input[i] == '\'' || data->input[i] == '\"')
 		{
 			j = fill_quotes(data, &data->input[i], data->input[i]) - 1;
-			if (j < 0)
+			if (j == -2)
+				return (1);
+			if (j == -1)
 				return (data->exit_code = 2, syntax_error(data->input[i]), 1);
 			i += j;
 		}
 		else if (data->input[i] != ' ')
-			i += fill_word(data, &data->input[i]) - 1;
+		{
+			j = fill_word(data, &data->input[i]) - 1;
+			if (j == -1)
+				return (print_error(data, "ft_calloc", 1));
+			i += j;
+		}
 		else
 			continue ;
-		/* printf("token: {%s}\n", data->tokens[data->token_count - 1].value);
-		printf("type: %s\n", g_token_type_names[data->tokens[data->token_count
-			- 1].type]);
-		printf("no_space: %d\n", data->tokens[data->token_count - 1].no_space);
-		printf("token_count: %d\n", data->token_count);
-		printf("token_max: %d\n", data->token_max);
-		printf("--------------------\n"); */
 	}
 	return (check_syntax(data));
 }

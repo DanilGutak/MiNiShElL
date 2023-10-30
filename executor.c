@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 15:53:41 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:17:29 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	executor(t_data *data)
 {
 	int		i;
 	int		status;
-	int 	fd[2];
+	int		fd[2];
 
 	i = -1;
 	while (++i < data->cmdt_count)

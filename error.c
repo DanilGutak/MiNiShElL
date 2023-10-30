@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 20:51:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 19:37:15 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:25:45 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,15 @@ void	syntax_error(int type)
 		ft_putstr_fd("minishell: syntax error near \
 		unexpected token `newline'\n",
 			2);
+}
+
+int	print_error(t_data *data, char *str, int exit_code)
+{
+	if (exit_code == 1)
+	{
+		ft_printf_fd(2, "minishell: %s:", str);
+		perror(" ");
+	}
+	data->exit_code = exit_code;
+	return (1);
 }

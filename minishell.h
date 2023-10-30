@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 12:11:58 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 16:24:44 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,15 @@ void				syntax_error(int code);
 void				free_double_p(char **p);
 void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
 void				free_all(t_data *data);
+int					print_error(t_data *data, char *str, int exit_code);
 
 // lexer
 
 int					lexer(t_data *data);
 int					fill_quotes(t_data *data, char const *s, char temp);
 int					fill_word(t_data *data, char const *s);
-void				realloc_tokens(t_data *data, int token_max);
-void				free_tokens(t_token *tokens, int token_max, t_data *data);
+int				realloc_tokens(t_data *data, int token_max);
+int				free_tokens(t_token *tokens, int token_max, t_data *data);
 
 // parser
 

@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/29 16:07:58 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:24:30 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minishell.h"
 
-void	free_tokens(t_token *tokens, int token_max, t_data *data)
+int	free_tokens(t_token *tokens, int token_max, t_data *data)
 {
 	while (++token_max < data->token_count)
 		ft_free(tokens[token_max].value);
 	ft_free(tokens);
-	exit_shell(data, 1);
+	return (1);
 }
 /* reallocate memory in case there are nott enough space for tokens(multiplies by 2 everytime) */
-void	realloc_tokens(t_data *data, int token_max)
+int	realloc_tokens(t_data *data, int token_max)
 {
 	t_token	*new_tokens;
 
 	new_tokens = ft_calloc(token_max * 2, sizeof(t_token));
 	if (!new_tokens)
-		exit_shell(data, 1);
+		return (print_error(data, "ft_calloc", 1));
 	while (--token_max >= 0)
 	{
 		new_tokens[token_max].type = data->tokens[token_max].type;
@@ -36,7 +36,7 @@ void	realloc_tokens(t_data *data, int token_max)
 			new_tokens[token_max].value
 				= ft_strdup(data->tokens[token_max].value);
 			if (!new_tokens[token_max].value)
-				free_tokens(new_tokens, token_max, data);
+				return (free_tokens(new_tokens, token_max, data));
 		}
 		new_tokens[token_max].no_space = data->tokens[token_max].no_space;
 		free(data->tokens[token_max].value);
@@ -44,6 +44,7 @@ void	realloc_tokens(t_data *data, int token_max)
 	free(data->tokens);
 	data->tokens = new_tokens;
 	data->token_max *= 2;
+	return (0);
 }
 
 /* searches for "PATH=" in env, then splits it by : and store it as alloced 2d array */
