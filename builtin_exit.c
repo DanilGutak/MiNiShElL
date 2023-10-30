@@ -47,7 +47,7 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 		clean_stuff(data);
 		exit(2);
 	}
-	printf("exit\n");
+	ft_printf_fd("exit\n");
 	if (!cmd_table || cmd_table->num_args == 1)
 		exit(data->exit_code);
 	code = ft_atoi(cmd_table->args[1]);

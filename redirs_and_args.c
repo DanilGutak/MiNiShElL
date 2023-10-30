@@ -69,11 +69,11 @@ int	fill_cmd_args(t_data *data, int j, int i)
 			{
 				data->cmdt[j].cmd = ft_strdup(data->tokens[i].value);
 				if (!data->cmdt[j].cmd)
-					exit_shell(data, 1);
+					return(print_error(data, "ft_strdup", 1) - 2);
 			}
 			data->cmdt[j].args[k++] = ft_strdup(data->tokens[i].value);
 			if (!data->cmdt[j].args[k - 1])
-				exit_shell(data, 1);
+				return(print_error(data, "ft_strdup", 1) - 2);
 		}
 	}
 	if (data->cmdt[j].cmd != NULL)

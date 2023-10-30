@@ -8,9 +8,9 @@ Please help!
 - some tests(VITALIK)
 
 - write descriptions for functions(DONE)
-- replace all printf to putstr_fd
+- replace all printf to printf_fd (DONE)
 - add cleaning envp in case bash exits(NOT IN CLEAN_STUFF)
-- turn exits into returns(ass job)
+- turn exits into returns(WIP, done for lexer and parser)
 
 
 ## CLEANER(??) after every rdln
@@ -42,8 +42,8 @@ Please help!
 - set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
 - execute different part of pipes one after another(donish)
 - find executable for builtins(DONE)
-- configure pipe for it(WIP)
-- check exit codes of execve and set it accordingly
+- configure pipe for it(DONE)
+- check exit codes of execve and set it accordingly(WIP)
 
 
 
@@ -51,7 +51,7 @@ Please help!
 
 - signals
 
-- builts
+- builtins
 
     ◦ echo with option -n
 
@@ -65,7 +65,7 @@ Please help!
 
     ◦ env with no options or arguments
 
-    ◦ exit with no options (DONE, need to change output to stderror)
+    ◦ exit with no options (DONE)
 
 - add history (DONE)
 

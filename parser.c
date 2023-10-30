@@ -124,8 +124,8 @@ int	parser(t_data *data)
 		if (fill_redirs(data, j, i) == 1)
 			return (1);
 		i = fill_cmd_args(data, j, i - 1) + 1;
-		data->cmdt[j].fd_in = 0;
-		data->cmdt[j].fd_out = 1;
+		if (i == 0)
+			return (1);
 		j++;
 	}
 	return (0);
