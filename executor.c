@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 12:12:21 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 15:53:41 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 
 void	executor(t_data *data)
 {
-	int	i;
+	int		i;
+	int		status;
+	int 	fd[2];
 
 	i = -1;
 	while (++i < data->cmdt_count)
@@ -63,7 +65,10 @@ void	executor(t_data *data)
 		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,
 				&data->cmdt[i]) == 1)
 			continue ;
+		if (pipe(fd) == -1)
+			exit_shell(data, 1);
 		execute_command(data, &data->cmdt[i]);
 	}
-	wait(NULL);
+	while (wait(&status) > 0)
+		;
 }
