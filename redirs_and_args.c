@@ -26,7 +26,7 @@ int	count_redirs(t_data *data, int i)
 	return (count);
 }
 
-void	fill_redirs(t_data *data, int j, int i)
+int	fill_redirs(t_data *data, int j, int i)
 {
 	int	count;
 
@@ -34,24 +34,25 @@ void	fill_redirs(t_data *data, int j, int i)
 	data->cmdt[j].redirs = NULL;
 	data->cmdt[j].num_redirs = count;
 	if (count <= 0)
-		return ;
+		return 0;
 	data->cmdt[j].redirs = ft_calloc(count, sizeof(t_token));
 	if (!data->cmdt[j].redirs)
-		exit_shell(data, 1);
+		return (print_error(data, "ft_calloc", 1));
 	count = 0;
 	while (i < data->token_count && data->tokens[i].type != PIPE)
 	{
-		if (is_not_redir(data->tokens[i].type) == 0)
+		if (is_not_redir(data->tokens[i].type) == 0 )
 		{
 			data->cmdt[j].redirs[count].type = data->tokens[i].type;
 			data->cmdt[j].redirs[count].value = ft_strdup(data->tokens[i++
 					+ 1].value);
 			if (!data->cmdt[j].redirs[count].value)
-				exit_shell(data, 1);
+				return (print_error(data, "ft_strdup", 1));
 			count++;
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	fill_cmd_args(t_data *data, int j, int i)

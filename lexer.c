@@ -39,16 +39,16 @@ int	check_syntax_dir(t_data *data, int i)
 {
 	if (data->tokens[i].type == REDIR_APPEND
 		&& (is_not_redir(data->tokens[i + 1].type) == 0))
-		return (data->exit_code = 2, syntax_error(data->tokens[i + 1].type), 1);
+		return (syntax_error(data->tokens[i + 1].type, data), 1);
 	else if (data->tokens[i].type == REDIR_HEREDOC
 		&& (is_not_redir(data->tokens[i + 1].type) == 0))
-		return (data->exit_code = 2, syntax_error(data->tokens[i + 1].type), 1);
+		return (syntax_error(data->tokens[i + 1].type, data), 1);
 	else if (data->tokens[i].type == REDIR_IN
 		&& (is_not_redir(data->tokens[i + 1].type) == 0))
-		return (data->exit_code = 2, syntax_error(data->tokens[i + 1].type), 1);
+		return (syntax_error(data->tokens[i + 1].type, data), 1);
 	else if (data->tokens[i].type == REDIR_OUT
 		&& (is_not_redir(data->tokens[i + 1].type) == 0))
-		return (data->exit_code = 2, syntax_error(data->tokens[i + 1].type), 1);
+		return (syntax_error(data->tokens[i + 1].type, data), 1);
 	return (0);
 }
 
@@ -60,15 +60,18 @@ int check_syntax(t_data *data)
 	while (++i < data->token_count)
 	{
 		if (data->tokens[i].type == PIPE && i == data->token_count - 1)
-			return (data->exit_code = 2, syntax_error(data->tokens[i].type), 1);
+			return (syntax_error(data->tokens[i].type, data), 1);
 		else if (data->tokens[i].type == PIPE && i == 0)
-			return (data->exit_code = 2, syntax_error(data->tokens[i].type), 1);
+			return (syntax_error(data->tokens[i].type, data), 1);
 		else if (data->tokens[i].type == PIPE
 			&& data->tokens[i + 1].type == PIPE)
-			return (data->exit_code = 2, syntax_error(data->tokens[i].type), 1);
+			return (syntax_error(data->tokens[i].type, data), 1);
+		else if (data->tokens[i].type == PIPE
+			&& (is_not_redir(data->tokens[i - 1].type) == 0))
+			return (syntax_error(data->tokens[i].type, data), 1);
 		else if (is_not_redir(data->tokens[i].type) == 0
 			&& i == data->token_count - 1)
-			return (data->exit_code = 2, syntax_error(0), 1);
+			return (syntax_error(0, data), 1);
 		else if (check_syntax_dir(data, i) == 1)
 			return (1);
 	}
@@ -103,7 +106,7 @@ int	lexer(t_data *data)
 			if (j == -2)
 				return (1);
 			if (j == -1)
-				return (data->exit_code = 2, syntax_error(data->input[i]), 1);
+				return (syntax_error(data->input[i], data), 1);
 			i += j;
 		}
 		else if (data->input[i] != ' ')

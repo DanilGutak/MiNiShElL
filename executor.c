@@ -14,24 +14,42 @@
 #include "minishell.h"
 #include <unistd.h>
 
-void	execute_command(t_data *data, t_cmd_table *cmd_table)
+void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
 {
 	pid_t	process1;
+	int		pipe_fd[2];
 
+	if (pipe(pipe_fd) == -1)
+        exit_shell(data, 1);
 	process1 = fork();
 	if (process1 < 0)
 		exit_shell(data, 1);
 	if (!process1)
 	{
-		if (execve(cmd_table->cmd, cmd_table->args, data->envp) == -1)
+		if (i != 0) 
 		{
-			ft_putstr_fd("minishell : ", 2);
-			ft_putstr_fd(cmd_table->cmd, 2);
-			perror(" ");
-			clean_stuff(data);
-			exit(1);
+			dup2(data->prev_fd, STDIN_FILENO);
+			close(data->prev_fd);  // Close the read end of the pipe
 		}
+		if (i != data->cmdt_count - 1) 
+		{
+			close(pipe_fd[0]);
+			dup2(pipe_fd[1], STDOUT_FILENO);
+			close(pipe_fd[1]);  // Close the write end of the pipe
+		}
+		execve(cmd_table->cmd, cmd_table->args, data->envp);
+		ft_putstr_fd("minishell : ", 2);
+		ft_putstr_fd(cmd_table->cmd, 2);
+		perror(" ");
+		clean_stuff(data);
+		exit(1);
 	}
+	close(pipe_fd[1]);
+	if (data->prev_fd != -1)
+		close(data->prev_fd);
+	data->prev_fd = pipe_fd[0];
+	
+	
 }
 
 int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
@@ -56,19 +74,21 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 void	executor(t_data *data)
 {
 	int		i;
-	int		status;
-	int		fd[2];
+	int		pipe_fd[2];
+
 
 	i = -1;
+	if (pipe(pipe_fd) == -1)
+			exit_shell(data, 1);
+	data->prev_fd = -1;
 	while (++i < data->cmdt_count)
 	{
 		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,
 				&data->cmdt[i]) == 1)
 			continue ;
-		if (pipe(fd) == -1)
-			exit_shell(data, 1);
-		execute_command(data, &data->cmdt[i]);
+		execute_command(data, &data->cmdt[i], i);
 	}
-	while (wait(&status) > 0)
-		;
+	i = -1;
+	while (++i < data->cmdt_count)
+        wait(NULL);
 }

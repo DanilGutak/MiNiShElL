@@ -73,6 +73,7 @@ typedef struct s_data
 	int				cmdt_count;
 	int				pip[2];
 	int				exit_code;
+	int 			prev_fd;
 }					t_data;
 
 // init
@@ -83,7 +84,7 @@ char				**get_path(t_data *data, int i);
 // errors
 
 void				exit_shell(t_data *data, int exit_code);
-void				syntax_error(int code);
+void				syntax_error(int code, t_data *data);
 void				free_double_p(char **p);
 void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
 void				free_all(t_data *data);
@@ -103,7 +104,7 @@ int					parser(t_data *data);
 int					is_arg(t_token_type type);
 int					is_not_redir(t_token_type type);
 int					fill_cmd_args(t_data *data, int j, int i);
-void				fill_redirs(t_data *data, int j, int i);
+int				fill_redirs(t_data *data, int j, int i);
 
 // executor
 

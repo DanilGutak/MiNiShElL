@@ -25,27 +25,28 @@ int	count_pipes(t_data *data)
 	return (j);
 }
 /* the copy tokens contents into new tokens, if no_space = 1 concats nex elements as well */
-void	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
+int	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 {
 	new_tokens[*j].type = data->tokens[*i].type;
 	if (is_arg(data->tokens[*i].type) == 1)
 	{
 		new_tokens[*j].value = ft_strdup(data->tokens[*i].value);
 		if (!new_tokens[*j].value)
-			exit_shell(data, 1);
+			return(print_error(data, "ft_strdup", 1));
 		while (data->tokens[*i].no_space == 1)
 		{
 			*i = *i + 1;
 			new_tokens[*j].value = ft_strjoin(new_tokens[*j].value,
 					data->tokens[*i].value);
 			if (!new_tokens[*j].value)
-				exit_shell(data, 1);
+				return(print_error(data, "ft_strjoin", 1));
 		}
 	}
 	*j = *j + 1;
+	return (0);
 }
 
-void	merge_words(t_data *data)
+int	merge_words(t_data *data)
 {
 	t_token	*new_tokens;
 	int		i;
@@ -57,10 +58,11 @@ void	merge_words(t_data *data)
 	k = -1;
 	new_tokens = ft_calloc(data->token_count, sizeof(t_token));
 	if (!new_tokens)
-		exit_shell(data, 1);
+		return(print_error(data, "ft_calloc ", 1));
 	while (i < data->token_count)
 	{
-		copy_token(data, new_tokens, &i, &j);
+		if (copy_token(data, new_tokens, &i, &j) == 1)
+			return(1);
 		i++;
 	}
 	while (++k < data->token_count)
@@ -69,6 +71,7 @@ void	merge_words(t_data *data)
 	free(data->tokens);
 	data->tokens = new_tokens;
 	data->token_count = j;
+	return (0);
 }
 
 int	count_args(t_data *data, int i)
@@ -98,11 +101,12 @@ int	parser(t_data *data)
 
 	j = 0;
 	i = 0;
-	merge_words(data);
+	if (merge_words(data) == 1)
+		return (1);
 	data->cmdt_count = count_pipes(data) + 1;
 	data->cmdt = ft_calloc(data->cmdt_count, sizeof(t_cmd_table));
 	if (!data->cmdt)
-		exit_shell(data, 1);
+		return(print_error(data, "ft_calloc error", 1));
 	while (j < data->cmdt_count)
 	{
 		data->cmdt[j].num_args = count_args(data, i);
@@ -111,12 +115,14 @@ int	parser(t_data *data)
 			data->cmdt[j].args = ft_calloc((data->cmdt[j].num_args + 1),
 					sizeof(char *));
 			if (!data->cmdt[j].args)
-				exit_shell(data, 1);
+				return(print_error(data, "ft_calloc error", 1));
+
 		}
 		else
 			data->cmdt[j].args = NULL;
 		data->cmdt[j].cmd = NULL;
-		fill_redirs(data, j, i);
+		if (fill_redirs(data, j, i) == 1)
+			return (1);
 		i = fill_cmd_args(data, j, i - 1) + 1;
 		data->cmdt[j].fd_in = 0;
 		data->cmdt[j].fd_out = 1;
