@@ -6,31 +6,14 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/29 16:03:11 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 18:46:49 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* += operator for the variables. key in format 'VAL' */
-int	append_variable(char **envp, char *key, char *value)
-{
-	char	*new;
-	int		position;
-
-	position = get_variable_numb(envp, key);
-	if (position == -1)
-		return (FAILURE);
-	new = ft_strcat(envp[position], value);
-	if (new == NULL)
-		return (FAILURE); // should exit intead of return NULL
-	ft_free(envp[position]);
-	envp[position] = new;
-	return (SUCCESS);
-}
-
 /* delete a variable from the envp */
-void	delete_variable(t_data *data, char *key)
+int	delete_variable(t_data *data, char *key)
 {
 	char	**new;
 	char	position;
@@ -39,11 +22,11 @@ void	delete_variable(t_data *data, char *key)
 
 	position = get_variable_numb(data->envp, key);
 	if (position == -1)
-		return ;
+		return (FAILURE);
 	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size);
 	if (!new)
-		exit_shell(data, 1); // same error here related to malloc
+		return (MALLOC_F); // same error here related to malloc
 	i = 0;
 	while (i < size)
 	{
@@ -52,6 +35,7 @@ void	delete_variable(t_data *data, char *key)
 	}
 	ft_free(data->envp);
 	data->envp = new;
+	return (SUCCESS);
 }
 
 int	is_valid_key(char *key)
@@ -69,28 +53,52 @@ int	is_valid_key(char *key)
 
 /* should add one more variable to the environment.
  kinda confused about the time when you print errors */
-void	create_variable(t_data *data, char *key, char *value)
+int	create_variable(t_data *data, char *key, char *value)
 {
 	char	**new;
+	char	*buffer;
 	char	*new_one;
 	int		size;
 	int		i;
 
-	new_one = ft_strcat(key, value);
+	buffer = ft_strcat(key, "=");
+	if (buffer == NULL)
+		return (MALLOC_F);
+	new_one = ft_strcat(buffer, value);
+	ft_free(buffer);
 	if (new_one == NULL)
-		exit_shell(data, 1); // probably need to put  error message later
+		return (MALLOC_F);
 	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size + 2);
 	if (new == NULL)
-		exit_shell(data, 1); // same here, sm text for error
-	i = 0;
-	while (i < size)
-	{
+		return (MALLOC_F);
+	i = -1;
+	while (++i < size)
 		new[i] = data->envp[i];
-		i++;
-	}
 	new[i++] = new_one;
 	new[i] = NULL;
-	ft_free(data->envp); // free only **, the strings within are still needed
+	ft_free(data->envp);
 	data->envp = new;
+	return (SUCCESS);
+}
+
+/* += operator for the variables. key in format 'VAL'. IDK IF WE NEED IT*/
+int	append_variable(t_data *data, char *key, char *value)
+{
+	char	*new;
+	char	*temp;
+	int		position;
+
+	position = get_variable_numb(data->envp, key);
+	if (position == -1)
+		return (create_variable(data, key, value));
+	temp = ft_strcat(data->envp[position], "=");
+	if (temp == NULL)
+		return (MALLOC_F);
+	new = ft_strcat(temp, value);
+	if (new == NULL)
+		return (MALLOC_F);
+	ft_free(data->envp[position]);
+	data->envp[position] = new;
+	return (SUCCESS);
 }
