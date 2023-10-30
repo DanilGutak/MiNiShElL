@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/30 11:52:41 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 20:28:28 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 			builtin_exit(&data, NULL);
 		if (data.input[0] != '\0')
 			add_history(data.input);
-		if (lexer(&data) == 0 && parser(&data) == 0)
+		if (lexer(&data) == 0 && parser(&data) == 0 && expander(&data) == 0)
 			executor(&data);
 		clean_stuff(&data);
 	}
