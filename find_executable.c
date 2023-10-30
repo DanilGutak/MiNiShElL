@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 12:33:11 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 13:11:09 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,13 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 
 	while (data->path[++i])
 	{
-		if (cmd_table->cmd[0] == '\0')
-			break ;
 		temp = ft_strdup(data->path[i]);
 		if (!temp)
 			exit_shell(data, 1);
 		ret = ft_strjoin(temp, cmd_table->cmd);
-		ft_free(temp);
 		if (!ret)
 			exit_shell(data, 1);
-		if (access(ret, X_OK) == 0)
+		if (access(ret, F_OK) == 0)
 		{
 			temp = cmd_table->cmd;
 			cmd_table->cmd = ret;
@@ -106,6 +103,11 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 	i = -1;
 	if (!cmd_table->cmd)
 		return (1);
+	if (cmd_table->cmd[0] == '\0')
+	{
+		ft_printf_fd(2, "minishell: %s: command not found\n", cmd_table->cmd);
+		return (1);
+	}
 	if (ft_strchr(cmd_table->cmd, '/') != 0)
 		return (check_with_slash(cmd_table));
 	if (search_in_path(data, cmd_table, i) == 0)
