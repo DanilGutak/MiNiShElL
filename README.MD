@@ -9,6 +9,8 @@ Please help!
 
 - write descriptions for functions(DONE)
 - replace all printf to putstr_fd
+- add cleaning envp in case bash exits(NOT IN CLEAN_STUFF)
+- 
 
 
 ## CLEANER(??) after every rdln

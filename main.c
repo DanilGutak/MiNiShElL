@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/29 16:14:51 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 11:52:41 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	clean_stuff(t_data *data)
 	if (data->tokens)
 	{
 		while (data->token_count > 0)
-			ft_free(data->tokens[data->token_count--].value);
+			ft_free(data->tokens[--data->token_count].value);
 		ft_free(data->tokens);
 	}
 	if (data->cmdt)
@@ -39,7 +39,6 @@ void	clean_stuff(t_data *data)
 		}
 		ft_free(data->cmdt);
 	}
-	ft_free_split(data->envp);
 	ft_free(data->input);
 }
 
@@ -54,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	data_init(&data, envp);
 	while (1)
 	{
+		data.path = get_path(&data, -1);
 		data.input = readline("minishell$ ");
 		if (!data.input)
 			builtin_exit(&data, NULL);

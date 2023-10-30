@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/29 15:00:06 by vfrants          ###   ########.fr        #
+#    Updated: 2023/10/30 12:12:41 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ LIBFT	= ${LIBDIR}/libft.a
 
 LEX		= lexer.c fill_tokens.c
 PARS	= parser.c parser_utils.c redirs_and_args.c
-EXEC	= executor.c
-BUILDS	= enviroment_api.c enviroment_api_2.c
+EXEC	= executor.c find_executable.c
+BUILDS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
 
-SRCS	= main.c init.c exit.c exit_shell.c $(LEX) $(PARS) $(EXEC) $(BUILDS) error.c
+SRCS	= main.c init.c exit_shell.c $(LEX) $(PARS) $(EXEC) $(BUILDS) error.c
 OBJS	= ${SRCS:.c=.o}
 
 all		: $(NAME)

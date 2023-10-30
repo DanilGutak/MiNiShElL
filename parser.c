@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/26 19:41:37 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 11:46:10 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	parser(t_data *data)
 	i = 0;
 	merge_words(data);
 	/* for (int k = 0; k < data->token_count; k++)
-		printf("token{%d}: {%s}\n", k, data->tokens[k].value); */
+		printf("token{%d}: {%s}\n", k, data->tokens[k].value);
+	printf("token_count: %d\n", data->token_count); */
 	data->cmdt_count = count_pipes(data) + 1;
 	/* printf("~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("cmdt_count: %d\n", data->cmdt_count);

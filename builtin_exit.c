@@ -6,10 +6,11 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 21:56:33 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/30 11:45:46 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 int	check_arg(char *str)
@@ -29,19 +30,19 @@ int	check_arg(char *str)
 
 void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 {
-	int code;
-	
+	int	code;
+
 	if (!cmd_table)
 		exit(data->exit_code);
 	if (cmd_table && cmd_table->num_args > 2)
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_printf_fd(2, "minishell: exit: too many arguments\n");
 		data->exit_code = 1;
 		return ;
 	}
-	if (check_arg(cmd_table->args[1]) == 1)
+	if (cmd_table->num_args > 1 && check_arg(cmd_table->args[1]) == 1)
 	{
-		printf("minishell: exit: %s: numeric argument required\n",
+		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
 		clean_stuff(data);
 		exit(2);

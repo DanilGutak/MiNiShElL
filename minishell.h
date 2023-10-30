@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/29 13:34:52 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 12:11:58 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void				fill_redirs(t_data *data, int j, int i);
 // executor
 
 void				executor(t_data *data);
+int					find_executable(t_data *data, t_cmd_table *cmd_table);
 
 // cleaner
 
@@ -113,9 +114,9 @@ void				clean_stuff(t_data *data);
 
 // variables api, for buildins and so on
 
-char	*get_variable(char **envp, char *name);
-int		get_variable_numb(char **envp, char *name);
-int		starts_with(char *string, char *begin);
-int		increment_shlvl_variable(t_data *data);
+char				*get_variable(char **envp, char *name);
+int					get_variable_numb(char **envp, char *name);
+int					starts_with(char *string, char *begin);
+int					increment_shlvl_variable(t_data *data);
 
 #endif

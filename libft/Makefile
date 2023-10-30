@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 12:33:40 by vfrants           #+#    #+#              #
-#    Updated: 2023/10/29 15:11:01 by vfrants          ###   ########.fr        #
+#    Updated: 2023/10/30 11:19:08 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
