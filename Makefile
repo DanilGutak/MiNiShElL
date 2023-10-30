@@ -23,7 +23,6 @@ LEX		= lexer.c fill_tokens.c
 PARS	= parser.c parser_utils.c redirs_and_args.c
 EXEC	= executor.c find_executable.c
 BUILDS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
-EXPANDER= expander.c
 
 SRCS	= main.c init.c exit_shell.c \
 		$(LEX) $(PARS) $(EXEC) $(BUILDS) $(EXPANDER) error.c

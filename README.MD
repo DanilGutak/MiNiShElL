@@ -65,7 +65,7 @@ Please help!
 
     ◦ env with no options or arguments
 
-    ◦ exit with no options (DONE)
+    ◦ exit with no options (DONE, change exit for pipes vs no pipes)
 
 - add history (DONE)
 

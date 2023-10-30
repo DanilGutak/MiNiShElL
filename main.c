@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 			builtin_exit(&data, NULL);
 		if (data.input[0] != '\0')
 			add_history(data.input);
-		if (lexer(&data) == 0 && parser(&data) == 0 && expander(&data) == 0)
+		if (lexer(&data) == 0 && parser(&data) == 0 /*&& expander(&data) == 0*/)
 			executor(&data);
 		clean_stuff(&data);
 	}
