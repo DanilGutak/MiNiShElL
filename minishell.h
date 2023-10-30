@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 16:50:04 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:59:27 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int					print_error(t_data *data, char *str, int exit_code);
 int					lexer(t_data *data);
 int					fill_quotes(t_data *data, char const *s, char temp);
 int					fill_word(t_data *data, char const *s);
-int				realloc_tokens(t_data *data, int token_max);
-int				free_tokens(t_token *tokens, int token_max, t_data *data);
+int					realloc_tokens(t_data *data, int token_max);
+int					free_tokens(t_token *tokens, int token_max, t_data *data);
 
 // parser
 
@@ -110,15 +110,24 @@ void				fill_redirs(t_data *data, int j, int i);
 void				executor(t_data *data);
 int					find_executable(t_data *data, t_cmd_table *cmd_table);
 
+// expander
+
+int					expander(t_data *data);
+
 // cleaner
 
 void				clean_stuff(t_data *data);
 
 // variables api, for buildins and so on
 
-char				*get_variable(char **envp, char *name);
-int					get_variable_numb(char **envp, char *name);
-int					starts_with(char *string, char *begin);
 int					increment_shlvl_variable(t_data *data);
+int					get_variable_numb(char **envp, char *name);
+char				*get_variable(char **envp, char *name);
+int					starts_with(char *string, char *begin);
+int					append_variable(t_data *data, char *key, char *value);
+int					create_variable(t_data *data, char *key, char *value);
+int					is_valid_key(char *key);
+int					delete_variable(t_data *data, char *key);
+char				*get_variable_value(t_data *data, char *key);
 
 #endif

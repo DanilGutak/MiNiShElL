@@ -6,11 +6,21 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/30 18:46:49 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:59:14 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_variable_value(t_data *data, char *key)
+{
+	int		i;
+
+	i = get_variable_numb(data->envp, key);
+	if (i == -1)
+		return (NULL);
+	return (data->envp[i] + ft_strlen(key) + 1);
+}
 
 /* delete a variable from the envp */
 int	delete_variable(t_data *data, char *key)
