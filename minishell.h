@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 13:13:39 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 17:13:48 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_cmd_table
 	t_token			*redirs;
 	int				num_redirs;
 	int				num_args;
+	int				is_child_created;
+	pid_t			pid;
 }					t_cmd_table;
 
 typedef struct s_data

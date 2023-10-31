@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 13:15:32 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 17:17:15 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	fill_cmdt(t_data *data, int j, int *i)
 	else
 		data->cmdt[j].args = NULL;
 	data->cmdt[j].cmd = NULL;
+	data->cmdt[j].is_child_created = 0;
+	data->cmdt[j].pid = 0;
 	if (fill_redirs(data, j, *i) == 1)
 		return (1);
 	*i = fill_cmd_args(data, j, *i - 1) + 1;

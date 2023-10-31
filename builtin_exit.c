@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 14:12:25 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 15:04:43 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ long int	atoi_new(char *str)
 
 	x = 0;
 	sign = 1;
+	if (!str)
+		return (0);
 	while (*str == ' ' || *str == '\v' || *str == '\t' || *str == '\n'
 		|| *str == '\f' || *str == '\r')
 		str++;
 	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
+		if (*str++ == '-')
 			sign *= -1;
-		str++;
-	}
 	while (*str)
 	{
 		if (*str >= '0' && *str <= '9')
@@ -60,6 +59,7 @@ int	check_arg(char *str)
 void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 		int count)
 {
+	printf("count: %d\n", count);
 	if (count == 1)
 		ft_printf_fd(2, "exit\n");
 	if (count == 1 && (!cmd_table || cmd_table->num_args == 1))
