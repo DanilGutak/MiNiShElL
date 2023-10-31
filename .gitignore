@@ -1,5 +1,6 @@
 minishell_tester-main/*
 minishell_tester/*
+/workspaces/MiNiShElL/minishell_tester/*
 .nfs*
 .vscode/*
 *.o

@@ -21,6 +21,9 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
 
 	if (pipe(pipe_fd) == -1)
 		exit_shell(data, 1);
+	printf("cmd: %s\n", cmd_table->cmd);
+	printf("pipe[0]: %d\n", pipe_fd[0]);
+	printf("pipe[1]: %d\n", pipe_fd[1]);
 	cmd_table->pid = fork();
 	if (cmd_table->pid < 0)
 		exit_shell(data, 1);
@@ -41,13 +44,18 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
 		print_error(data, cmd_table->cmd, 1);
 		exit(42);
 	}
+	printf("closing pipe[1]: %d\n", pipe_fd[1]);
 	close(pipe_fd[1]);
+	printf("closing prev_fd: %d\n", data->prev_fd);
 	if (data->prev_fd != -1)
 		close(data->prev_fd);
-	data->prev_fd = pipe_fd[0];
+	if (i != data->cmdt_count - 1)
+		data->prev_fd = pipe_fd[0];
+	else
+		close(pipe_fd[0]);
 }
 
-int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
+int	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i)
 {
 	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (builtin_echo(data, cmd_table));
@@ -69,16 +77,13 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 void	executor(t_data *data)
 {
 	int		i;
-	int		pipe_fd[2];
 	int		status;
 
 	i = -1;
-	if (pipe(pipe_fd) == -1)
-		exit_shell(data, 1);
 	data->prev_fd = -1;
 	while (++i < data->cmdt_count)
 	{
-		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,
+		if (execute_builtin(data, &data->cmdt[i], i) == 1 || find_executable(data,
 				&data->cmdt[i]) == 1)
 			continue ;
 		data->cmdt[i].is_child_created = 1;

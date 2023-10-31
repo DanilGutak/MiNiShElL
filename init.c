@@ -122,5 +122,4 @@ void	data_init(t_data *data, char **envp)
 	data->envp = new_env;
 	if (increment_shlvl_variable(data) == FAILURE)
 		exit_shell(data, 1); // should be malloc fail, idk the number for sure
-	data->path = get_path(data, -1);
 }

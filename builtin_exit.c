@@ -71,13 +71,9 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 			cmd_table->args[1]);
 		data->exit_code = 2;
 		if (count == 1)
-			clean_stuff(data);
-		if (count == 1)
 			exit(data->exit_code);
 		return ;
 	}
-	if (count == 1)
-		clean_stuff(data);
 	if (code < 0)
 		data->exit_code = 256 + code % 256;
 	else
@@ -91,11 +87,13 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 	int	count;
 
 	count = data->cmdt_count;
+	if (!cmd_table || count == 1)
+		clean_stuff(data);
 	if (!cmd_table)
 		exit(data->exit_code);
 	if (cmd_table && cmd_table->num_args > 2)
 	{
-		ft_printf_fd(2, "minishell: exit: too many arguments\n");
+		ft_printf_fd(1, "minishell: exit: too many arguments\n");
 		data->exit_code = 1;
 		return ;
 	}
@@ -104,8 +102,6 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
 		data->exit_code = 2;
-		if (count == 1)
-			clean_stuff(data);
 		if (count == 1)
 			exit(data->exit_code);
 		return ;

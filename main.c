@@ -35,11 +35,12 @@ void	clean_stuff(t_data *data)
 				ft_free(data->cmdt[data->cmdt_count]
 					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
 			ft_free(data->cmdt[data->cmdt_count].redirs);
-				ft_free(data->cmdt[data->cmdt_count].cmd);
+			ft_free(data->cmdt[data->cmdt_count].cmd);
 		}
 		ft_free(data->cmdt);
 	}
 	ft_free(data->input);
+	free_double_p(data->path);
 }
 
 /* entry point, initiates data, reads the input, lexer-extender-parser-executor-cleaner(repeated) */
