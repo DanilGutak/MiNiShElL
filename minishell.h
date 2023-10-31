@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 20:59:27 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/31 13:13:39 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_data
 	int				cmdt_count;
 	int				pip[2];
 	int				exit_code;
-	int 			prev_fd;
+	int				prev_fd;
 }					t_data;
 
 // init
@@ -104,7 +104,8 @@ int					parser(t_data *data);
 int					is_arg(t_token_type type);
 int					is_not_redir(t_token_type type);
 int					fill_cmd_args(t_data *data, int j, int i);
-int				fill_redirs(t_data *data, int j, int i);
+int					fill_redirs(t_data *data, int j, int i);
+int					count_pipes(t_data *data);
 
 // executor
 

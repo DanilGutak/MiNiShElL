@@ -1,17 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 11:45:46 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 14:12:25 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minishell.h"
+
+long int	atoi_new(char *str)
+{
+	long int	x;
+	long int	sign;
+
+	x = 0;
+	sign = 1;
+	while (*str == ' ' || *str == '\v' || *str == '\t' || *str == '\n'
+		|| *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str)
+	{
+		if (*str >= '0' && *str <= '9')
+			x = x * 10 + *str - '0';
+		else
+			break ;
+		if ((x > 4294967295 && sign == 1) || (sign == -1 && x > 4294967296))
+			return (9876543210);
+		str++;
+	}
+	return (sign * x);
+}
 
 int	check_arg(char *str)
 {
@@ -28,10 +57,40 @@ int	check_arg(char *str)
 	return (0);
 }
 
+void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
+		int count)
+{
+	if (count == 1)
+		ft_printf_fd(2, "exit\n");
+	if (count == 1 && (!cmd_table || cmd_table->num_args == 1))
+		exit(data->exit_code);
+	code = atoi_new(cmd_table->args[1]);
+	if (code == 987654321)
+	{
+		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
+			cmd_table->args[1]);
+		data->exit_code = 2;
+		if (count == 1)
+			clean_stuff(data);
+		if (count == 1)
+			exit(data->exit_code);
+		return ;
+	}
+	if (count == 1)
+		clean_stuff(data);
+	if (code < 0)
+		data->exit_code = 256 + code % 256;
+	else
+		data->exit_code = code % 256;
+	if (count == 1)
+		exit(data->exit_code);
+}
+
 void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 {
-	int	code;
+	int	count;
 
+	count = data->cmdt_count;
 	if (!cmd_table)
 		exit(data->exit_code);
 	if (cmd_table && cmd_table->num_args > 2)
@@ -44,16 +103,12 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 	{
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
-		clean_stuff(data);
-		exit(2);
+		data->exit_code = 2;
+		if (count == 1)
+			clean_stuff(data);
+		if (count == 1)
+			exit(data->exit_code);
+		return ;
 	}
-	if (data->cmdt_count == 1)
-		ft_printf_fd(2, "exit\n");
-	if (!cmd_table || cmd_table->num_args == 1)
-		exit(data->exit_code);
-	code = ft_atoi(cmd_table->args[1]);
-	clean_stuff(data);
-	if (code < 0)
-		exit(256 + code % 256);
-	exit(code % 256);
+	builtin_exit_part2(data, cmd_table, 0, count);
 }

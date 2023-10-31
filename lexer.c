@@ -6,12 +6,14 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 16:21:52 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 13:23:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/* if string is is arrow, searches for the second one, then set type accoringl. */
+
+/* if string is is arrow, searches for the second one,
+	then set type accoringl. */
 int	fill_redir(t_data *data, char const *s)
 {
 	int	ret;
@@ -32,8 +34,6 @@ int	fill_redir(t_data *data, char const *s)
 	}
 	return (ret);
 }
-const char	*g_token_type_names[] = {"WORD", "PIPE", "REDIR_IN", "REDIR_OUT",
-	"REDIR_APPEND", "REDIR_HEREDOC", "DQUOTE", "SQUOTE"};
 
 int	check_syntax_dir(t_data *data, int i)
 {
@@ -52,7 +52,7 @@ int	check_syntax_dir(t_data *data, int i)
 	return (0);
 }
 
-int check_syntax(t_data *data)
+int	check_syntax(t_data *data)
 {
 	int	i;
 
@@ -77,47 +77,52 @@ int check_syntax(t_data *data)
 	}
 	return (0);
 }
+
+int	fill_tokens(t_data *data, int *i, int j)
+{
+	if (data->token_count == data->token_max)
+		if (realloc_tokens(data, data->token_max) == 1)
+			return (1);
+	if (data->input[*i] == '|')
+		data->tokens[++data->token_count - 1].type = PIPE;
+	else if (data->input[*i] == '>' || data->input[*i] == '<')
+		*i += fill_redir(data, &data->input[*i]) - 1;
+	else if (data->input[*i] == '\'' || data->input[*i] == '\"')
+	{
+		j = fill_quotes(data, &data->input[*i], data->input[*i]) - 1;
+		if (j == -2)
+			return (1);
+		if (j == -1)
+			return (syntax_error(data->input[*i], data), 1);
+		*i += j;
+	}
+	else if (data->input[*i] != ' ')
+	{
+		j = fill_word(data, &data->input[*i]) - 1;
+		if (j == -1)
+			return (print_error(data, "ft_calloc", 1));
+		*i += j;
+	}
+	return (0);
+}
+
 /* main entry point for lexer(tokeniser). Separates input string
  by spaces,
-quotes and special charactersm,allocate memory for tokens.Checks syntax (quotes, redirs , pipes)
-token has 3 variables: TYPE - which type, VALUE - if its not special character the text in it,
+quotes and special charactersm,allocate memory for tokens.Checks syntax (quotes,
+	redirs , pipes)
+token has 3 variables: TYPE - which type, VALUE
+	- if its not special character the text in it,
 NO_SPACE - whether the token is followed by token which can be concatenated.*/
 int	lexer(t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = -1;
 	data->tokens = ft_calloc(data->token_max, sizeof(t_token));
 	if (!data->tokens)
 		return (print_error(data, "ft_calloc", 1));
 	while (data->input[++i])
-	{
-		if (data->token_count == data->token_max)
-			if (realloc_tokens(data, data->token_max) == 1)
-				return (1);
-		if (data->input[i] == '|')
-			data->tokens[++data->token_count - 1].type = PIPE;
-		else if (data->input[i] == '>' || data->input[i] == '<')
-			i += fill_redir(data, &data->input[i]) - 1;
-		else if (data->input[i] == '\'' || data->input[i] == '\"')
-		{
-			j = fill_quotes(data, &data->input[i], data->input[i]) - 1;
-			if (j == -2)
-				return (1);
-			if (j == -1)
-				return (syntax_error(data->input[i], data), 1);
-			i += j;
-		}
-		else if (data->input[i] != ' ')
-		{
-			j = fill_word(data, &data->input[i]) - 1;
-			if (j == -1)
-				return (print_error(data, "ft_calloc", 1));
-			i += j;
-		}
-		else
-			continue ;
-	}
+		if (fill_tokens(data, &i, 0) == 1)
+			return (1);
 	return (check_syntax(data));
 }

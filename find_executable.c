@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 13:11:09 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 13:25:36 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 	}
 	return (1);
 }
+
 int	find_executable(t_data *data, t_cmd_table *cmd_table)
 {
 	int	i;

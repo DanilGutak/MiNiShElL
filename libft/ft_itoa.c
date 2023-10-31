@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:40:09 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 18:53:23 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/10/31 13:24:12 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_itoa(int n)
 	nbr = n;
 	flag = 0;
 	n = count_digits(nbr);
-	ret = ft_calloc(sizeof(char),  (size_t) (n + 1));
+	ret = ft_calloc(sizeof(char), (size_t)(n + 1));
 	if (!ret)
 		return (0);
 	if (nbr < 0)

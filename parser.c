@@ -6,25 +6,14 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 15:24:56 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/10/31 13:15:32 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_pipes(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	while (++i < data->token_count)
-		if (data->tokens[i].type == PIPE)
-			j++;
-	return (j);
-}
-/* the copy tokens contents into new tokens, if no_space = 1 concats nex elements as well */
+/* the copy tokens contents into new tokens,
+	if no_space = 1 concats nex elements as well */
 int	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 {
 	new_tokens[*j].type = data->tokens[*i].type;
@@ -32,14 +21,14 @@ int	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 	{
 		new_tokens[*j].value = ft_strdup(data->tokens[*i].value);
 		if (!new_tokens[*j].value)
-			return(print_error(data, "ft_strdup", 1));
+			return (print_error(data, "ft_strdup", 1));
 		while (data->tokens[*i].no_space == 1)
 		{
 			*i = *i + 1;
 			new_tokens[*j].value = ft_strjoin(new_tokens[*j].value,
 					data->tokens[*i].value);
 			if (!new_tokens[*j].value)
-				return(print_error(data, "ft_strjoin", 1));
+				return (print_error(data, "ft_strjoin", 1));
 		}
 	}
 	*j = *j + 1;
@@ -58,11 +47,11 @@ int	merge_words(t_data *data)
 	k = -1;
 	new_tokens = ft_calloc(data->token_count, sizeof(t_token));
 	if (!new_tokens)
-		return(print_error(data, "ft_calloc ", 1));
+		return (print_error(data, "ft_calloc ", 1));
 	while (i < data->token_count)
 	{
 		if (copy_token(data, new_tokens, &i, &j) == 1)
-			return(1);
+			return (1);
 		i++;
 	}
 	while (++k < data->token_count)
@@ -94,6 +83,27 @@ merges words with no_spaces
 create cmd table for each pipe
 fill cmd, args and redirs in cmd table
  */
+int	fill_cmdt(t_data *data, int j, int *i)
+{
+	data->cmdt[j].num_args = count_args(data, *i);
+	if (data->cmdt[j].num_args > 0)
+	{
+		data->cmdt[j].args = ft_calloc((data->cmdt[j].num_args + 1),
+				sizeof(char *));
+		if (!data->cmdt[j].args)
+			return (print_error(data, "ft_calloc error", 1));
+	}
+	else
+		data->cmdt[j].args = NULL;
+	data->cmdt[j].cmd = NULL;
+	if (fill_redirs(data, j, *i) == 1)
+		return (1);
+	*i = fill_cmd_args(data, j, *i - 1) + 1;
+	if (*i == 0)
+		return (1);
+	return (0);
+}
+
 int	parser(t_data *data)
 {
 	int	j;
@@ -106,25 +116,10 @@ int	parser(t_data *data)
 	data->cmdt_count = count_pipes(data) + 1;
 	data->cmdt = ft_calloc(data->cmdt_count, sizeof(t_cmd_table));
 	if (!data->cmdt)
-		return(print_error(data, "ft_calloc error", 1));
+		return (print_error(data, "ft_calloc error", 1));
 	while (j < data->cmdt_count)
 	{
-		data->cmdt[j].num_args = count_args(data, i);
-		if (data->cmdt[j].num_args > 0)
-		{
-			data->cmdt[j].args = ft_calloc((data->cmdt[j].num_args + 1),
-					sizeof(char *));
-			if (!data->cmdt[j].args)
-				return(print_error(data, "ft_calloc error", 1));
-
-		}
-		else
-			data->cmdt[j].args = NULL;
-		data->cmdt[j].cmd = NULL;
-		if (fill_redirs(data, j, i) == 1)
-			return (1);
-		i = fill_cmd_args(data, j, i - 1) + 1;
-		if (i == 0)
+		if (fill_cmdt(data, j, &i))
 			return (1);
 		j++;
 	}
