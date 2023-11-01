@@ -1,9 +1,6 @@
-треба допомога
-Please help!
+# Hold my beer 🍺
 
-
-
-# TODO:
+## TODO:
 
 - some tests(VITALIK)
 
@@ -26,7 +23,7 @@ Please help!
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
 
-## EXPANDER (postponed) (VITALIK?)
+## EXPANDER (DONE) (REQUIRES TESTS)
 - change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 
 ## PARSER(DONE)
