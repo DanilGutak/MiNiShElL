@@ -3,8 +3,8 @@ minishell_tester/*
 /workspaces/MiNiShElL/minishell_tester/*
 .nfs*
 .vscode/*
-*.o
+/objs
+/libft/objs
 libft/libft.a
 minishell
 .vscode
-```
