@@ -6,54 +6,58 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/01 19:16:17 by vfrants          ###   ########.fr        #
+#    Updated: 2023/11/01 22:30:42 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME	= minishell
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g
+RM		= rm -rf
+CFLAGS	= -Wall -Wextra -Werror -g -MD -MP
 LDFLAGS	= -L ./libft -lft -lreadline
 
-NAME	= minishell
+LIBDIR		= ./libft
+LIBFT		= ${LIBDIR}/libft.a
 
-LIBDIR	= ./libft
-LIBFT	= ${LIBDIR}/libft.a
-
-LEX		= lexer.c fill_tokens.c
-PARS	= parser.c parser_utils.c redirs_and_args.c
-EXEC	= executor.c find_executable.c
-BUILDS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
+LEXER		= lexer.c fill_tokens.c
+PARSER		= parser.c parser_utils.c redirs_and_args.c
+EXECUTOR	= executor.c find_executable.c
+BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
 EXPANDER	= expander.c
 
 SRCS	= main.c init.c exit_shell.c \
-		$(LEX) $(PARS) $(EXEC) $(BUILDS) $(EXPANDER) error.c
-OBJS	= ${SRCS:.c=.o}
+		$(LEXER) $(PARSER) $(EXECUTOR) $(BUILDINS) $(EXPANDER) error.c
+
+OBJS_DIR	= objs
+OBJS		= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+DEPS		= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
 
 all		: $(NAME)
 
-$(NAME)	: ${LIBFT} ${OBJS}
-	$(CC) $(CFLAGS) -o $@ ${OBJS} $(LDFLAGS)
+$(NAME)	: ${OBJS}
+		make --no-print-directory -C ${LIBDIR} all
+		$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-%.o		: %.c
-	cc $(CFLAGS) -c $< -o $@ -I ${LIBDIR}
+objs/%.o	: %.c
+		@mkdir -p $(dir $@)
+		${CC} ${CFLAGS} -c $< -o $@ -I .
 
 clean	:
-	rm -f $(OBJS)
-	make --no-print-directory -C ${LIBDIR} clean
+		make --no-print-directory -C ${LIBDIR} clean
+		$(RM) $(OBJS_DIR)
 
-fclean	: clean
-	rm -f $(NAME)
-	make --no-print-directory -C ${LIBDIR} fclean
+fclean	:
+		make --no-print-directory -C ${LIBDIR} fclean
+		$(RM) $(OBJS_DIR) $(NAME)
 
 re		: fclean all
-
-${LIBFT}:
-	make --no-print-directory -C ${LIBDIR} all
 
 generate_test:
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=$(NAME).log ./$(NAME)
 
 test	: all
 	clear; valgrind --leak-check=full --track-origins=yes --track-fds=yes --show-reachable=yes --show-leak-kinds=all --error-limit=no --suppressions=./$(NAME).supp ./$(NAME)
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re test generate_test

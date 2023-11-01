@@ -6,12 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:36:22 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/01 19:53:58 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/01 21:37:15 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 char	*ft_strcat(const char *s1, const char *s2)
 {
@@ -35,4 +34,3 @@ char	*ft_strcat(const char *s1, const char *s2)
 	*res = '\0';
 	return (buffer);
 }
-

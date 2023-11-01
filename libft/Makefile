@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
+#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 12:33:40 by vfrants           #+#    #+#              #
-#    Updated: 2023/10/30 11:19:08 by dgutak           ###   ########.fr        #
+#    Updated: 2023/11/01 22:33:38 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
-RM		= rm -f
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP
+RM		= rm -rf
 NAME	= libft.a
 
 SRCS	= \
@@ -30,9 +30,12 @@ SRCS	= \
 		ft_lstsize.c ft_lstlast.c ft_lstdelone.c \
 		ft_lstclear.c ft_lstiter.c
 
-OBJS	= $(SRCS:.c=.o)
+OBJS_DIR	= objs
+OBJS		= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+DEPS		= $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.d))
 
-%.o		: %.c
+objs/%.o	: %.c
+		@mkdir -p $(dir $@)
 		${CC} ${CFLAGS} -c $< -o $@ -I .
 
 all		: ${NAME}
@@ -41,12 +44,14 @@ $(NAME) : ${OBJS}
 		ar rcs ${NAME} ${OBJS}
 
 clean	:
-		$(RM) $(OBJS)
+		$(RM) $(OBJS_DIR)
 
-fclean	: clean
-		$(RM) $(NAME)
+fclean	:
+		$(RM) $(OBJS_DIR) $(NAME)
 
-re		: fclean $(NAME)
+re		: fclean all
+
+-include $(DEPS)
 
 .PHONY	: all clean fclean re
 .SILENT :

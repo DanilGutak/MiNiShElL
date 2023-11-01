@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:14 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 11:18:34 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/01 22:09:16 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define LIBFT_H
 
 # include <stdarg.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 # ifndef GNL_BUFFER
 #  define GNL_BUFFER 10
