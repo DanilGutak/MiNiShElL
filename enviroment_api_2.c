@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/30 20:59:14 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/01 19:14:55 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*get_variable_value(t_data *data, char *key)
 {
 	int		i;
 
+	if (ft_strcmp(key, "?") == 0)
+		return (ft_itoa(data->exit_code));
 	i = get_variable_numb(data->envp, key);
 	if (i == -1)
 		return (NULL);
@@ -81,7 +83,7 @@ int	create_variable(t_data *data, char *key, char *value)
 	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size + 2);
 	if (new == NULL)
-		return (MALLOC_F);
+		return (ft_free(new_one), MALLOC_F);
 	i = -1;
 	while (++i < size)
 		new[i] = data->envp[i];
@@ -107,7 +109,7 @@ int	append_variable(t_data *data, char *key, char *value)
 		return (MALLOC_F);
 	new = ft_strcat(temp, value);
 	if (new == NULL)
-		return (MALLOC_F);
+		return (ft_free(temp), MALLOC_F);
 	ft_free(data->envp[position]);
 	data->envp[position] = new;
 	return (SUCCESS);

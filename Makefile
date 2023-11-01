@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
+#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/10/31 12:39:02 by dgutak           ###   ########.fr        #
+#    Updated: 2023/11/01 19:16:17 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LEX		= lexer.c fill_tokens.c
 PARS	= parser.c parser_utils.c redirs_and_args.c
 EXEC	= executor.c find_executable.c
 BUILDS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
-##EXPANDER	= expander.c 
+EXPANDER	= expander.c
 
 SRCS	= main.c init.c exit_shell.c \
 		$(LEX) $(PARS) $(EXEC) $(BUILDS) $(EXPANDER) error.c

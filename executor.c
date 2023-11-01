@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 19:08:38 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/01 19:16:08 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
 		close(pipe_fd[0]);
 }
 
-int	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i)
+int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 {
 	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (builtin_echo(data, cmd_table));
@@ -83,7 +83,7 @@ void	executor(t_data *data)
 	data->prev_fd = -1;
 	while (++i < data->cmdt_count)
 	{
-		if (execute_builtin(data, &data->cmdt[i], i) == 1 || find_executable(data,
+		if (execute_builtin(data, &data->cmdt[i]) == 1 || find_executable(data,
 				&data->cmdt[i]) == 1)
 			continue ;
 		data->cmdt[i].is_child_created = 1;
