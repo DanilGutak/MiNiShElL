@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment_api.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 20:23:45 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 17:22:47 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 18:50:41 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	increment_shlvl_variable(t_data *data)
 	free(new_value);
 	if (new_prop == NULL)
 		return (FAILURE);
+	free(data->envp[shlvl]);
 	data->envp[shlvl] = new_prop;
 	return (SUCCESS);
 }
