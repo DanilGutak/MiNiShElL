@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 13:52:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:16:57 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	clean_stuff(t_data *data)
 	if (data->tokens)
 	{
 		while (data->token_count > 0)
-			ft_free(data->tokens[--data->token_count].value);
+			free(data->tokens[--data->token_count].value);
 		free(data->tokens);
 		data->tokens = NULL;
 	}
@@ -30,12 +30,12 @@ void	clean_stuff(t_data *data)
 		{
 			data->cmdt_count--;
 			while (data->cmdt[data->cmdt_count].num_args-- > 0)
-				ft_free(data->cmdt[data->cmdt_count]
+				free(data->cmdt[data->cmdt_count]
 					.args[data->cmdt[data->cmdt_count].num_args]);
 			free(data->cmdt[data->cmdt_count].args);
 			data->cmdt[data->cmdt_count].args = NULL;
 			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
-				ft_free(data->cmdt[data->cmdt_count]
+				free(data->cmdt[data->cmdt_count]
 					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
 			free(data->cmdt[data->cmdt_count].redirs);
 			data->cmdt[data->cmdt_count].redirs = NULL;

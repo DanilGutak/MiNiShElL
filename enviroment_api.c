@@ -6,11 +6,31 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 20:23:45 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/01 19:15:12 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:34:18 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* reset variable to new value */
+int	set_variable(t_data *data, char *key, char *value)
+{
+	char	*temp;
+	char	*new;
+	int		i;
+
+	i = get_variable_numb(data->envp, key);
+	if (i == -1)
+		return (create_variable(data, key, value));
+	temp = ft_strcat(key, "=");
+	if (temp == NULL)
+		return (MALLOC_F);
+	new = ft_strcat(temp, value);
+	free(temp);
+	free(data->envp[i]);
+	data->envp[i] = new;
+	return (SUCCESS);
+}
 
 /* should be useful */
 int	starts_with(char *string, char *begin)
@@ -83,8 +103,9 @@ int	increment_shlvl_variable(t_data *data)
 	if (new_value == NULL)
 		return (FAILURE);
 	new_prop = ft_strcat("SHLVL=", new_value);
+	free(new_value);
 	if (new_prop == NULL)
-		return (ft_free(new_value), FAILURE);
+		return (FAILURE);
 	data->envp[shlvl] = new_prop;
 	return (SUCCESS);
 }

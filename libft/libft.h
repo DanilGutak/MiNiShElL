@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:14 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/01 22:09:16 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 15:50:39 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,5 @@ int					ft_is_blank(const char *str);
 char				*get_next_line(int fd, int mode);
 void				ft_free_split(char **strs);
 int					ft_len_split(char **split);
-void				ft_free(void *data);
 
 #endif

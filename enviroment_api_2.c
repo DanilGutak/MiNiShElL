@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/01 19:14:55 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:05:56 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_variable_value(t_data *data, char *key)
 	i = get_variable_numb(data->envp, key);
 	if (i == -1)
 		return (NULL);
-	return (data->envp[i] + ft_strlen(key) + 1);
+	return (ft_strdup(data->envp[i] + ft_strlen(key) + 1));
 }
 
 /* delete a variable from the envp */
@@ -45,7 +45,7 @@ int	delete_variable(t_data *data, char *key)
 		new[i] = data->envp[ft_tr(i < position, i, i + 1)];
 		i++;
 	}
-	ft_free(data->envp);
+	free(data->envp);
 	data->envp = new;
 	return (SUCCESS);
 }
@@ -77,19 +77,19 @@ int	create_variable(t_data *data, char *key, char *value)
 	if (buffer == NULL)
 		return (MALLOC_F);
 	new_one = ft_strcat(buffer, value);
-	ft_free(buffer);
+	free(buffer);
 	if (new_one == NULL)
 		return (MALLOC_F);
 	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size + 2);
 	if (new == NULL)
-		return (ft_free(new_one), MALLOC_F);
+		return (free(new_one), MALLOC_F);
 	i = -1;
 	while (++i < size)
 		new[i] = data->envp[i];
 	new[i++] = new_one;
 	new[i] = NULL;
-	ft_free(data->envp);
+	free(data->envp);
 	data->envp = new;
 	return (SUCCESS);
 }
@@ -97,20 +97,17 @@ int	create_variable(t_data *data, char *key, char *value)
 /* += operator for the variables. key in format 'VAL'. IDK IF WE NEED IT*/
 int	append_variable(t_data *data, char *key, char *value)
 {
-	char	*new;
 	char	*temp;
 	int		position;
 
 	position = get_variable_numb(data->envp, key);
 	if (position == -1)
 		return (create_variable(data, key, value));
-	temp = ft_strcat(data->envp[position], "=");
+	temp = ft_strcat(data->envp[position], value);
+	free(temp);
 	if (temp == NULL)
 		return (MALLOC_F);
-	new = ft_strcat(temp, value);
-	if (new == NULL)
-		return (ft_free(temp), MALLOC_F);
-	ft_free(data->envp[position]);
-	data->envp[position] = new;
+	free(data->envp[position]);
+	data->envp[position] = temp;
 	return (SUCCESS);
 }

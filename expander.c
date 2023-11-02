@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/01 19:56:04 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:59:26 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static int	replace_dollar(char *iterate, char **result, t_data *data)
 	if (key == NULL)
 		return (vlen);
 	buffer = get_variable_value(data, key);
-	ft_free(key);
+	free(key);
 	if (buffer == NULL)
 		*result = ft_strdup("");
 	else
 		*result = ft_strdup(buffer);
+	free(buffer);
 	return (vlen);
 }
 
@@ -72,14 +73,14 @@ static int	expand_token(char *value, t_data *data, int t)
 		else
 			value += concat_chars(value, &buffer);
 		if (buffer == NULL)
-			return (ft_free(res), MALLOC_F);
+			return (free(res), MALLOC_F);
 		buf_res = ft_strcat(res, buffer);
-		(ft_free(buffer), ft_free(res));
+		(free(buffer), free(res));
 		if (buf_res == NULL)
 			return (MALLOC_F);
 		res = buf_res;
 	}
-	ft_free(buf_value);
+	free(buf_value);
 	data->tokens[t].value = res;
 	return (SUCCESS);
 }

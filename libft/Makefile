@@ -6,7 +6,7 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 12:33:40 by vfrants           #+#    #+#              #
-#    Updated: 2023/11/01 22:33:38 by vfrants          ###   ########.fr        #
+#    Updated: 2023/11/02 15:50:52 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS	= \
 		ft_toupper.c ft_tolower.c ft_calloc.c ft_strdup.c ft_substr.c \
 		ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
 		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-		ft_math_i.c ft_contains.c get_next_line.c ft_strcat.c ft_free.c \
+		ft_math_i.c ft_contains.c get_next_line.c ft_strcat.c \
 		ft_is_blank.c ft_free_split.c ft_strcmp.c  ft_len_split.c \
 		ft_printf_fd.c ft_putnbru_fd.c ft_printhex.c ft_strstr.c \
 		ft_lstnew.c ft_lstadd_front.c ft_lstadd_back.c \

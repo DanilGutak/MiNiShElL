@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 14:54:36 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:54:53 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 int	free_tokens(t_token *tokens, int token_max, t_data *data)
 {
 	while (++token_max < data->token_count)
-		ft_free(tokens[token_max].value);
-	ft_free(tokens);
+		(free(tokens[token_max].value), tokens[token_max].value = NULL);
+	free(tokens);
+	tokens = NULL;
 	return (1);
 }
 /* reallocate memory in case there are nott enough space for tokens(multiplies by 2 everytime) */
@@ -77,14 +78,13 @@ char	**get_path(t_data *data, int i)
 	return (ret);
 }
 
-static char	**split_dup(char **old)
+char	**split_dup(char **old)
 {
 	char	**new;
 	char	*temp;
 	int		i;
 
-	i = ft_len_split(old);
-	new = (char **)ft_calloc(sizeof (char *), i + 1);
+	new = (char **)ft_calloc(sizeof (char *), ft_len_split(old) + 1);
 	if (new == NULL)
 		return (NULL);
 	i = 0;
@@ -92,11 +92,10 @@ static char	**split_dup(char **old)
 	{
 		temp = ft_strdup(old[i]);
 		if (temp == NULL)
-			return (ft_free_split(new), NULL);
+			return (free_double_p(new), NULL);
 		new[i] = temp;
 		i++;
 	}
-	new[i] = NULL;
 	return (new);
 }
 /* set variables to default values, copy envp, gets path variable */

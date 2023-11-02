@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:18:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 16:05:22 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:28:10 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	free_double_p(char **p)
 	if (p)
 	{
 		while (p[++i])
-			ft_free(p[i]);
-		ft_free(p);
+			(free(p[i]), p[i] = NULL);
+		free(p);
 	}
 }
 
@@ -30,11 +30,13 @@ void	free_all(t_data *data)
 	free_double_p(data->path);
 	while (data->token_count--)
 	{
-		ft_free(data->tokens[data->token_count].value);
+		free(data->tokens[data->token_count].value);
 		data->tokens[data->token_count].value = NULL;
 	}
-	ft_free(data->tokens);
-	ft_free(data->input);
+	free(data->tokens);
+	data->tokens = NULL;
+	free(data->input);
+	data->input = NULL;
 }
 
 
@@ -43,5 +45,6 @@ void	exit_shell(t_data *data, int exit_code)
 	if (exit_code == 1)
 		perror("Error");
 	clean_stuff(data);
+	free_double_p(data->envp);
 	exit(exit_code);
 }

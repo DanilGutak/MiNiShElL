@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 14:25:11 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:35:49 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 {
 	int	count;
 
+	free_double_p(data->envp);
 	count = data->cmdt_count;
 	if (!cmd_table)
 	{
