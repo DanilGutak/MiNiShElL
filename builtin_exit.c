@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 16:35:49 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 17:07:33 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,8 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 		clean_stuff(data);
 		exit(data->exit_code);
 	}
-	if (cmd_table && cmd_table->num_args > 2)
-		return (ft_printf_fd(1, "minishell: exit: too many arguments\n"),
-			(void)(data->exit_code = 1));
-	if (cmd_table->num_args > 1 && check_arg(cmd_table->args[1]) == 1)
+	if (cmd_table && cmd_table->num_args > 1
+		&& check_arg(cmd_table->args[1]) == 1)
 	{
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
@@ -112,5 +110,8 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 		}
 		return ;
 	}
+	if (cmd_table && cmd_table->num_args > 2)
+		return (ft_printf_fd(2, "minishell: exit: too many arguments\n"),
+			(void)(data->exit_code = 1));
 	builtin_exit_part2(data, cmd_table, 0, count);
 }

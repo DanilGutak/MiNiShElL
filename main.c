@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 16:16:57 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 17:07:06 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "libft/libft.h"
 #include "minishell.h"
 
-/* clean everything regarding one read of readline(tokens, cmd tables,input, etc..) */
-void	clean_stuff(t_data *data)
+/* clean everything regarding one read of readline(tokens, cmd tables,input,
+	etc..) */
+void	clean_stuff(t_data	*data)
 {
 	if (data->tokens)
 	{
@@ -30,13 +30,11 @@ void	clean_stuff(t_data *data)
 		{
 			data->cmdt_count--;
 			while (data->cmdt[data->cmdt_count].num_args-- > 0)
-				free(data->cmdt[data->cmdt_count]
-					.args[data->cmdt[data->cmdt_count].num_args]);
+				free(data->cmdt[data->cmdt_count].args[data->cmdt[data->cmdt_count].num_args]);
 			free(data->cmdt[data->cmdt_count].args);
 			data->cmdt[data->cmdt_count].args = NULL;
 			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
-				free(data->cmdt[data->cmdt_count]
-					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
+				free(data->cmdt[data->cmdt_count].redirs[data->cmdt[data->cmdt_count].num_redirs].value);
 			free(data->cmdt[data->cmdt_count].redirs);
 			data->cmdt[data->cmdt_count].redirs = NULL;
 			free(data->cmdt[data->cmdt_count].cmd);
@@ -48,9 +46,11 @@ void	clean_stuff(t_data *data)
 	free(data->input);
 	data->input = NULL;
 	free_double_p(data->path);
+	data->path = NULL;
 }
 
-/* entry point, initiates data, reads the input, lexer-extender-parser-executor-cleaner(repeated) */
+/* entry point, initiates data, reads the input,
+	lexer-extender-parser-executor-cleaner(repeated) */
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -67,9 +67,7 @@ int	main(int argc, char **argv, char **envp)
 			builtin_exit(&data, NULL);
 		if (data.input[0] != '\0')
 			add_history(data.input);
-		if (lexer(&data) == 0
-			&& expander(&data) == 0
-			&& parser(&data) == 0)
+		if (lexer(&data) == 0 && expander(&data) == 0 && parser(&data) == 0)
 		{
 			executor(&data);
 		}

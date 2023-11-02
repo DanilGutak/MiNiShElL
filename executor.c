@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 15:28:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:01:35 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,30 @@ void	set_dups(t_cmd_table *cmd_table)
 	if (cmd_table->fd_out != -1)
 		dup2(cmd_table->fd_out, STDOUT_FILENO);
 }
-void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
-{
-	int	pipe_fd[2];
 
-	if (pipe(pipe_fd) == -1)
-		exit_shell(data, 1);
+void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
+		int *pipe_fd)
+{
 	cmd_table->pid = fork();
 	if (cmd_table->pid < 0)
-		exit_shell(data, 1);
+		return ((void)print_error(data, "fork", 1));
 	if (!cmd_table->pid)
 	{
 		if (i != 0)
 		{
-			dup2(data->prev_fd, STDIN_FILENO);
-			close(data->prev_fd);
+			if (cmd_table->fd_in != -1)
+				dup2(cmd_table->fd_in, STDIN_FILENO);
+			close(cmd_table->fd_in);
 		}
 		if (i != data->cmdt_count - 1)
 		{
 			close(pipe_fd[0]);
-			dup2(pipe_fd[1], STDOUT_FILENO);
+			if (cmd_table->fd_out != -1)
+				dup2(cmd_table->fd_out, STDOUT_FILENO);
 			close(pipe_fd[1]);
 		}
 		execve(cmd_table->cmd, cmd_table->args, data->envp);
-		print_error(data, cmd_table->cmd, 1);
-		exit(1);
+		exit(print_error(data, cmd_table->cmd, 1));
 	}
 	close(pipe_fd[1]);
 	if (data->prev_fd != -1)
@@ -56,11 +55,23 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i)
 		close(pipe_fd[0]);
 }
 
-int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
+int	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 {
 	int	returno;
 
 	returno = 0;
+	if (i != 0)
+	{
+		if (cmd_table->fd_in != -1)
+			dup2(cmd_table->fd_in, STDIN_FILENO);
+		close(cmd_table->fd_in);
+	}
+	if (i != data->cmdt_count - 1)
+	{
+		if (cmd_table->fd_out != -1)
+			dup2(cmd_table->fd_out, STDOUT_FILENO);
+		close(pipe_fd[1]);
+	}
 	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (builtin_echo(data, cmd_table));
 	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
@@ -75,18 +86,53 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table)
 		return (builtin_env(data, cmd_table));  */
 	if (ft_strcmp(cmd_table->cmd, "exit") == 0 && ++returno)
 		builtin_exit(data, cmd_table);
+	close(cmd_table->fd_out);
+	if (i != data->cmdt_count - 1)
+		data->prev_fd = pipe_fd[0];
+	else
+		close(pipe_fd[0]);
+	dup2(data->original_stdout, STDOUT_FILENO);
+	dup2(data->original_stdin, STDIN_FILENO);
 	return (returno);
 }
 
-/* int set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd)
+int	set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd)
 {
-	if (cmd_table->in_file)
-} */
+	if (cmd_table->in_file != -1)
+		cmd_table->fd_in = cmd_table->in_file;
+	else if (data->prev_fd != -1)
+		cmd_table->fd_in = data->prev_fd;
+	if (cmd_table->out_file != -1)
+		cmd_table->fd_out = cmd_table->out_file;
+	else if (fd[1] != -1)
+		cmd_table->fd_out = fd[1];
+	return (0);
+}
+
+int check_builtin(t_cmd_table *cmd_table)
+{
+	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(cmd_table->cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd_table->cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd_table->cmd, "env") == 0)
+		return (1); */
+	if (ft_strcmp(cmd_table->cmd, "exit") == 0)
+		return (1);
+	return (0);
+}
 
 void	executor(t_data *data)
 {
 	int	i;
 	int	status;
+	int	pip[2];
 
 	i = -1;
 	data->prev_fd = -1;
@@ -94,15 +140,18 @@ void	executor(t_data *data)
 	// set infile and outfile here
 	while (++i < data->cmdt_count)
 	{
-		/* if pipit
-		if (set_fd_in_out(data, &data->cmdt[i]) == 1)
-			return ; */
-		if (execute_builtin(data, &data->cmdt[i]) == 0)
+		if (pipe(pip) == -1)
+			return ((void)print_error(data, "pipe", 1));
+		if (set_fd_in_out(data, &data->cmdt[i], pip) == 1)
+			return ;
+		if (check_builtin(&data->cmdt[i]) == 1)
+			execute_builtin(data, &data->cmdt[i],i , pip);
+		else
 		{
 			if (find_executable(data, &data->cmdt[i]) == 0)
 			{
 				data->cmdt[i].is_child_created = 1;
-				execute_command(data, &data->cmdt[i], i);
+				execute_command(data, &data->cmdt[i], i, pip);
 			}
 		}
 	}

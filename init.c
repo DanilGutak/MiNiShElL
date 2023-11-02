@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 16:54:53 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 17:20:42 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	**get_path(t_data *data, int i)
 char	**split_dup(char **old)
 {
 	char	**new;
-	char	*temp;
 	int		i;
 
 	new = (char **)ft_calloc(sizeof (char *), ft_len_split(old) + 1);
@@ -90,12 +89,12 @@ char	**split_dup(char **old)
 	i = 0;
 	while (old[i] != NULL)
 	{
-		temp = ft_strdup(old[i]);
-		if (temp == NULL)
+		new[i] = ft_strdup(old[i]);
+		if (new[i] == NULL)
 			return (free_double_p(new), NULL);
-		new[i] = temp;
 		i++;
 	}
+	new[i] = NULL;
 	return (new);
 }
 /* set variables to default values, copy envp, gets path variable */
