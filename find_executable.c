@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 16:59:59 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 19:00:01 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 				cmd_table->cmd);
 			data->exit_code = 126;
 		}
+		return (1);
 	}
 	ft_printf_fd(2, "minishell: %s: No such file or directory\n",
 		cmd_table->cmd);
