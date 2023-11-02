@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/01 22:30:42 by vfrants          ###   ########.fr        #
+#    Updated: 2023/11/02 15:25:44 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ EXECUTOR	= executor.c find_executable.c
 BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c
 EXPANDER	= expander.c
 
-SRCS	= main.c init.c exit_shell.c \
+SRCS	= main.c init.c exit_shell.c init_utils.c\
 		$(LEXER) $(PARSER) $(EXECUTOR) $(BUILDINS) $(EXPANDER) error.c
 
 OBJS_DIR	= objs

@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 15:04:43 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 14:25:11 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	check_arg(char *str)
 void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 		int count)
 {
-	printf("count: %d\n", count);
 	if (count == 1)
 		ft_printf_fd(2, "exit\n");
 	if (count == 1 && (!cmd_table || cmd_table->num_args == 1))
@@ -67,17 +66,22 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 	code = atoi_new(cmd_table->args[1]);
 	if (code == 987654321)
 	{
-		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
+		ft_printf_fd(1, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
 		data->exit_code = 2;
 		if (count == 1)
+		{
+			clean_stuff(data);
 			exit(data->exit_code);
+		}
 		return ;
 	}
 	if (code < 0)
 		data->exit_code = 256 + code % 256;
 	else
 		data->exit_code = code % 256;
+	if (count == 1)
+		clean_stuff(data);
 	if (count == 1)
 		exit(data->exit_code);
 }
@@ -87,23 +91,24 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 	int	count;
 
 	count = data->cmdt_count;
-	if (!cmd_table || count == 1)
-		clean_stuff(data);
 	if (!cmd_table)
-		exit(data->exit_code);
-	if (cmd_table && cmd_table->num_args > 2)
 	{
-		ft_printf_fd(1, "minishell: exit: too many arguments\n");
-		data->exit_code = 1;
-		return ;
+		clean_stuff(data);
+		exit(data->exit_code);
 	}
+	if (cmd_table && cmd_table->num_args > 2)
+		return (ft_printf_fd(1, "minishell: exit: too many arguments\n"),
+			(void)(data->exit_code = 1));
 	if (cmd_table->num_args > 1 && check_arg(cmd_table->args[1]) == 1)
 	{
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
 		data->exit_code = 2;
 		if (count == 1)
+		{
+			clean_stuff(data);
 			exit(data->exit_code);
+		}
 		return ;
 	}
 	builtin_exit_part2(data, cmd_table, 0, count);

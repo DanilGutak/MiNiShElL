@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/01 19:14:18 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 13:52:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	clean_stuff(t_data *data)
 	{
 		while (data->token_count > 0)
 			ft_free(data->tokens[--data->token_count].value);
-		ft_free(data->tokens);
+		free(data->tokens);
+		data->tokens = NULL;
 	}
 	if (data->cmdt)
 	{
@@ -31,16 +32,21 @@ void	clean_stuff(t_data *data)
 			while (data->cmdt[data->cmdt_count].num_args-- > 0)
 				ft_free(data->cmdt[data->cmdt_count]
 					.args[data->cmdt[data->cmdt_count].num_args]);
-			ft_free(data->cmdt[data->cmdt_count].args);
+			free(data->cmdt[data->cmdt_count].args);
+			data->cmdt[data->cmdt_count].args = NULL;
 			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
 				ft_free(data->cmdt[data->cmdt_count]
 					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
-			ft_free(data->cmdt[data->cmdt_count].redirs);
-			ft_free(data->cmdt[data->cmdt_count].cmd);
+			free(data->cmdt[data->cmdt_count].redirs);
+			data->cmdt[data->cmdt_count].redirs = NULL;
+			free(data->cmdt[data->cmdt_count].cmd);
+			data->cmdt[data->cmdt_count].cmd = NULL;
 		}
-		ft_free(data->cmdt);
+		free(data->cmdt);
+		data->cmdt = NULL;
 	}
-	ft_free(data->input);
+	free(data->input);
+	data->input = NULL;
 	free_double_p(data->path);
 }
 
@@ -67,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			executor(&data);
 		}
+		printf("exit code: %d\n", data.exit_code);
 		clean_stuff(&data);
 	}
 }

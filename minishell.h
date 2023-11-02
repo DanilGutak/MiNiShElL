@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/01 22:19:07 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 15:27:06 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ typedef struct s_cmd_table
 	int				fd_in;
 	int				fd_out;
 	t_token			*redirs;
+	int				in_file;
+	int				out_file;
 	int				num_redirs;
 	int				num_args;
 	int				is_child_created;
+
 	pid_t			pid;
 }					t_cmd_table;
 
@@ -73,15 +76,17 @@ typedef struct s_data
 	int				token_max;
 	t_cmd_table		*cmdt;
 	int				cmdt_count;
-	int				pip[2];
 	int				exit_code;
 	int				prev_fd;
+	int				original_stdin;
+	int				original_stdout;
 }					t_data;
 
 // init
 
 void				data_init(t_data *data, char **envp);
 char				**get_path(t_data *data, int i);
+void				create_original_fds(t_data *data);
 
 // errors
 
@@ -113,6 +118,7 @@ int					count_pipes(t_data *data);
 
 void				executor(t_data *data);
 int					find_executable(t_data *data, t_cmd_table *cmd_table);
+void				set_dups(t_cmd_table *cmd_table);
 
 // expander
 

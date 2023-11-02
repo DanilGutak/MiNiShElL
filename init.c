@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/30 16:59:57 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:54:36 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,8 @@ void	data_init(t_data *data, char **envp)
 	data->exit_code = 0;
 	data->cmdt = NULL;
 	data->cmdt_count = 0;
-	data->pip[0] = 0;
-	data->pip[1] = 0;
 	data->exit_code = 0;
+	create_original_fds(data);
 	new_env = split_dup(envp);
 	if (new_env == NULL)
 		exit_shell(data, 1);
