@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:18:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 17:23:20 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 18:07:18 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_all(t_data *data)
 	free(data->input);
 	data->input = NULL;
 }
-
 
 void	exit_shell(t_data *data, int exit_code)
 {

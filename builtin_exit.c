@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 17:07:33 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 18:50:26 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 		data->exit_code = 2;
 		if (count == 1)
 		{
-			clean_stuff(data);
+			clean_all(data);
 			exit(data->exit_code);
 		}
 		return ;
@@ -81,7 +81,7 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 	else
 		data->exit_code = code % 256;
 	if (count == 1)
-		clean_stuff(data);
+		clean_all(data);
 	if (count == 1)
 		exit(data->exit_code);
 }
@@ -90,11 +90,10 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 {
 	int	count;
 
-	free_double_p(data->envp);
 	count = data->cmdt_count;
 	if (!cmd_table)
 	{
-		clean_stuff(data);
+		clean_all(data);
 		exit(data->exit_code);
 	}
 	if (cmd_table && cmd_table->num_args > 1
@@ -105,7 +104,7 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 		data->exit_code = 2;
 		if (count == 1)
 		{
-			clean_stuff(data);
+			clean_all(data);
 			exit(data->exit_code);
 		}
 		return ;

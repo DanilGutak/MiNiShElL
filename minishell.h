@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 15:27:06 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/02 18:49:54 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int					expander(t_data *data);
 // cleaner
 
 void				clean_stuff(t_data *data);
+void				clean_all(t_data *data);
 
 // variables api, for buildins and so on
 
