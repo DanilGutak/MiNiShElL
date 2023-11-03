@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:23:44 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 17:27:45 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	free_tokens(t_token *tokens, int token_max, t_data *data)
 	tokens = NULL;
 	return (1);
 }
-/* reallocate memory in case there are nott enough space for tokens(multiplies by 2 everytime) */
+
+/* reallocate memory in case 
+there are nott enough space for tokens(multiplies by 2 everytime) */
 int	realloc_tokens(t_data *data, int token_max)
 {
 	t_token	*new_tokens;
@@ -48,7 +50,8 @@ int	realloc_tokens(t_data *data, int token_max)
 	return (0);
 }
 
-/* searches for "PATH=" in env, then splits it by : and store it as alloced 2d array */
+/* searches for "PATH=" in env, then 
+splits it by : and store it as alloced 2d array */
 char	**get_path(t_data *data, int i)
 {
 	char	**ret;
@@ -97,6 +100,7 @@ char	**split_dup(char **old)
 	new[i] = NULL;
 	return (new);
 }
+
 /* set variables to default values, copy envp, gets path variable */
 void	data_init(t_data *data, char **envp)
 {
@@ -118,5 +122,5 @@ void	data_init(t_data *data, char **envp)
 		exit_shell(data, 1);
 	data->envp = new_env;
 	if (increment_shlvl_variable(data) == FAILURE)
-		exit_shell(data, 0); // should be malloc fail, idk the number for sure
+		exit_shell(data, 0);
 }
