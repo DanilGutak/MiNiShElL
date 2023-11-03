@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 14:25:27 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 15:04:16 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	check_builtin(t_cmd_table *cmd_table)
 	return (0);
 }
 
-int manage_redirs(t_data *data, t_cmd_table *cmd_table)
+int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 {
 	int	i;
 
@@ -170,10 +170,28 @@ void	executor(t_data *data)
 	data->prev_fd = -1;
 	while (++i < data->cmdt_count)
 	{
-		if (manage_redirs(data, &data->cmdt[i]) == 1)
-			continue ;
 		if (pipe(pip) == -1)
 			return ((void)print_error(data, "pipe", 1));
+		if (manage_redirs(data, &data->cmdt[i]) == 1)
+		{
+			if (data->cmdt[i].fd_in != -1)
+			{
+				dup2(data->cmdt[i].fd_in, STDIN_FILENO);
+				close(data->cmdt[i].fd_in);
+			}
+			if (data->cmdt[i].fd_out != -1)
+				dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
+			close(pip[1]);
+			if (data->prev_fd != -1)
+				close(data->prev_fd);
+			if (i != data->cmdt_count - 1)
+				data->prev_fd = pip[0];
+			else
+				close(pip[0]);
+			dup2(data->original_stdout, STDOUT_FILENO);
+			dup2(data->original_stdin, STDIN_FILENO);
+			continue ;
+		}
 		set_fd_in_out(data, &data->cmdt[i], pip, i);
 		if (check_builtin(&data->cmdt[i]) == 1)
 			execute_builtin(data, &data->cmdt[i], i, pip);

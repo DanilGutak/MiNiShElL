@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 11:41:04 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 16:18:34 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 	char	*ret;
 	char	*temp;
 
-	while (data->path[++i])
+	while (data->path && data->path[++i])
 	{
 		if (cmd_table->cmd[0] == '\0')
 			break ;
@@ -80,7 +80,7 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 	char	*ret;
 	char	*temp;
 
-	while (data->path[++i])
+	while (data->path && data->path[++i])
 	{
 		temp = ft_strdup(data->path[i]);
 		if (!temp)

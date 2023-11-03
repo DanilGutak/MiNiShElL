@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 13:24:36 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 16:08:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	len_quotes(char const *str, char temp)
 		len++;
 		str++;
 	}
+	if (*str == 0)
+		return (-1);
 	return (len);
 }
 
@@ -45,11 +47,15 @@ omits quotes in the end result. Sets type and no_space*/
 int	fill_quotes(t_data *data, char const *s, char temp)
 {
 	int	j;
+	int	i;
 
 	j = 0;
 	s++;
+	i = len_quotes(s, temp);
+	if (i == -1)
+		return (0);
 	data->tokens[++data->token_count - 1].value
-		= ft_calloc(len_quotes(s, temp) + 1, sizeof(char));
+		= ft_calloc(i + 1, sizeof(char));
 	if (!data->tokens[data->token_count - 1].value)
 		return (print_error(data, "ft_calloc", 1) - 3);
 	while (*s && *s != temp)

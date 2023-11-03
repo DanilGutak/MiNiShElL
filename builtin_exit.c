@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 18:50:26 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 15:23:43 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	check_arg(char *str)
 	return (0);
 }
 
-void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
+void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, long int code,
 		int count)
 {
 	if (count == 1)
@@ -64,7 +64,7 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, int code,
 	if (count == 1 && (!cmd_table || cmd_table->num_args == 1))
 		exit(data->exit_code);
 	code = atoi_new(cmd_table->args[1]);
-	if (code == 987654321)
+	if (code == 9876543210)
 	{
 		ft_printf_fd(1, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);

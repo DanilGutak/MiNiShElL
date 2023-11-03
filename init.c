@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 17:20:42 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 16:23:44 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**get_path(t_data *data, int i)
 			break ;
 	}
 	if (data->envp[i] == NULL)
-		exit_shell(data, 1);
+		return (NULL);
 	ret = ft_split(find, ':');
 	if (!ret)
 		exit_shell(data, 1);
@@ -118,5 +118,5 @@ void	data_init(t_data *data, char **envp)
 		exit_shell(data, 1);
 	data->envp = new_env;
 	if (increment_shlvl_variable(data) == FAILURE)
-		exit_shell(data, 1); // should be malloc fail, idk the number for sure
+		exit_shell(data, 0); // should be malloc fail, idk the number for sure
 }
