@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:28:42 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 17:43:40 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,16 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 	int	returno;
 
 	returno = 0;
-	if (i != 0)
+	if (cmd_table->fd_in != -1)
 	{
-		if (cmd_table->fd_in != -1)
-			dup2(cmd_table->fd_in, STDIN_FILENO);
+		dup2(cmd_table->fd_in, STDIN_FILENO);
 		close(cmd_table->fd_in);
 	}
-	if (i != data->cmdt_count - 1)
-	{
-		if (cmd_table->fd_out != -1)
-			dup2(cmd_table->fd_out, STDOUT_FILENO);
-		close(pipe_fd[1]);
-	}
-	if (ft_strcmp(cmd_table->cmd, "echo") == 0)
-		return (builtin_echo(data, cmd_table));
+	if (cmd_table->fd_out != -1)
+		dup2(cmd_table->fd_out, STDOUT_FILENO);
+	close(pipe_fd[1]);
+	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
+		return (builtin_echo(data, cmd_table)); */
 	/*if (ft_strcmp(cmd_table->cmd, "cd") == 0)
 		return (builtin_cd(data, cmd_table));
 	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
@@ -160,10 +156,44 @@ int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 	}
 	return (0);
 }
-void	executor(t_data *data)
+
+void	wait_children(t_data *data)
 {
 	int	i;
 	int	status;
+
+	i = -1;
+	while (++i < data->cmdt_count)
+		if (data->cmdt[i].is_child_created == 1)
+			waitpid(data->cmdt[i].pid, &status, 0);
+	if (data->cmdt[i - 1].is_child_created == 1)
+		data->exit_code = WEXITSTATUS(status);
+}
+
+int	fake_pipes(t_data *data, int i, int *pip)
+{
+	if (data->cmdt[i].fd_in != -1)
+	{
+		dup2(data->cmdt[i].fd_in, STDIN_FILENO);
+		close(data->cmdt[i].fd_in);
+	}
+	if (data->cmdt[i].fd_out != -1)
+		dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
+	close(pip[1]);
+	if (data->prev_fd != -1)
+		close(data->prev_fd);
+	if (i != data->cmdt_count - 1)
+		data->prev_fd = pip[0];
+	else
+		close(pip[0]);
+	dup2(data->original_stdout, STDOUT_FILENO);
+	dup2(data->original_stdin, STDIN_FILENO);
+	return (1);
+}
+
+void	executor(t_data *data)
+{
+	int	i;
 	int	pip[2];
 
 	i = -1;
@@ -172,61 +202,20 @@ void	executor(t_data *data)
 	{
 		if (pipe(pip) == -1)
 			return ((void)print_error(data, "pipe", 1));
-		if (manage_redirs(data, &data->cmdt[i]) == 1)
-		{
-			if (data->cmdt[i].fd_in != -1)
-			{
-				dup2(data->cmdt[i].fd_in, STDIN_FILENO);
-				close(data->cmdt[i].fd_in);
-			}
-			if (data->cmdt[i].fd_out != -1)
-				dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
-			close(pip[1]);
-			if (data->prev_fd != -1)
-				close(data->prev_fd);
-			if (i != data->cmdt_count - 1)
-				data->prev_fd = pip[0];
-			else
-				close(pip[0]);
-			dup2(data->original_stdout, STDOUT_FILENO);
-			dup2(data->original_stdin, STDIN_FILENO);
+		if (manage_redirs(data, &data->cmdt[i]) == 1
+			&& fake_pipes(data, i, pip))
 			continue ;
-		}
 		set_fd_in_out(data, &data->cmdt[i], pip, i);
 		if (check_builtin(&data->cmdt[i]) == 1)
 			execute_builtin(data, &data->cmdt[i], i, pip);
 		else
 		{
-			if (find_executable(data, &data->cmdt[i]) == 0)
-			{
-				data->cmdt[i].is_child_created = 1;
+			if (find_executable(data, &data->cmdt[i]) == 0
+				&& ++data->cmdt[i].is_child_created)
 				execute_command(data, &data->cmdt[i], i, pip);
-			}
 			else
-			{
-				if (data->cmdt[i].fd_in != -1)
-				{
-					dup2(data->cmdt[i].fd_in, STDIN_FILENO);
-					close(data->cmdt[i].fd_in);
-				}
-				if (data->cmdt[i].fd_out != -1)
-					dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
-				close(pip[1]);
-				if (data->prev_fd != -1)
-					close(data->prev_fd);
-				if (i != data->cmdt_count - 1)
-					data->prev_fd = pip[0];
-				else
-					close(pip[0]);
-				dup2(data->original_stdout, STDOUT_FILENO);
-				dup2(data->original_stdin, STDIN_FILENO);
-			}
+				fake_pipes(data, i, pip);
 		}
 	}
-	i = -1;
-	while (++i < data->cmdt_count)
-		if (data->cmdt[i].is_child_created == 1)
-			waitpid(data->cmdt[i].pid, &status, 0);
-	if (data->cmdt[i - 1].is_child_created == 1)
-		data->exit_code = WEXITSTATUS(status);
+	wait_children(data);
 }
