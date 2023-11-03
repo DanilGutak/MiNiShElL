@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 15:23:43 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 18:40:13 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	builtin_exit_part2(t_data *data, t_cmd_table *cmd_table, long int code,
 	code = atoi_new(cmd_table->args[1]);
 	if (code == 9876543210)
 	{
-		ft_printf_fd(1, "minishell: exit: %s: numeric argument required\n",
+		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			cmd_table->args[1]);
 		data->exit_code = 2;
 		if (count == 1)

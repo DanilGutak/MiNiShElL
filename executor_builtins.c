@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_builtins.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 19:58:12 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 20:26:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *p_fd)
 	setup_fd_in_builtin(cmd_table, p_fd);
 	if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		builtin_echo(data, cmd_table);
-	/*if (ft_strcmp(cmd_table->cmd, "cd") == 0)
-		return (builtin_cd(data, cmd_table));
+	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
+		builtin_cd(data, cmd_table);
+	/*
 	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
 		return (builtin_pwd(data, cmd_table));
 	if (ft_strcmp(cmd_table->cmd, "export") == 0)

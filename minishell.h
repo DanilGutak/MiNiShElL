@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 19:47:53 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 20:27:23 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void				create_original_fds(t_data *data);
 void				exit_shell(t_data *data, int exit_code);
 void				syntax_error(int code, t_data *data);
 void				free_double_p(char **p);
-void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
 void				free_all(t_data *data);
 int					print_error(t_data *data, char *str, int mode);
 // lexer
@@ -146,10 +145,13 @@ int					create_variable(t_data *data, char *key, char *value);
 int					is_valid_key(char *key);
 int					delete_variable(t_data *data, char *key);
 char				*get_variable_value(t_data *data, char *key);
+int					set_variable(t_data *data, char *key, char *value);
 
 // builtins
 
 void				builtin_echo(t_data *data, t_cmd_table *cmd_table);
+void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
+int					builtin_cd(t_data *data, t_cmd_table *cmd_table);
 void				builtin_unset(t_data *data, t_cmd_table *cmd_table);
 void				builtin_env(t_data *data, t_cmd_table *cmd_table);
 
