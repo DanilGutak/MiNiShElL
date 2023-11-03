@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:06:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 11:50:20 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 18:32:52 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	fill_cmd_args(t_data *data, int j, int i)
 				|| is_not_redir(data->tokens[i - 1].type)))
 		{
 			if (data->tokens[i].value[0] == '\0'
-				&& data->tokens[i].type == WORD)
+				&& data->tokens[i].type == WORD && data->cmdt[j].num_args-- > 0)
 				continue ;
 			if (data->cmdt[j].cmd == NULL)
 			{
