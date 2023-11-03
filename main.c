@@ -52,6 +52,8 @@ void clean_all(t_data *data)
 {
 	free_double_p(data->envp);
 	clean_stuff(data);
+	close(data->original_stdout);
+	close(data->original_stdin);
 }
 /* entry point, initiates data, reads the input,
 	lexer-extender-parser-executor-cleaner(repeated) */

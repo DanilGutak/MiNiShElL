@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 17:01:35 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 13:40:16 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd)
 	return (0);
 }
 
-int check_builtin(t_cmd_table *cmd_table)
+int	check_builtin(t_cmd_table *cmd_table)
 {
 	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (1);
@@ -136,16 +136,18 @@ void	executor(t_data *data)
 
 	i = -1;
 	data->prev_fd = -1;
-	// open redirs here
-	// set infile and outfile here
 	while (++i < data->cmdt_count)
 	{
+		if (manage_redirs(data, &data->cmdt[i]) == 1)
+			return ;
 		if (pipe(pip) == -1)
 			return ((void)print_error(data, "pipe", 1));
 		if (set_fd_in_out(data, &data->cmdt[i], pip) == 1)
 			return ;
+		printf("pipe: %d %d , cmd: %s fd in :%d fd out :%d \n", pip[0], pip[1],
+			data->cmdt[i].cmd, data->cmdt[i].fd_in, data->cmdt[i].fd_out);
 		if (check_builtin(&data->cmdt[i]) == 1)
-			execute_builtin(data, &data->cmdt[i],i , pip);
+			execute_builtin(data, &data->cmdt[i], i, pip);
 		else
 		{
 			if (find_executable(data, &data->cmdt[i]) == 0)
@@ -153,11 +155,38 @@ void	executor(t_data *data)
 				data->cmdt[i].is_child_created = 1;
 				execute_command(data, &data->cmdt[i], i, pip);
 			}
+			else
+			{
+				if (i != 0)
+				{
+					if (data->cmdt[i].fd_in != -1)
+						dup2(data->cmdt[i].fd_in, STDIN_FILENO);
+					close(data->cmdt[i].fd_in);
+				}
+				if (i != data->cmdt_count - 1)
+				{
+					if (data->cmdt[i].fd_out != -1)
+						dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
+					close(pip[1]);
+				}
+				if (data->prev_fd != -1)
+					close(data->prev_fd);
+				if (i != data->cmdt_count - 1)
+					data->prev_fd = pip[0];
+				else
+					close(pip[0]);
+				dup2(data->original_stdout, STDOUT_FILENO);
+				dup2(data->original_stdin, STDIN_FILENO);
+			}
 		}
 	}
 	i = -1;
 	while (++i < data->cmdt_count)
-		waitpid(data->cmdt[i].pid, &status, 0);
+	{
+		printf("cmd: %s, pid: %d\n", data->cmdt[i].cmd, data->cmdt[i].pid);
+		if (data->cmdt[i].is_child_created == 1)
+			waitpid(data->cmdt[i].pid, &status, 0);
+	}
 	if (data->cmdt[i - 1].is_child_created == 1)
 		data->exit_code = WEXITSTATUS(status);
 }
