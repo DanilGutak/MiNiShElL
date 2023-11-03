@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 13:05:38 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:22:06 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ void				syntax_error(int code, t_data *data);
 void				free_double_p(char **p);
 void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
 void				free_all(t_data *data);
-int					print_error(t_data *data, char *str, int exit_code);
-
+int					print_error(t_data *data, char *str, int mode);
 // lexer
 
 int					lexer(t_data *data);
