@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 14:47:47 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:59:04 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	replace_dollar(char *iterate, char **result, t_data *data)
 	char		*key;
 
 	if (vlen == 1)
-		return (*result = ft_strdup("$"), vlen); // handle $ within the string
+		return (*result = ft_strdup("$"), vlen);
 	key = ft_substr(iterate, 1, vlen - 1);
 	if (key == NULL)
 		return (vlen);

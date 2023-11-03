@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 19:26:54 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:47:53 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,6 @@ char				*get_variable_value(t_data *data, char *key);
 
 void				builtin_echo(t_data *data, t_cmd_table *cmd_table);
 void				builtin_unset(t_data *data, t_cmd_table *cmd_table);
-
+void				builtin_env(t_data *data, t_cmd_table *cmd_table);
 
 #endif

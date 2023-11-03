@@ -6,7 +6,7 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/03 19:30:57 by vfrants          ###   ########.fr        #
+#    Updated: 2023/11/03 19:48:32 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LEXER		= lexer.c fill_tokens.c
 PARSER		= parser.c parser_utils.c redirs_and_args.c
 EXECUTOR	= executor.c find_executable.c executor_builtins.c executor_utils.c
 BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c \
-			builtin_echo.c builtin_unset.c
+			builtin_echo.c builtin_unset.c builtin_env.c
 EXPANDER	= expander.c
 
 SRCS	= main.c init.c exit_shell.c init_utils.c cleaner.c\

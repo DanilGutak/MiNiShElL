@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 19:30:38 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:58:12 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	setup_fd_in_builtin(t_cmd_table *cmd_table, int *pipe_fd)
 
 void	restore_fds(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 {
-	close(cmd_table->fd_out);
+	if (cmd_table->fd_out != -1)
+		close(cmd_table->fd_out);
 	if (i != data->cmdt_count - 1)
 		data->prev_fd = pipe_fd[0];
 	else
@@ -35,9 +36,9 @@ void	restore_fds(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 	dup2(data->original_stdin, STDIN_FILENO);
 }
 
-void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
+void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *p_fd)
 {
-	setup_fd_in_builtin(cmd_table, pipe_fd);
+	setup_fd_in_builtin(cmd_table, p_fd);
 	if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		builtin_echo(data, cmd_table);
 	/*if (ft_strcmp(cmd_table->cmd, "cd") == 0)
@@ -48,11 +49,11 @@ void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 		return (builtin_export(data, cmd_table));*/
 	if (ft_strcmp(cmd_table->cmd, "unset") == 0)
 		builtin_unset(data, cmd_table);
-	/*if (ft_strcmp(cmd_table->cmd, "env") == 0)
-		return (builtin_env(data, cmd_table));  */
+	if (ft_strcmp(cmd_table->cmd, "env") == 0)
+		builtin_env(data, cmd_table);
 	if (ft_strcmp(cmd_table->cmd, "exit") == 0)
 		builtin_exit(data, cmd_table);
-	restore_fds(data, cmd_table, i, pipe_fd);
+	restore_fds(data, cmd_table, i, p_fd);
 }
 
 int	check_builtin(t_cmd_table *cmd_table)
@@ -67,8 +68,8 @@ int	check_builtin(t_cmd_table *cmd_table)
 	//	return (1);
 	if (ft_strcmp(cmd_table->cmd, "unset") == 0)
 		return (1);
-	/*if (ft_strcmp(cmd_table->cmd, "env") == 0)
-		return (1); */
+	if (ft_strcmp(cmd_table->cmd, "env") == 0)
+		return (1);
 	if (ft_strcmp(cmd_table->cmd, "exit") == 0)
 		return (1);
 	return (0);

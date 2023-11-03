@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 19:13:44 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:59:30 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	delete_variable(t_data *data, char *key)
 	size = ft_len_split(data->envp);
 	new = (char **)ft_calloc(sizeof (char *), size);
 	if (!new)
-		return (MALLOC_F); // same error here related to malloc
+		return (MALLOC_F);
 	i = 0;
 	while (i < size)
 	{
