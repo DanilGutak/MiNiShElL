@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 14:22:06 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:57:07 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,9 @@ int					create_variable(t_data *data, char *key, char *value);
 int					is_valid_key(char *key);
 int					delete_variable(t_data *data, char *key);
 char				*get_variable_value(t_data *data, char *key);
+
+// builtins
+
+int					builtin_echo(t_data *data, t_cmd_table *cmd_table);
 
 #endif

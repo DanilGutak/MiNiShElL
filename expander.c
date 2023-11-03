@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 16:59:26 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:47:47 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ int	expander(t_data *data)
 	end = data->token_count;
 	while (i < end)
 	{
+		if (data->tokens[i].type == REDIR_HEREDOC)
+		{
+			i++;
+			while (data->tokens[i].no_space)
+				i++;
+		}
 		if ((data->tokens[i].type == WORD || data->tokens[i].type == DQUOTE)
 			&& ft_contains(data->tokens[i].value, '$'))
 		{
