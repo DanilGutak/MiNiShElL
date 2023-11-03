@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 20:26:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 20:28:07 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	check_builtin(t_cmd_table *cmd_table)
 {
 	if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (1);
-	//if (ft_strcmp(cmd_table->cmd, "cd") == 0)
-	//	return (1);
+	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
+		return (1);
 	//if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
 	//	return (1);
 	//if (ft_strcmp(cmd_table->cmd, "export") == 0)
