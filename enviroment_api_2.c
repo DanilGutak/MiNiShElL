@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 21:43:19 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 16:05:56 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:13:44 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ char	*get_variable_value(t_data *data, char *key)
 /* delete a variable from the envp */
 int	delete_variable(t_data *data, char *key)
 {
-	char	**new;
-	char	position;
-	int		size;
-	int		i;
+	char		**new;
+	const int	position = get_variable_numb(data->envp, key);
+	int			size;
+	int			i;
 
-	position = get_variable_numb(data->envp, key);
 	if (position == -1)
 		return (FAILURE);
 	size = ft_len_split(data->envp);
@@ -45,6 +44,7 @@ int	delete_variable(t_data *data, char *key)
 		new[i] = data->envp[ft_tr(i < position, i, i + 1)];
 		i++;
 	}
+	free(data->envp[position]);
 	free(data->envp);
 	data->envp = new;
 	return (SUCCESS);

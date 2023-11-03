@@ -6,14 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:23:27 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 18:19:02 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 19:25:37 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 int	is_flag(char *arg)
 {
@@ -29,7 +26,11 @@ int	is_flag(char *arg)
 	return (0);
 }
 
-int	builtin_echo(t_data *data, t_cmd_table *cmd_table)
+/*
+	Builtin echo
+	works with flag -n as well
+*/
+void	builtin_echo(t_data *data, t_cmd_table *cmd_table)
 {
 	int	new_line;
 	int	i;
@@ -46,11 +47,4 @@ int	builtin_echo(t_data *data, t_cmd_table *cmd_table)
 	if (new_line)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	data->exit_code = 0;
-	// (void) data;
-	// printf("cmd {%s}\n", cmd_table->cmd);
-	// for (int i = 0; cmd_table->args[i]; i++) {
-	// 	printf("args %d {%s}\n", i, cmd_table->args[i]);
-	// }
-	// printf("nbr args {%d}\n", cmd_table->num_args);
-	return (FAILURE);
 }

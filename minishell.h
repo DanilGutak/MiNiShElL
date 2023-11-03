@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:55:51 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 19:26:54 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void				executor(t_data *data);
 int					find_executable(t_data *data, t_cmd_table *cmd_table);
 void				set_dups(t_cmd_table *cmd_table);
 int					check_builtin(t_cmd_table *cmd_table);
-int					execute_builtin(t_data *data, t_cmd_table *cmd_table, int i,
+void				execute_builtin(t_data *data, t_cmd_table *cmd_table, int i,
 						int *pipe_fd);
 int					set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd,
 						int i);
@@ -149,6 +149,8 @@ char				*get_variable_value(t_data *data, char *key);
 
 // builtins
 
-int					builtin_echo(t_data *data, t_cmd_table *cmd_table);
+void				builtin_echo(t_data *data, t_cmd_table *cmd_table);
+void				builtin_unset(t_data *data, t_cmd_table *cmd_table);
+
 
 #endif

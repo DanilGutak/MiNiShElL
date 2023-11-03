@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 20:23:45 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 18:50:41 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/03 18:34:58 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	increment_shlvl_variable(t_data *data)
 
 	shlvl = get_variable_numb(data->envp, "SHLVL");
 	if (shlvl == -1)
-		return (FAILURE);
+		return (create_variable(data, "SHLVL", "1"));
 	current = ft_atoi(data->envp[shlvl] + 6);
 	if (current == 0)
 		return (FAILURE);
