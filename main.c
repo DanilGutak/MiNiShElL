@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 12:26:04 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 13:08:10 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			executor(&data);
 		}
-		//printf("exit code: %d\n", data.exit_code);
 		clean_stuff(&data);
 	}
 }
