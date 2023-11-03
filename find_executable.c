@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:18:34 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 17:26:33 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 int	find_executable(t_data *data, t_cmd_table *cmd_table)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = -1;
 	if (!cmd_table->cmd)
