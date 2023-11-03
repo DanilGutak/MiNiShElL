@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:54:33 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 18:02:14 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,34 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		close(pipe_fd[0]);
 }
 
+int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
+{
+	if (cmd_table->redirs[i].type == REDIR_OUT)
+	{
+		if (cmd_table->out_file != -1)
+			close(cmd_table->out_file);
+		cmd_table->out_file = open(cmd_table->redirs[i].value,
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd_table->out_file == -1)
+			return (print_error(data, cmd_table->redirs[i].value, 1));
+	}
+	else if (cmd_table->redirs[i].type == REDIR_APPEND)
+	{
+		if (cmd_table->out_file != -1)
+			close(cmd_table->out_file);
+		cmd_table->out_file = open(cmd_table->redirs[i].value,
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (cmd_table->out_file == -1)
+			return (print_error(data, cmd_table->redirs[i].value, 1));
+	}
+	else if (cmd_table->redirs[i].type == REDIR_HEREDOC)
+	{
+		//do_heredoc(data, cmd_table, i); TODO
+		return(0);
+	}
+	return (0);
+}
+
 int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 {
 	int	i;
@@ -58,24 +86,9 @@ int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 			if (cmd_table->in_file == -1)
 				return (print_error(data, cmd_table->redirs[i].value, 1));
 		}
-		else if (cmd_table->redirs[i].type == REDIR_OUT)
-		{
-			if (cmd_table->out_file != -1)
-				close(cmd_table->out_file);
-			cmd_table->out_file = open(cmd_table->redirs[i].value,
-					O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (cmd_table->out_file == -1)
-				return (print_error(data, cmd_table->redirs[i].value, 1));
-		}
-		else if (cmd_table->redirs[i].type == REDIR_APPEND)
-		{
-			if (cmd_table->out_file != -1)
-				close(cmd_table->out_file);
-			cmd_table->out_file = open(cmd_table->redirs[i].value,
-					O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (cmd_table->out_file == -1)
-				return (print_error(data, cmd_table->redirs[i].value, 1));
-		}
+		else
+			if (other_redirs(data, cmd_table, i) == 1)
+				return (1);
 	}
 	return (0);
 }
@@ -91,8 +104,8 @@ void	executor(t_data *data)
 	{
 		if (pipe(pip) == -1)
 			return ((void)print_error(data, "pipe", 1));
-		if (manage_redirs(data, &data->cmdt[i]) == 1
-			&& fake_pipes(data, i, pip))
+		if (manage_redirs(data, &data->cmdt[i]) == 1 && fake_pipes(data, i,
+				pip))
 			continue ;
 		set_fd_in_out(data, &data->cmdt[i], pip, i);
 		if (check_builtin(&data->cmdt[i]) == 1)
