@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 14:25:27 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 14:56:16 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 			dup2(cmd_table->fd_out, STDOUT_FILENO);
 		close(pipe_fd[1]);
 	}
-	/* if (ft_strcmp(cmd_table->cmd, "echo") == 0)
+	if (ft_strcmp(cmd_table->cmd, "echo") == 0)
 		return (builtin_echo(data, cmd_table));
-	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
+	/*if (ft_strcmp(cmd_table->cmd, "cd") == 0)
 		return (builtin_cd(data, cmd_table));
 	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
 		return (builtin_pwd(data, cmd_table));
