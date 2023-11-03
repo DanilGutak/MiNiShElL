@@ -6,7 +6,7 @@
 #    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/03 17:27:08 by dgutak           ###   ########.fr        #
+#    Updated: 2023/11/03 17:56:18 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBFT		= ${LIBDIR}/libft.a
 
 LEXER		= lexer.c fill_tokens.c
 PARSER		= parser.c parser_utils.c redirs_and_args.c
-EXECUTOR	= executor.c find_executable.c
+EXECUTOR	= executor.c find_executable.c executor_builtins.c executor_utils.c
 BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c \
 			builtin_echo.c
 EXPANDER	= expander.c
