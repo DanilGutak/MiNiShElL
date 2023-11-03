@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:27:45 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 00:23:53 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	free_tokens(t_token *tokens, int token_max, t_data *data)
 	return (1);
 }
 
-/* reallocate memory in case 
+/* reallocate memory in case
 there are nott enough space for tokens(multiplies by 2 everytime) */
 int	realloc_tokens(t_data *data, int token_max)
 {
@@ -50,7 +50,7 @@ int	realloc_tokens(t_data *data, int token_max)
 	return (0);
 }
 
-/* searches for "PATH=" in env, then 
+/* searches for "PATH=" in env, then
 splits it by : and store it as alloced 2d array */
 char	**get_path(t_data *data, int i)
 {

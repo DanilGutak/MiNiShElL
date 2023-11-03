@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 20:27:23 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 00:23:35 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,6 @@ void				builtin_exit(t_data *data, t_cmd_table *cmd_table);
 int					builtin_cd(t_data *data, t_cmd_table *cmd_table);
 void				builtin_unset(t_data *data, t_cmd_table *cmd_table);
 void				builtin_env(t_data *data, t_cmd_table *cmd_table);
+void				builtin_export(t_data *data, t_cmd_table *cmd_table);
 
 #endif
