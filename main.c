@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/02 18:47:15 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 12:26:04 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void clean_all(t_data *data)
 {
 	free_double_p(data->envp);
 	clean_stuff(data);
+	close(data->original_stdout);
+	close(data->original_stdin);
 }
 /* entry point, initiates data, reads the input,
 	lexer-extender-parser-executor-cleaner(repeated) */
@@ -75,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			executor(&data);
 		}
-		printf("exit code: %d\n", data.exit_code);
+		//printf("exit code: %d\n", data.exit_code);
 		clean_stuff(&data);
 	}
 }

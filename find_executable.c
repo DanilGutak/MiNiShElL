@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 19:00:01 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/03 11:41:04 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 		dir = opendir(cmd_table->cmd);
 		if (dir)
 		{
-			ft_printf_fd(2, "minishell: %s: Is a directory.\n", cmd_table->cmd);
+			ft_printf_fd(2, "minishell: %s: Is a directory\n", cmd_table->cmd);
 			data->exit_code = 126;
 			closedir(dir);
 		}
