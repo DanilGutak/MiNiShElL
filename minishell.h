@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 00:49:19 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 01:42:08 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,17 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <signal.h>
 // for errno
 # include <errno.h>
 
 # define SUCCESS 0
 # define FAILURE 1
 # define MALLOC_F 2
+
+# define KEEP_GOING 0
+# define CNTRL_C 1
+# define CNTRL_S 2
 
 typedef enum s_token_type
 {
