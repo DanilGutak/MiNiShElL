@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:26:33 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 17:46:22 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 {
 	DIR	*dir;
 
-	if (access(cmd_table->cmd, F_OK) == 0)
+	if (access(cmd_table->cmd, F_OK) == 0 && cmd_table->cmd[0] != '.')
 	{
 		dir = opendir(cmd_table->cmd);
 		if (dir)
@@ -117,7 +117,7 @@ int	find_executable(t_data *data, t_cmd_table *cmd_table)
 		data->exit_code = 127;
 		return (1);
 	}
-	if (ft_strchr(cmd_table->cmd, '/') != 0)
+	if (ft_strchr(cmd_table->cmd, '/') != 0 || cmd_table->cmd[0] == '.')
 		return (check_with_slash(cmd_table, data));
 	ret = search_in_path(data, cmd_table, i);
 	if (ret == 0)
