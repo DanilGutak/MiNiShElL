@@ -6,15 +6,15 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:53:04 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 18:41:04 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:10:57 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_signal = 0;
+int	g_signal = 0;
 
-void handler(int status)
+void	handler(int status)
 {
 	if (status == SIGINT)
 	{
@@ -26,7 +26,7 @@ void handler(int status)
 	}
 }
 
-void setup_signals(t_data *data)
+void	setup_signals(t_data *data)
 {
 	if (data->mode == INTERACTIVE)
 	{

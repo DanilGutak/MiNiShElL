@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 18:31:39 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 23:12:12 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 
 long int	atoi_new(char *str)
@@ -93,7 +92,6 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 	count = data->cmdt_count;
 	if (!cmd_table)
 	{
-		//ft_printf_fd(2, "exit\n");
 		clean_all(data);
 		exit(data->exit_code);
 	}

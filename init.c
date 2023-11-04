@@ -6,11 +6,10 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 12:36:22 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:04:26 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 
 int	free_tokens(t_token *tokens, int token_max, t_data *data)

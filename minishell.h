@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 19:42:57 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:07:14 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <signal.h>
+# include <signal.h>
 // for errno
 # include <errno.h>
 
@@ -36,7 +36,7 @@
 # define CNTRL_C 1
 # define CNTRL_S 2
 
-extern int g_signal;
+extern int	g_signal;
 
 typedef enum s_token_type
 {
@@ -48,13 +48,13 @@ typedef enum s_token_type
 	REDIR_HEREDOC,
 	DQUOTE,
 	SQUOTE
-} t_token_type;
+}					t_token_type;
 
 typedef enum s_mode
 {
-	INTERACTIVE, // heredoc, prompt
-	NON_INTERACTIVE, // waits a child
-	CHILD // test
+	INTERACTIVE,
+	NON_INTERACTIVE,
+	CHILD
 }					t_mode;
 
 typedef struct s_token
@@ -94,21 +94,21 @@ typedef struct s_data
 	int				prev_fd;
 	int				original_stdin;
 	int				original_stdout;
-	t_mode mode;
+	t_mode			mode;
 }					t_data;
 
 // signals
 
-void 				setup_signals(t_data *data);
+void				setup_signals(t_data *data);
 void				mode(t_data *data, t_mode mode);
 
 // heredoc
 
-void	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i);
+void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i);
 
 // init
 
-void 				data_init(t_data *data, char **envp);
+void				data_init(t_data *data, char **envp);
 char				**get_path(t_data *data, int i);
 void				create_original_fds(t_data *data);
 

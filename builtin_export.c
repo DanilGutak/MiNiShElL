@@ -6,12 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:38:28 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 17:16:11 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:05:01 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 static int	is_invalid(char *str)
 {

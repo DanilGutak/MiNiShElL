@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 18:45:41 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:11:48 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		clean_stuff(&data);
 	}
-}/*
+}
+
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;

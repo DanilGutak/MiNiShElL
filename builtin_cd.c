@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:12:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 16:01:34 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 23:05:12 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 
 int	builtin_cd(t_data *data, t_cmd_table *cmd_table)
