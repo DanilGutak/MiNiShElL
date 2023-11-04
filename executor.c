@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 18:31:17 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:44:08 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
 	}
 	else if (cmd_table->redirs[i].type == REDIR_HEREDOC)
 	{
-		//do_heredoc(data, cmd_table, i); TODO
+		do_heredoc(data, cmd_table, i);
 		return(0);
 	}
 	return (0);

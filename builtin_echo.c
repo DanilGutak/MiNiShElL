@@ -6,10 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:23:27 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 19:33:48 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 18:47:07 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 int	is_flag(char *arg)
