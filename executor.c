@@ -6,13 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 22:59:29 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 23:00:31 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
-#include <unistd.h>
 
 void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		int *pipe_fd)

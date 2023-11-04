@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 12:07:09 by vfrants           #+#    #+#             */
-/*   Updated: 2023/10/28 15:45:08 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 22:37:27 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*ft_sep_n_trim(char *str)
 	while (*str && *str != '\n')
 		*res++ = *str++;
 	if (*str == '\n')
-		*res++ = *str;
+		*res++ = '\0';
 	*res = '\0';
 	return (buff);
 }
@@ -99,6 +99,8 @@ static char	*ft_get_rest(char *str, size_t offset)
 		return (free(str), NULL);
 	buf_str = str;
 	while (offset--)
+		str++;
+	if (*str == '\n')
 		str++;
 	res = (char *)malloc(sizeof (char) * (ft_strlen(str) + 1));
 	if (!res)

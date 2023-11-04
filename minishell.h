@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 18:30:37 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:42:57 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ typedef struct s_data
 
 void 				setup_signals(t_data *data);
 void				mode(t_data *data, t_mode mode);
+
+// heredoc
+
+void	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i);
 
 // init
 

@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:11:14 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/02 15:50:39 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 21:46:46 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int					ft_printf_fd(int fd, const char *format, ...);
 int					ft_putnbru_fd(unsigned int n, int fd);
 int					ft_printhex_fd(unsigned long n, char format, int fd);
 char				*ft_strstr(char *str, char *to_find);
-int					ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(const char *s1, const char *s2);
 
 // Vitalik starter pack
 

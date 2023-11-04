@@ -6,7 +6,7 @@
 #    By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/04 12:54:29 by vfrants          ###   ########.fr        #
+#    Updated: 2023/11/04 19:46:50 by vfrants          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ PARSER		= parser.c parser_utils.c redirs_and_args.c
 EXECUTOR	= executor.c find_executable.c executor_builtins.c executor_utils.c
 BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c \
 			builtin_echo.c builtin_cd.c builtin_unset.c builtin_env.c \
-			builtin_export.c builtin_pwd.c signal_handler.c
+			builtin_export.c builtin_pwd.c signal_handler.c heredoc.c
 EXPANDER	= expander.c
 
 SRCS	= main.c init.c exit_shell.c init_utils.c cleaner.c\
