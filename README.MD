@@ -8,7 +8,12 @@
 - replace all printf to printf_fd (DONE)
 - add cleaning envp in case bash exits(NOT IN CLEAN_STUFF)
 - turn exits into returns(WIP, done for lexer and parser)
+пишу пока помню
 
+- cd, export, unset не должно работать в пайпах
+- пвд должна викоростовивать getcwd вместо env
+- exit codes for signals
+- fix heredocs
 
 ## CLEANER(??) after every rdln
 - clean tokens(DONE)

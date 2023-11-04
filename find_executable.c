@@ -16,7 +16,7 @@ int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 {
 	DIR	*dir;
 
-	if (access(cmd_table->cmd, F_OK) == 0 && cmd_table->cmd[0] != '.')
+	if (access(cmd_table->cmd, F_OK) == 0)
 	{
 		dir = opendir(cmd_table->cmd);
 		if (dir)
