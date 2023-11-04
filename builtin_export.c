@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:38:28 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 01:15:36 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 17:16:11 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	builtin_export(t_data *data, t_cmd_table *cmd_table)
 		{
 			if (ft_is_blank(cmd_table->args[i]) && !data->exit_code)
 				ft_putendl_fd("export: not valid in this context:", 2);
-			else if (!ft_is_blank(cmd_table->args[i]) && data->exit_code)
+			else if (!data->exit_code)
 			{
 				ft_putstr_fd("bash: export: `", STDERR_FILENO);
 				ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);

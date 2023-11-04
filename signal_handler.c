@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:53:04 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 13:14:03 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 17:01:34 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void handler(int status)
 	(void)status;
 	g_signal = CNTRL_C;
 	write(STDERR_FILENO, "\n", 1);
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 }
 
@@ -36,3 +36,4 @@ void setup_signals(t_data *data)
 		signal(SIGQUIT, SIG_DFL);
 	}
 }
+
