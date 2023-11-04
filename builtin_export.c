@@ -6,12 +6,12 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:38:28 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 00:36:51 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 01:15:36 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
+#include <stdio.h>
 
 static int	is_invalid(char *str)
 {
@@ -32,12 +32,12 @@ static void	handle_valid(t_data *data, char *line)
 	char	*key;
 	int		i;
 
-	if (!line || *line || !ft_contains(line, '='))
+	if (!line || !*line || !ft_contains(line, '='))
 		return ;
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
-	key = ft_substr(line, 0, ++i);
+	key = ft_substr(line, 0, i++);
 	if (!key)
 		return ;
 	while (line[i])
@@ -80,17 +80,22 @@ void	builtin_export(t_data *data, t_cmd_table *cmd_table)
 	int		i;
 
 	data->exit_code = 0;
-	i = 1;
 	if (cmd_table->num_args == 1)
 		handle_empty(data->envp);
+	i = 1;
 	while (i < cmd_table->num_args)
 	{
 		if (is_invalid(cmd_table->args[i]))
 		{
+			if (ft_is_blank(cmd_table->args[i]) && !data->exit_code)
+				ft_putendl_fd("export: not valid in this context:", 2);
+			else if (!ft_is_blank(cmd_table->args[i]) && data->exit_code)
+			{
+				ft_putstr_fd("bash: export: `", STDERR_FILENO);
+				ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);
+				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			}
 			data->exit_code = 1;
-			ft_putstr_fd("bash: export: `", STDERR_FILENO);
-			ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);
-			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 		}
 		else
 			handle_valid(data, cmd_table->args[i]);

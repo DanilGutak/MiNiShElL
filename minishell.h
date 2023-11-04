@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 00:23:35 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 00:49:19 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,6 @@ int					builtin_cd(t_data *data, t_cmd_table *cmd_table);
 void				builtin_unset(t_data *data, t_cmd_table *cmd_table);
 void				builtin_env(t_data *data, t_cmd_table *cmd_table);
 void				builtin_export(t_data *data, t_cmd_table *cmd_table);
+void				builtin_pwd(t_data *data, t_cmd_table *cmd_table);
 
 #endif

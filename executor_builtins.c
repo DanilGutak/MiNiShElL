@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 23:18:44 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 01:12:33 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *p_fd)
 		builtin_echo(data, cmd_table);
 	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
 		builtin_cd(data, cmd_table);
-	/*
 	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
-		return (builtin_pwd(data, cmd_table));*/
+		builtin_pwd(data, cmd_table);
 	if (ft_strcmp(cmd_table->cmd, "export") == 0)
-		return (builtin_export(data, cmd_table));
+		builtin_export(data, cmd_table);
 	if (ft_strcmp(cmd_table->cmd, "unset") == 0)
 		builtin_unset(data, cmd_table);
 	if (ft_strcmp(cmd_table->cmd, "env") == 0)
@@ -63,8 +62,8 @@ int	check_builtin(t_cmd_table *cmd_table)
 		return (1);
 	if (ft_strcmp(cmd_table->cmd, "cd") == 0)
 		return (1);
-	//if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
-	//	return (1);
+	if (ft_strcmp(cmd_table->cmd, "pwd") == 0)
+		return (1);
 	if (ft_strcmp(cmd_table->cmd, "export") == 0)
 		return (1);
 	if (ft_strcmp(cmd_table->cmd, "unset") == 0)
