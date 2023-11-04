@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 18:04:05 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 18:44:27 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* entry point, initiates data, reads the input,
 	lexer-extender-parser-executor-cleaner(repeated) */
-int	main(int argc, char **argv, char **envp)
+/* int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
@@ -52,11 +52,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signals(&data);
 		data.path = get_path(&data, -1);
-		if (isatty(fileno(stdin)))
+		if (isatty(0))
 			data.input = readline("minishell$ ");
 		else
 		{
-			line = get_next_line(fileno(stdin), 1);
+			line = get_next_line(0, 0);
+			if (!line)
+				builtin_exit(&data, NULL);
 			data.input = ft_strtrim(line, "\n");
 			free(line);
 		}
