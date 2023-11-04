@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 13:11:42 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 16:45:25 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,36 @@ int	main(int argc, char **argv, char **envp)
 		}
 		clean_stuff(&data);
 	}
-}
+}/* 
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	data;
+	char *line;
+
+	(void)argv;
+	if (argc != 1)
+		return (ft_putstr_fd("Error: too many arguments\n", 2));
+	data_init(&data, envp);
+	while (1)
+	{
+		setup_signals(&data);
+		data.path = get_path(&data, -1);
+		if (isatty(fileno(stdin)))
+			data.input = readline("minishell$ ");
+		else
+		{
+			line = get_next_line(fileno(stdin), 1);
+			data.input = ft_strtrim(line, "\n");
+			free(line);
+		}
+		if (!data.input)
+			builtin_exit(&data, NULL);
+		if (data.input[0] != '\0')
+			add_history(data.input);
+		if (lexer(&data) == 0 && expander(&data) == 0 && parser(&data) == 0)
+		{
+			executor(&data);
+		}
+		clean_stuff(&data);
+	}
+} */

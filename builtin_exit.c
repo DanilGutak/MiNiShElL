@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:04:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 18:40:13 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:56:34 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 	count = data->cmdt_count;
 	if (!cmd_table)
 	{
+		//ft_printf_fd(2, "exit\n");
 		clean_all(data);
 		exit(data->exit_code);
 	}
@@ -103,10 +104,9 @@ void	builtin_exit(t_data *data, t_cmd_table *cmd_table)
 			cmd_table->args[1]);
 		data->exit_code = 2;
 		if (count == 1)
-		{
 			clean_all(data);
+		if (count == 1)
 			exit(data->exit_code);
-		}
 		return ;
 	}
 	if (cmd_table && cmd_table->num_args > 2)

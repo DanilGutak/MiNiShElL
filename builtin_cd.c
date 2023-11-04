@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:12:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 20:24:13 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:01:34 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ int	builtin_cd(t_data *data, t_cmd_table *cmd_table)
 		return (data->exit_code = 1, 1);
 	if (set_variable(data, "PWD", temp) != 0)
 		return (data->exit_code = 1, free(temp), 1);
-	free(temp);
-	return (0);
+	return (free(temp), 0);
 }

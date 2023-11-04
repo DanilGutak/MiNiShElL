@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:01:42 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:01:52 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:41:44 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	clean_stuff(t_data *data)
 		data->tokens = NULL;
 	}
 	free_cmdt(data);
-	free(data->input);
+	if (data->input)
+		free(data->input);
 	data->input = NULL;
 	free_double_p(data->path);
 	data->path = NULL;

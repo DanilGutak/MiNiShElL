@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:53:21 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 17:57:03 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:26:56 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ void	wait_children(t_data *data)
 		if (data->cmdt[i].is_child_created == 1)
 			waitpid(data->cmdt[i].pid, &status, 0);
 	if (data->cmdt[i - 1].is_child_created == 1)
-		data->exit_code = WEXITSTATUS(status);
+	{
+		if (WIFEXITED(status))
+			data->exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			data->exit_code = WTERMSIG(status) + 128;
+	}
 }
 
 int	fake_pipes(t_data *data, int i, int *pip)
