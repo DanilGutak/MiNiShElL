@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 12:59:15 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 18:30:37 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef enum s_token_type
 typedef enum s_mode
 {
 	INTERACTIVE, // heredoc, prompt
-	NON_INTERACTIVE // child, sleep
+	NON_INTERACTIVE, // waits a child
+	CHILD // test
 }					t_mode;
 
 typedef struct s_token
@@ -99,6 +100,7 @@ typedef struct s_data
 // signals
 
 void 				setup_signals(t_data *data);
+void				mode(t_data *data, t_mode mode);
 
 // init
 

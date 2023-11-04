@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 16:45:25 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/04 18:04:05 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	data_init(&data, envp);
 	while (1)
 	{
-		setup_signals(&data);
+		mode(&data, INTERACTIVE);
 		data.path = get_path(&data, -1);
 		data.input = readline("minishell$ ");
 		if (!data.input)
@@ -33,11 +33,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data.input);
 		if (lexer(&data) == 0 && expander(&data) == 0 && parser(&data) == 0)
 		{
+			mode(&data, NON_INTERACTIVE);
 			executor(&data);
 		}
 		clean_stuff(&data);
 	}
-}/* 
+}/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;

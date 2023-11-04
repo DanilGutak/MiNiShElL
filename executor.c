@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 18:04:42 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 18:31:17 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		if (cmd_table->fd_out != -1)
 			dup2(cmd_table->fd_out, STDOUT_FILENO);
 		close(pipe_fd[1]);
+		mode(data, CHILD);
 		execve(cmd_table->cmd, cmd_table->args, data->envp);
 		exit(print_error(data, cmd_table->cmd, 1));
 	}
