@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 01:42:08 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 12:59:15 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define CNTRL_C 1
 # define CNTRL_S 2
 
+extern int g_signal;
+
 typedef enum s_token_type
 {
 	WORD,
@@ -46,7 +48,13 @@ typedef enum s_token_type
 	REDIR_HEREDOC,
 	DQUOTE,
 	SQUOTE
-}					t_token_type;
+} t_token_type;
+
+typedef enum s_mode
+{
+	INTERACTIVE, // heredoc, prompt
+	NON_INTERACTIVE // child, sleep
+}					t_mode;
 
 typedef struct s_token
 {
@@ -85,11 +93,16 @@ typedef struct s_data
 	int				prev_fd;
 	int				original_stdin;
 	int				original_stdout;
+	t_mode mode;
 }					t_data;
+
+// signals
+
+void 				setup_signals(t_data *data);
 
 // init
 
-void				data_init(t_data *data, char **envp);
+void 				data_init(t_data *data, char **envp);
 char				**get_path(t_data *data, int i);
 void				create_original_fds(t_data *data);
 

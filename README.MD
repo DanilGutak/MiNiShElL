@@ -23,7 +23,7 @@
 -	check pipes and redirs(DONE)
 -   changing exit code to 2 if syntax is wrong(DONE)
 
-## EXPANDER (DONE) (REQUIRES TESTS)
+## EXPANDER (DONE)
 - change $stuff in WORD and DQUOTE types to their values, need to get enviroment + additional enviroment
 
 ## PARSER(DONE)
@@ -34,9 +34,9 @@
 
 
  ## EXECUTOR
-- open redirs (> lol > kek > pop)(VITALIK)
+- open redirs (> lol > kek > pop)(DONE)
 - trigger heredocs if anywhere (do expands(dont forget about "eof" does not expand))(VITALIK)
-- set the fd for redir(last for in and last for out[not heredoc])(VITALIK?)
+- set the fd for redir(last for in and last for out[not heredoc])(DONE)
 - execute different part of pipes one after another(done)
 - find executable for builtins(DONE)
 - configure pipe for it(DONE)
@@ -46,9 +46,9 @@
 
 ## MISC:
 
-- signals
+- signals (IN PROCESS)
 
-- builtins
+- builtins (DONE)
 
     ◦ echo with option -n
 

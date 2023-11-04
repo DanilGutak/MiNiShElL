@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 00:23:53 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 12:36:22 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	data_init(t_data *data, char **envp)
 	data->cmdt = NULL;
 	data->cmdt_count = 0;
 	data->exit_code = 0;
+	data->mode = INTERACTIVE;
 	create_original_fds(data);
 	new_env = split_dup(envp);
 	if (new_env == NULL)

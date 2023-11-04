@@ -6,22 +6,11 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 01:42:00 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/04 13:11:42 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_signal = 0;
-
-void	handler(int status)
-{
-	printf("SIGNAL IS RECEIVED ---%d---", status);
-	if (status == SIGINT)
-		g_signal = CNTRL_C;
-	else if (status == SIGQUIT)
-		g_signal = CNTRL_S;
-}
 
 /* entry point, initiates data, reads the input,
 	lexer-extender-parser-executor-cleaner(repeated) */
@@ -33,10 +22,9 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (ft_putstr_fd("Error: too many arguments\n", 2));
 	data_init(&data, envp);
-	signal(SIGINT, &handler);
-	signal(SIGQUIT, &handler);
 	while (1)
 	{
+		setup_signals(&data);
 		data.path = get_path(&data, -1);
 		data.input = readline("minishell$ ");
 		if (!data.input)
