@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:06:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 18:32:52 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/05 21:43:40 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	fill_redirs(t_data *data, int j, int i)
 		if (is_not_redir(data->tokens[i].type) == 0)
 		{
 			data->cmdt[j].redirs[count].type = data->tokens[i].type;
+			data->cmdt[j].redirs[count].no_space = data->tokens[i].no_space;
 			data->cmdt[j].redirs[count].value = ft_strdup(data->tokens[i++
 					+ 1].value);
-			if (!data->cmdt[j].redirs[count].value)
+			if (!data->cmdt[j].redirs[count++].value)
 				return (print_error(data, "ft_strdup", 1));
-			count++;
 		}
 		i++;
 	}

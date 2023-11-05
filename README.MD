@@ -2,17 +2,22 @@
 
 ## TODO:
 
+- export, unset не должно работать в пайпах (VITALIK)
+- пвд должна викоростовивать getcwd вместо env(done)
+- exit codes for signals (done)
+- fix heredocs (VITALIK)
+- Norminette for parser(WIP)
+- proper message for ambigious redirections(including env var if possible)
+- dont expand if nearby heredoc(ass heredoc does not need expanded value)
+
 - some tests(VITALIK)
 
 - write descriptions for functions(DONE)
 - replace all printf to printf_fd (DONE)
 - add cleaning envp in case bash exits(NOT IN CLEAN_STUFF)
 - turn exits into returns(WIP, done for lexer and parser)
-пишу пока помню
-- export, unset не должно работать в пайпах
-- пвд должна викоростовивать getcwd вместо env(done)
-- exit codes for signals (done)
-- fix heredocs (VITALIK)
+
+
 
 ## CLEANER(??) after every rdln
 - clean tokens(DONE)

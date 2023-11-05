@@ -6,10 +6,11 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 16:23:02 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/05 21:48:46 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
 
 void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
@@ -76,6 +77,12 @@ int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 	i = -1;
 	while (++i < cmd_table->num_redirs)
 	{
+		if (cmd_table->redirs[i].no_space == 2
+			&& cmd_table->redirs[i].type != REDIR_HEREDOC)
+		{
+			ft_printf_fd(2, "minishell: ambigious redirect\n");
+			return (1);
+		}
 		if (cmd_table->redirs[i].type == REDIR_IN)
 		{
 			if (cmd_table->in_file != -1)
