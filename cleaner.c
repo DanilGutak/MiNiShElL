@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:01:42 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 12:41:18 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/05 15:31:47 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	free_cmdt(t_data *data)
 {
 	if (data->cmdt)
 	{
-		while (data->cmdt_count > 0)
+		while (data->cmdt_count-- > 0)
 		{
-			data->cmdt_count--;
 			if (data->cmdt[data->cmdt_count].args)
 				while (data->cmdt[data->cmdt_count].num_args-- > 0)
 					free(data->cmdt[data->cmdt_count]
@@ -26,12 +25,15 @@ void	free_cmdt(t_data *data)
 			if (data->cmdt[data->cmdt_count].args)
 				free(data->cmdt[data->cmdt_count].args);
 			data->cmdt[data->cmdt_count].args = NULL;
-			while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
-				free(data->cmdt[data->cmdt_count]
-					.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
-			free(data->cmdt[data->cmdt_count].redirs);
+			if (data->cmdt[data->cmdt_count].redirs)
+				while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
+					free(data->cmdt[data->cmdt_count]
+						.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
+			if (data->cmdt[data->cmdt_count].redirs)
+				free(data->cmdt[data->cmdt_count].redirs);
 			data->cmdt[data->cmdt_count].redirs = NULL;
-			free(data->cmdt[data->cmdt_count].cmd);
+			if (data->cmdt[data->cmdt_count].cmd)
+				free(data->cmdt[data->cmdt_count].cmd);
 			data->cmdt[data->cmdt_count].cmd = NULL;
 		}
 		free(data->cmdt);

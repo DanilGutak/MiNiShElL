@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:09:06 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:08:34 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/05 15:26:08 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	fill_tokens(t_data *data, int *i, int j)
 			return (syntax_error(data->input[*i], data), 1);
 		*i += j;
 	}
-	else if (data->input[*i] != ' ')
+	else if (data->input[*i] != ' ' && data->input[*i] != '\t')
 	{
 		j = fill_word(data, &data->input[*i]) - 1;
 		if (j == -1)
