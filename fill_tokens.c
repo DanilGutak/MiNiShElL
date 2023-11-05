@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:08:19 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/05 14:59:52 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	fill_quotes(t_data *data, char const *s, char temp)
 	if (*s++ == '\0')
 		return (-1);
 	if (*s == '\"' || *s == '\'' || (*s != ' ' && *s != '<' && *s != '>'
-			&& *s != '|' && *s != '\0'))
+			&& *s != '|' && *s != '\0' && *s != '<'))
 		data->tokens[data->token_count - 1].no_space = 1;
 	data->tokens[data->token_count - 1].value[j] = '\0';
 	if (temp == '\'')
