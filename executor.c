@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 23:11:31 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/05 16:23:02 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		return ((void)print_error(data, "fork", 1));
 	if (!cmd_table->pid)
 	{
-		if (cmd_table->fd_in != -1)
-		{
-			dup2(cmd_table->fd_in, STDIN_FILENO);
+		if (cmd_table->fd_in != -1 && dup2(cmd_table->fd_in, STDIN_FILENO))
 			close(cmd_table->fd_in);
-		}
 		close(pipe_fd[0]);
 		if (cmd_table->fd_out != -1)
 			dup2(cmd_table->fd_out, STDOUT_FILENO);
 		close(pipe_fd[1]);
 		mode(data, CHILD);
 		execve(cmd_table->cmd, cmd_table->args, data->envp);
-		exit(print_error(data, cmd_table->cmd, 1));
+		print_error(data, cmd_table->cmd, 1);
+		clean_all(data);
+		exit(1);
 	}
 	close(pipe_fd[1]);
 	if (data->prev_fd != -1)
