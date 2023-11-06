@@ -6,16 +6,16 @@
 - пвд должна викоростовивать getcwd вместо env(done)
 - exit codes for signals (done)
 - fix heredocs (VITALIK)
-- Norminette for parser(WIP)
-- proper message for ambigious redirections(including env var if possible)
+- Norminette for parser(DONE)
+- proper message for ambigious redirections(i dunno)
 - dont expand if nearby heredoc(ass heredoc does not need expanded value)
 
 - some tests(VITALIK)
 
 - write descriptions for functions(DONE)
 - replace all printf to printf_fd (DONE)
-- add cleaning envp in case bash exits(NOT IN CLEAN_STUFF)
-- turn exits into returns(WIP, done for lexer and parser)
+- add cleaning envp in case bash exits(DONE)
+- turn exits into returns(DONE)
 
 
 
@@ -49,13 +49,13 @@
 - execute different part of pipes one after another(done)
 - find executable for builtins(DONE)
 - configure pipe for it(DONE)
-- check exit codes of execve and set it accordingly(DONE, needs signals now)
+- check exit codes of execve and set it accordingly(DONE)
 
 
 
 ## MISC:
 
-- signals (IN PROCESS)
+- signals (DONE)
 
 - builtins (DONE)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_executable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 23:04:33 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 14:50:45 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 		if (!temp)
 			return (print_error(data, "ft_strdup", 1) + 1);
 		ret = ft_strjoin(temp, cmd_table->cmd);
-		if (!temp)
-			free(temp);
 		if (!ret)
 			return (print_error(data, "ft_strjoin", 1) + 1);
 		if (access(ret, X_OK) == 0)
@@ -71,7 +69,7 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 		}
 		free(ret);
 	}
-	return (1);
+	return (look_in_dir(data, cmd_table));
 }
 
 int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
@@ -99,7 +97,7 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 		}
 		free(ret);
 	}
-	return (1);
+	return (exist_in_dir(data, cmd_table));
 }
 
 int	find_executable(t_data *data, t_cmd_table *cmd_table)

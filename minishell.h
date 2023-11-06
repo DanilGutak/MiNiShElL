@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 14:07:48 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 14:50:32 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ int					set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd,
 						int i);
 void				wait_children(t_data *data);
 int					fake_pipes(t_data *data, int i, int *pip);
-
+int					exist_in_dir(t_data *data, t_cmd_table *cmd_table);
+int					look_in_dir(t_data *data, t_cmd_table *cmd_table);
 // expander
 
 int					expander(t_data *data);

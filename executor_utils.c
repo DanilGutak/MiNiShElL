@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:53:21 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 16:26:56 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 14:50:38 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,57 @@ int	fake_pipes(t_data *data, int i, int *pip)
 		close(pip[0]);
 	dup2(data->original_stdout, STDOUT_FILENO);
 	dup2(data->original_stdin, STDIN_FILENO);
+	return (1);
+}
+
+int	look_in_dir(t_data *data, t_cmd_table *cmd_table)
+{
+	char	*temp;
+	char	*ret;
+
+	if (data->path != NULL)
+		return (1);
+	if (cmd_table->cmd[0] == '\0')
+		return (1);
+	temp = ft_strdup("./");
+	if (!temp)
+		return (print_error(data, "ft_strdup", 1) + 1);
+	ret = ft_strjoin(temp, cmd_table->cmd);
+	if (!ret)
+		return (print_error(data, "ft_strjoin", 1) + 1);
+	if (access(ret, X_OK) == 0)
+	{
+		temp = cmd_table->cmd;
+		cmd_table->cmd = ret;
+		free(temp);
+		return (0);
+	}
+	free(ret);
+	return (1);
+}
+
+int	exist_in_dir(t_data *data, t_cmd_table *cmd_table)
+{
+	char	*ret;
+	char	*temp;
+
+	if (data->path != NULL)
+		return (1);
+	temp = ft_strdup("./");
+	if (!temp)
+		return (print_error(data, "ft_strdup", 1) + 1);
+	ret = ft_strjoin(temp, cmd_table->cmd);
+	if (!ret)
+		return (print_error(data, "ft_strjoin", 1) + 1);
+	if (access(ret, F_OK) == 0)
+	{
+		temp = cmd_table->cmd;
+		cmd_table->cmd = ret;
+		free(temp);
+		ft_printf_fd(2, "minishell: %s: Permission denied\n", cmd_table->cmd);
+		data->exit_code = 126;
+		return (0);
+	}
+	free(ret);
 	return (1);
 }
