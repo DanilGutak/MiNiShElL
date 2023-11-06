@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 19:45:49 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 19:55:03 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,6 @@ int	count_var_len(const char *value)
 	while (value[i] == '_' || ft_isalnum(value[i]))
 		i++;
 	return (i);
-}
-
-int	replace_dollar(char *iterate, char **result, t_data *data, int ex)
-{
-	const int	vlen = count_var_len(iterate);
-	char		*buffer;
-	char		*key;
-
-	if (vlen == 1 && ex)
-		return (*result = ft_strdup(""), vlen);
-	if (vlen == 1)
-		return (*result = ft_strdup("$"), vlen);
-	key = ft_substr(iterate, 1, vlen - 1);
-	if (key == NULL)
-		return (vlen);
-	buffer = get_variable_value(data, key);
-	free(key);
-	if (buffer == NULL)
-		*result = ft_strdup("");
-	else
-		*result = ft_strdup(buffer);
-	free(buffer);
-	return (vlen);
 }
 
 int	concat_chars(char *iterate, char **result)
@@ -87,6 +64,14 @@ static int	expand_token(char *value, t_data *data, int t, int ex)
 	return (SUCCESS);
 }
 
+int	is_exception(t_data *data, int i)
+{
+	return (data->tokens[i].type == WORD
+		&& data->tokens[i + 1].type == DQUOTE
+		&& data-> tokens[i].no_space
+		&& ft_strlen(data->tokens[i].value) == 1);
+}
+
 /*
 in case of variable within the token, shoud replace key with its value
 exceptions:
@@ -111,7 +96,7 @@ int	expander(t_data *data)
 		if ((data->tokens[i].type == WORD || data->tokens[i].type == DQUOTE)
 			&& ft_contains(data->tokens[i].value, '$'))
 		{
-			ex = data->tokens[i].type == WORD && data->tokens[i + 1].type == DQUOTE && data-> tokens[i].no_space && ft_strlen(data->tokens[i].value) == 1;
+			ex = is_exception(data, i);
 			if (expand_token(data->tokens[i].value, data, i, ex) == MALLOC_F)
 				return (MALLOC_F);
 		}
