@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 20:06:58 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 20:18:30 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		if (cmd_table->fd_in != -1 && dup2(cmd_table->fd_in, STDIN_FILENO))
 			close(cmd_table->fd_in);
 		close(pipe_fd[0]);
-		if (cmd_table->fd_out != -1)
-			dup2(cmd_table->fd_out, STDOUT_FILENO);
-		close(cmd_table->fd_out);
+		if (cmd_table->fd_out != -1 && dup2(cmd_table->fd_out, STDOUT_FILENO))
+			close(cmd_table->fd_out);
 		mode(data, CHILD);
 		execve(cmd_table->cmd, cmd_table->args, data->envp);
 		print_error(data, cmd_table->cmd, 1);

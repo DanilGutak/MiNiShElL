@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 20:08:10 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 20:17:24 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	setup_fd_in_builtin(t_cmd_table *cmd_table, int *pipe_fd)
 	if (cmd_table->fd_in != -1)
 	{
 		dup2(cmd_table->fd_in, STDIN_FILENO);
-		close(cmd_table->fd_in);
+		if (cmd_table->fd_in != -1)
+			close(cmd_table->fd_in);
 	}
 	if (cmd_table->fd_out != -1)
 		dup2(cmd_table->fd_out, STDOUT_FILENO);
