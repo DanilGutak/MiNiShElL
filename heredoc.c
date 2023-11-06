@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 18:05:58 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 18:59:43 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			return (ft_printf_fd(STDERR_FILENO, "bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')", j, stop));
+			return (close(fd), ft_printf_fd(STDERR_FILENO, "minishell: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", j, stop));
 		if (ft_strcmp(line, stop) == 0)
 			break;
 		line = expand_local_token(data, line);
