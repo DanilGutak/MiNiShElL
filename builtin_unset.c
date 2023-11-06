@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:44:45 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 17:13:36 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 18:10:50 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	builtin_unset(t_data *data, t_cmd_table *cmd_table)
 
 	i = 1;
 	data->exit_code = 0;
-	if (data->cmdt_count == 1)
+	if (data->cmdt_count != 1)
 		return ;
 	while (i < cmd_table->num_args)
 	{

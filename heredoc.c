@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 17:25:40 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 18:05:58 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*expand_local_token(t_data *data, char *value)
 	{
 		buffer = NULL;
 		if (*value == '$')
-			value += replace_dollar(value, &buffer, data);
+			value += replace_dollar(value, &buffer, data, 0);
 		else
 			value += concat_chars(value, &buffer);
 		if (buffer == NULL)
