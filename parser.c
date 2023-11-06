@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:49:24 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 15:53:13 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:59:13 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,10 @@ int	fill_cmdt(t_data *data, int j, int *i)
 	data->cmdt[j].fd_out = -1;
 	data->cmdt[j].in_file = -1;
 	data->cmdt[j].out_file = -1;
+	data->cmdt[j].last_heredoc = NULL;
 	if (fill_redirs(data, j, *i) == 1)
 		return (1);
 	check_last_heredoc(data, j);
-	for (int k = 0; k < data->cmdt[j].num_redirs; k++)
-	{
-		ft_printf_fd(2, "redir type: %d\n", data->cmdt[j].redirs[k].type);
-		ft_printf_fd(2, "redir value: %s\n", data->cmdt[j].redirs[k].value);
-	}
 	*i = fill_cmd_args(data, j, *i - 1) + 1;
 	if (*i == 0)
 		return (1);

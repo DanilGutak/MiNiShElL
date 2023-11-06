@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 15:52:53 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:58:40 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_cmd_table
 	int				num_args;
 	int				is_child_created;
 	int				is_failed;
+	char			*last_heredoc;
 	pid_t			pid;
 }					t_cmd_table;
 
@@ -104,7 +105,8 @@ void				mode(t_data *data, t_mode mode);
 
 // heredoc
 
-void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i, int useless);
+void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i,
+						int useless);
 
 // init
 
