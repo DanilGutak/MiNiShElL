@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 19:43:04 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 20:06:58 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 void	clean_fds(t_data *data, t_cmd_table *cmd_table, int i)
 {
-	close(cmd_table->fd_in);
-	close(cmd_table->fd_out);
+	if (cmd_table->fd_in != -1)
+		close(cmd_table->fd_in);
+	if (cmd_table->fd_out != -1)
+		close(cmd_table->fd_out);
 	if (data->cmdt[i].last_heredoc)
 	{
 		unlink(data->cmdt[i].last_heredoc);

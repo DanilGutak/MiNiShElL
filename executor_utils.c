@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:53:21 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 19:24:12 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 20:06:20 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ void	wait_children(t_data *data)
 
 int	fake_pipes(t_data *data, int i, int *pip)
 {
-	if (data->cmdt[i].fd_in != -1)
-	{
-		dup2(data->cmdt[i].fd_in, STDIN_FILENO);
+	if (data->cmdt[i].fd_in != -1
+		&& dup2(data->cmdt[i].fd_in, STDIN_FILENO) > -1)
 		close(data->cmdt[i].fd_in);
-	}
 	if (data->cmdt[i].fd_out != -1)
 		dup2(data->cmdt[i].fd_out, STDOUT_FILENO);
 	close(pip[1]);
@@ -61,8 +59,10 @@ int	fake_pipes(t_data *data, int i, int *pip)
 		close(pip[0]);
 	dup2(data->original_stdout, STDOUT_FILENO);
 	dup2(data->original_stdin, STDIN_FILENO);
-	close(data->cmdt[i].fd_in);
-	close(data->cmdt[i].fd_out);
+	if (data->cmdt[i].fd_in != -1)
+		close(data->cmdt[i].fd_in);
+	if (data->cmdt[i].fd_out != -1)
+		close(data->cmdt[i].fd_out);
 	if (data->cmdt[i].last_heredoc)
 	{
 		unlink(data->cmdt[i].last_heredoc);
