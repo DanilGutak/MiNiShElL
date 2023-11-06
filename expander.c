@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 18:09:42 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 18:13:33 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	replace_dollar(char *iterate, char **result, t_data *data, int ex)
 	char		*buffer;
 	char		*key;
 
-	printf("%s\n", iterate);
 	if (vlen == 1 && ex)
 		return (*result = ft_strdup(""), vlen);
 	if (vlen == 1)
