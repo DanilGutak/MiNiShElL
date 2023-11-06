@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 15:58:40 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 16:14:48 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ void				mode(t_data *data, t_mode mode);
 
 // heredoc
 
-void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i,
-						int useless);
+int					do_heredoc(t_data *data, t_cmd_table *cmd_table, int i);
 
 // init
 

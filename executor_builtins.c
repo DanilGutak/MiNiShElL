@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_builtins.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:48:57 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 11:55:13 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 16:27:00 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	restore_fds(t_data *data, t_cmd_table *cmd_table, int i, int *pipe_fd)
 		close(pipe_fd[0]);
 	dup2(data->original_stdout, STDOUT_FILENO);
 	dup2(data->original_stdin, STDIN_FILENO);
+	if (data->cmdt[i].last_heredoc)
+	{
+		unlink(data->cmdt[i].last_heredoc);
+		free(data->cmdt[i].last_heredoc);
+	}
 }
 
 void	execute_builtin(t_data *data, t_cmd_table *cmd_table, int i, int *p_fd)

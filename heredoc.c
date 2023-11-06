@@ -6,12 +6,15 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 15:35:02 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 17:25:40 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "minishell.h"
+#include <readline/readline.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static char	*expand_local_token(t_data *data, char *value)
 {
@@ -41,38 +44,49 @@ static char	*expand_local_token(t_data *data, char *value)
 	return (res);
 }
 
-void	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i, int useless)
+int	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i)
 {
-	const char	*stop = cmd_table->redirs[i].value;
+	char		*stop;
+	static int	j = -1;
+	char		*itoa_res;
+	char		*name;
 	char		*line;
 	int			fd;
 
-	fd = open(stop, O_CREAT | O_TRUNC | O_RDWR, 0666);
+	stop = cmd_table->redirs[i].value;
+	itoa_res = ft_itoa(i);
+	if (itoa_res == NULL)
+		return (MALLOC_F);
+	name = ft_strcat(".oouyhukuliyty", itoa_res);
+	free(itoa_res);
+	if (name == NULL)
+		return (MALLOC_F);
+	fd = open(name , O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (fd < 0)
-		return ((void)(data->exit_code = 1));
-	line = get_next_line(STDIN_FILENO, READ);
-	if (line == NULL)
-		return ((void)(close(fd)));
-	while (ft_strcmp(line, stop) != 0)
+		return (print_error(data, "Minishell: open: ", 1));
+	while (++j >= 0)
 	{
+		line = readline("> ");
+		if (line == NULL)
+			return (ft_printf_fd(STDERR_FILENO, "bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')", j, stop));
+		if (ft_strcmp(line, stop) == 0)
+			break;
 		line = expand_local_token(data, line);
 		if (!line)
-			return ((void)(close(fd), get_next_line(fd, CLEAN)));
+			return (close(fd), MALLOC_F);
 		ft_putendl_fd(line, fd);
 		free(line);
-		line = get_next_line(STDIN_FILENO, READ);
-		if (line == NULL)
-			return ((void)(close(fd), get_next_line(fd, CLEAN)));
 	}
-	free(line);
-	get_next_line(fd, CLEAN);
 	close(fd);
-	if (useless)
-		unlink(stop);
+	if (cmd_table->redirs[i].no_space != 3)
+		unlink(name);
 	else
 	{
-		cmd_table->in_file = open(stop, O_RDONLY);
+		cmd_table->in_file = open(name, O_RDONLY);
 		if (cmd_table->in_file == -1)
-			perror("kek");
+			return (print_error(data, "Minishell: open: ", 1));
+		cmd_table->last_heredoc = ft_strdup(name);
 	}
+	free(name);
+	return (SUCCESS);
 }

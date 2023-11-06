@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:53:21 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 14:50:38 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 16:26:26 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int	fake_pipes(t_data *data, int i, int *pip)
 		close(pip[0]);
 	dup2(data->original_stdout, STDOUT_FILENO);
 	dup2(data->original_stdin, STDIN_FILENO);
+	if (data->cmdt[i].last_heredoc)
+	{
+		unlink(data->cmdt[i].last_heredoc);
+		free(data->cmdt[i].last_heredoc);
+	}
 	return (1);
 }
 

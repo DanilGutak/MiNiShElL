@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 15:54:00 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 16:27:29 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		data->prev_fd = pipe_fd[0];
 	else
 		close(pipe_fd[0]);
+	if (data->cmdt[i].last_heredoc)
+	{
+		unlink(data->cmdt[i].last_heredoc);
+		free(data->cmdt[i].last_heredoc);
+	}
 }
 
 int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
@@ -63,10 +68,8 @@ int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
 			return (print_error(data, cmd_table->redirs[i].value, 1));
 	}
 	else if (cmd_table->redirs[i].type == REDIR_HEREDOC)
-	{
-		do_heredoc(data, cmd_table, i, cmd_table->is_last_heredoc);
-		return (0);
-	}
+		if (do_heredoc(data, cmd_table, i) == 1)
+			return (1);
 	return (0);
 }
 
