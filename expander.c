@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 18:13:33 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 18:18:22 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	expander(t_data *data)
 		if ((data->tokens[i].type == WORD || data->tokens[i].type == DQUOTE)
 			&& ft_contains(data->tokens[i].value, '$'))
 		{
-			ex = data->tokens[i].type == WORD && data->tokens[i + 1].type == DQUOTE && data-> tokens[i].no_space;
+			ex = data->tokens[i].type == WORD && data->tokens[i + 1].type == DQUOTE && data-> tokens[i].no_space && ft_strlen(data->tokens[i].value) == 1;
 			if (expand_token(data->tokens[i].value, data, i, ex) == MALLOC_F)
 				return (MALLOC_F);
 		}
