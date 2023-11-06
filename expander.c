@@ -6,13 +6,13 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/03 19:59:04 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 14:21:42 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_var_len(const char *value)
+int	count_var_len(const char *value)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static int	count_var_len(const char *value)
 	return (i);
 }
 
-static int	replace_dollar(char *iterate, char **result, t_data *data)
+int	replace_dollar(char *iterate, char **result, t_data *data)
 {
 	const int	vlen = count_var_len(iterate);
 	char		*buffer;
@@ -45,7 +45,7 @@ static int	replace_dollar(char *iterate, char **result, t_data *data)
 	return (vlen);
 }
 
-static int	concat_chars(char *iterate, char **result)
+int	concat_chars(char *iterate, char **result)
 {
 	int	i;
 
@@ -101,7 +101,7 @@ int	expander(t_data *data)
 	{
 		if (data->tokens[i].type == REDIR_HEREDOC)
 		{
-			i++;
+			i += 2;
 			while (data->tokens[i].no_space)
 				i++;
 		}

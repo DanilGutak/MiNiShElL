@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 14:50:32 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:34:48 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_cmd_table
 	int				num_args;
 	int				is_child_created;
 	int				is_failed;
+	int 			is_last_heredoc;
 	pid_t			pid;
 }					t_cmd_table;
 
@@ -104,7 +105,7 @@ void				mode(t_data *data, t_mode mode);
 
 // heredoc
 
-void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i);
+void				do_heredoc(t_data *data, t_cmd_table *cmd_table, int i, int useless);
 
 // init
 
@@ -155,6 +156,9 @@ int					look_in_dir(t_data *data, t_cmd_table *cmd_table);
 // expander
 
 int					expander(t_data *data);
+int					count_var_len(const char *value);
+int					replace_dollar(char *iterate, char **result, t_data *data);
+int					concat_chars(char *iterate, char **result);
 
 // cleaner
 

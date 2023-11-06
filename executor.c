@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 21:48:46 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:31:52 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
 	}
 	else if (cmd_table->redirs[i].type == REDIR_HEREDOC)
 	{
-		do_heredoc(data, cmd_table, i);
+		do_heredoc(data, cmd_table, i, cmd_table->is_last_heredoc);
 		return (0);
 	}
 	return (0);
