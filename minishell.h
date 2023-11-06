@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 11:54:47 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 14:07:48 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <dirent.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
 // for errno
 # include <errno.h>
 
@@ -36,7 +36,7 @@
 # define CNTRL_C 1
 # define CNTRL_S 2
 
-extern int	g_signal;
+extern int			g_signal;
 
 typedef enum s_token_type
 {
@@ -135,6 +135,8 @@ int					is_not_redir(t_token_type type);
 int					fill_cmd_args(t_data *data, int j, int i);
 int					fill_redirs(t_data *data, int j, int i);
 int					count_pipes(t_data *data);
+int					count_new_tokens(t_data *data);
+int					merge_words(t_data *data);
 
 // executor
 

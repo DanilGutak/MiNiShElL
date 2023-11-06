@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:04:39 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/31 13:13:46 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 14:07:17 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,30 @@ int	count_pipes(t_data *data)
 		if (data->tokens[i].type == PIPE)
 			j++;
 	return (j);
+}
+
+int	count_new_tokens(t_data *data)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	k = 0;
+	while (i < data->token_count)
+	{
+		if (data->tokens[i].type == WORD)
+		{
+			j = 0;
+			while (data->tokens[i].value[j])
+			{
+				if (data->tokens[i].value[j] == ' ')
+					k++;
+				j++;
+			}
+		}
+		k++;
+		i++;
+	}
+	return (k);
 }
