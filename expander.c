@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 19:06:36 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 19:55:03 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 20:38:39 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	expand_token(char *value, t_data *data, int t, int ex)
 int	is_exception(t_data *data, int i)
 {
 	return (data->tokens[i].type == WORD
-		&& data->tokens[i + 1].type == DQUOTE
+		&& i + 1 < data->token_count
+		&& data->tokens[i + 1].type != WORD
 		&& data-> tokens[i].no_space
 		&& ft_strlen(data->tokens[i].value) == 1);
 }

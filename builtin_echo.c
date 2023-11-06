@@ -6,7 +6,7 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 14:23:27 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/04 23:05:09 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 20:36:09 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	builtin_echo(t_data *data, t_cmd_table *cmd_table)
 	int	i;
 
 	new_line = is_flag(cmd_table->args[1]);
-	i = ft_tr(new_line, 1, 2);
+	i = 1;
+	while (is_flag(cmd_table->args[i]) == 0)
+		i++;
 	while (i < cmd_table->num_args)
 	{
 		ft_putstr_fd(cmd_table->args[i], STDOUT_FILENO);

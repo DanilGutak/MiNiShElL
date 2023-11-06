@@ -6,15 +6,12 @@
 /*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 19:55:12 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 21:36:23 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minishell.h"
-#include <readline/readline.h>
-#include <stdio.h>
-#include <unistd.h>
 
 int	replace_dollar(char *iterate, char **result, t_data *data, int ex)
 {
@@ -85,16 +82,13 @@ static int	do_while(t_data *data, int fd, char *stop)
 	static int	j = 0;
 	char		*line;
 
+	mode(data, INTERACTIVE);
 	while (1)
 	{
 		line = readline("> ");
-		if (line == NULL)
-		{
-			ft_printf_fd(STDERR_FILENO, "minishell: warning: \
-here-document at line %d delimited by end-of-file \
-(wanted `%s')\n", j, stop);
+		if (line == NULL && ft_printf_fd(STDERR_FILENO, "minishell: warning: \
+here-document at line %d delimited by end-of-file(wanted `%s')\n", j, stop))
 			break ;
-		}
 		if (ft_strcmp(line, stop) == 0)
 			break ;
 		line = expand_local_token(data, line);
@@ -104,6 +98,9 @@ here-document at line %d delimited by end-of-file \
 		free(line);
 		j++;
 	}
+	mode(data, NON_INTERACTIVE);
+	if (line != NULL)
+		free(line);
 	return (SUCCESS);
 }
 
