@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 16:27:29 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 19:26:38 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		close(pipe_fd[0]);
 		if (cmd_table->fd_out != -1)
 			dup2(cmd_table->fd_out, STDOUT_FILENO);
-		close(pipe_fd[1]);
+		close(cmd_table->fd_out);
 		mode(data, CHILD);
 		execve(cmd_table->cmd, cmd_table->args, data->envp);
 		print_error(data, cmd_table->cmd, 1);
@@ -40,6 +40,8 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		data->prev_fd = pipe_fd[0];
 	else
 		close(pipe_fd[0]);
+	close(cmd_table->fd_in);
+	close(cmd_table->fd_out);
 	if (data->cmdt[i].last_heredoc)
 	{
 		unlink(data->cmdt[i].last_heredoc);
