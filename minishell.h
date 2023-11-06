@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 18:05:21 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/06 19:43:43 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ int					look_in_dir(t_data *data, t_cmd_table *cmd_table);
 
 int					expander(t_data *data);
 int					count_var_len(const char *value);
-int					replace_dollar(char *iterate, char **result, t_data *data, int ex);
+int					replace_dollar(char *iterate, char **result, t_data *data,
+						int ex);
 int					concat_chars(char *iterate, char **result);
 
 // cleaner

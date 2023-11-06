@@ -6,12 +6,23 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:09:50 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 19:26:38 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/06 19:43:04 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minishell.h"
+
+void	clean_fds(t_data *data, t_cmd_table *cmd_table, int i)
+{
+	close(cmd_table->fd_in);
+	close(cmd_table->fd_out);
+	if (data->cmdt[i].last_heredoc)
+	{
+		unlink(data->cmdt[i].last_heredoc);
+		free(data->cmdt[i].last_heredoc);
+	}
+}
 
 void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		int *pipe_fd)
@@ -40,13 +51,7 @@ void	execute_command(t_data *data, t_cmd_table *cmd_table, int i,
 		data->prev_fd = pipe_fd[0];
 	else
 		close(pipe_fd[0]);
-	close(cmd_table->fd_in);
-	close(cmd_table->fd_out);
-	if (data->cmdt[i].last_heredoc)
-	{
-		unlink(data->cmdt[i].last_heredoc);
-		free(data->cmdt[i].last_heredoc);
-	}
+	clean_fds(data, cmd_table, i);
 }
 
 int	other_redirs(t_data *data, t_cmd_table *cmd_table, int i)
@@ -96,9 +101,8 @@ int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 			if (cmd_table->in_file == -1)
 				return (print_error(data, cmd_table->redirs[i].value, 1));
 		}
-		else
-			if (other_redirs(data, cmd_table, i) == 1)
-				return (1);
+		else if (other_redirs(data, cmd_table, i) == 1)
+			return (1);
 	}
 	return (0);
 }
