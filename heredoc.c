@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
+/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/07 15:08:00 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 15:28:04 by vfrants          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static char	*expand_local_token(t_data *data, char *value)
 
 	res = NULL;
 	buf_value = value;
+	if (!*value)
+		return (value);
 	while (*value)
 	{
 		buffer = NULL;
@@ -56,14 +58,12 @@ static char	*expand_local_token(t_data *data, char *value)
 		if (buffer == NULL)
 			return (free(res), NULL);
 		buf_res = ft_strcat(res, buffer);
-		free(buffer);
-		free(res);
+		(free(buffer), free(res));
 		if (buf_res == NULL)
 			return (NULL);
 		res = buf_res;
 	}
-	free(buf_value);
-	return (res);
+	return (free(buf_value), res);
 }
 
 static char	*get_name_heredoc(int i)
@@ -89,7 +89,7 @@ static int	do_while(t_data *data, int fd, char *stop)
 	{
 		line = readline("> ");
 		if (g_signal == CNTRL_C)
-			break ;
+			return (free(line), 1);
 		if (line == NULL && ft_printf_fd(STDERR_FILENO, "minishell: warning: \
 here-document at line %d delimited by end-of-file(wanted `%s')\n", j, stop))
 			break ;
@@ -116,13 +116,13 @@ int	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i)
 
 	name = get_name_heredoc(i);
 	if (!name)
-		return (MALLOC_F);
+		return (print_error(data, "Malloc failed", 1), 1);
 	fd = open(name, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (fd < 0)
 		return (free(name), print_error(data, "Minishell: open: ", 1));
 	status = do_while(data, fd, cmd_table->redirs[i].value);
-	if (status == MALLOC_F)
-		return (free(name), MALLOC_F);
+	if (status == MALLOC_F || status == 1)
+		return (unlink(name), free(name), 1);
 	close(fd);
 	if (cmd_table->redirs[i].no_space != 3)
 		unlink(name);
