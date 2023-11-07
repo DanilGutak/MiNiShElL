@@ -17,7 +17,7 @@ int	proper_copy(t_token *new_tokens, int *i, int *j, char **temp)
 	int	k;
 
 	k = -1;
-	if (i > 0 && new_tokens[*j].no_space == 1)
+	if (*i > 0 && new_tokens[*j].no_space == 1)
 	{
 		*j = *j - 1;
 		new_tokens[*j].value = ft_strjoin(new_tokens[*j].value, temp[++k]);
@@ -60,7 +60,7 @@ int	split_words(t_data *data, t_token *new_tokens, int *i, int *j)
 
 int	copy_not_word(t_data *data, t_token *new_tokens, int *i, int *j)
 {
-	if (i > 0 && new_tokens[*j].no_space == 1)
+	if (*i > 0 && new_tokens[*j].no_space == 1)
 	{
 		*j = *j - 1;
 		new_tokens[*j].value = ft_strjoin(new_tokens[*j].value,
