@@ -6,7 +6,7 @@
 #    By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/31 17:55:20 by dgutak            #+#    #+#              #
-#    Updated: 2023/11/06 14:22:19 by dgutak           ###   ########.fr        #
+#    Updated: 2023/11/07 14:26:24 by dgutak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BUILDINS	= enviroment_api.c enviroment_api_2.c builtin_exit.c \
 			builtin_export.c builtin_pwd.c signal_handler.c heredoc.c
 EXPANDER	= expander.c
 
-SRCS	= main1.c init.c exit_shell.c init_utils.c cleaner.c\
+SRCS	= main.c init.c exit_shell.c init_utils.c cleaner.c\
 		$(LEXER) $(PARSER) $(EXECUTOR) $(BUILDINS) $(EXPANDER) error.c
 
 OBJS_DIR	= objs

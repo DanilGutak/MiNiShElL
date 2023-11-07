@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 13:54:28 by dgutak            #+#    #+#             */
-/*   Updated: 2023/10/28 13:51:29 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/07 13:17:11 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	if (!s1)
-		s1 = ft_calloc(1, sizeof(char));
+		return (ft_strdup(s2));
 	temp = s1;
 	if (!s2 || !s1)
 		return (NULL);

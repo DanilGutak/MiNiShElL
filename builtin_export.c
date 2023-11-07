@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 20:38:28 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 17:13:11 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/07 14:24:02 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static void	handle_valid(t_data *data, char *line)
 		i++;
 	value = ft_substr(line, ft_strlen(key) + 1, i);
 	if (!value)
+	{
+		free(key);
 		return ;
+	}
 	set_variable(data, key, value);
 	free(value);
 	free(key);

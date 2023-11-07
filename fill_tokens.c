@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 18:10:22 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 15:27:25 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:22:06 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	fill_quotes(t_data *data, char const *s, char temp)
 	data->tokens[++data->token_count - 1].value
 		= ft_calloc(i + 1, sizeof(char));
 	if (!data->tokens[data->token_count - 1].value)
-		return (print_error(data, "ft_calloc", 1) - 3);
+		return (print_error(data, "ft_calloc", 1) - 2);
 	while (*s && *s != temp)
 		data->tokens[data->token_count - 1].value[j++] = *s++;
 	if (*s++ == '\0')
@@ -81,7 +81,7 @@ int	fill_word(t_data *data, char const *s)
 	data->tokens[++data->token_count - 1].value = ft_calloc(
 			len_word(s) + 1, sizeof(char));
 	if (!data->tokens[data->token_count - 1].value)
-		return (print_error(data, "ft_calloc", 1) - 2);
+		return (print_error(data, "ft_calloc", 1) - 1);
 	while (*s && !(*s == ' ' || *s == '<' || *s == '>' || *s == '|'
 			|| *s == '\"' || *s == '\'' || *s == '\t'))
 		data->tokens[data->token_count - 1].value[j++] = *s++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:41:27 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/04 23:04:26 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/07 14:26:34 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 int	free_tokens(t_token *tokens, int token_max, t_data *data)
 {
 	while (++token_max < data->token_count)
-		(free(tokens[token_max].value), tokens[token_max].value = NULL);
+	{
+		if (tokens[token_max].value)
+		{
+			free(tokens[token_max].value);
+			tokens[token_max].value = NULL;
+		}
+	}
 	free(tokens);
 	tokens = NULL;
 	return (1);
 }
 
 /* reallocate memory in case
-there are nott enough space for tokens(multiplies by 2 everytime) */
+there are nott enough space for	tokens(multiplies by 2 everytime) */
 int	realloc_tokens(t_data *data, int token_max)
 {
 	t_token	*new_tokens;
@@ -66,17 +72,7 @@ char	**get_path(t_data *data, int i)
 		return (NULL);
 	ret = ft_split(find, ':');
 	if (!ret)
-		exit_shell(data, 1);
-	i = -1;
-	while (ret[++i])
-	{
-		ret[i] = ft_strjoin(ret[i], "/");
-		if (!ret[i])
-		{
-			free_double_p(ret);
-			exit_shell(data, 1);
-		}
-	}
+		return (print_error(data, "ft_split", 1), NULL);
 	return (ret);
 }
 
@@ -85,7 +81,7 @@ char	**split_dup(char **old)
 	char	**new;
 	int		i;
 
-	new = (char **)ft_calloc(sizeof (char *), ft_len_split(old) + 1);
+	new = (char **)ft_calloc(sizeof(char *), ft_len_split(old) + 1);
 	if (new == NULL)
 		return (NULL);
 	i = 0;

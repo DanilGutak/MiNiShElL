@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:33:07 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/05 15:22:01 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:40:19 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	main(int argc, char **argv, char **envp)
 		mode(&data, NON_INTERACTIVE);
 		if (g_signal == 1 && g_signal--)
 			data.exit_code = 130;
-		data.path = get_path(&data, -1);
 		if (!data.input)
 			builtin_exit(&data, NULL);
-		if (data.input[0] != '\0')
-			add_history(data.input);
-		if (lexer(&data) == 0 && expander(&data) == 0 && parser(&data) == 0)
+		/* if (data.input[0] != '\0')
+			add_history(data.input); */
+		data.path = get_path(&data, -1);
+		if (data.path && lexer(&data) == 0
+			&& expander(&data) == 0 && parser(&data) == 0)
 			executor(&data);
 		clean_stuff(&data);
 	}

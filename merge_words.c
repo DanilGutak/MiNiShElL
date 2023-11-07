@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:05:52 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 14:07:39 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:14:18 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	split_words(t_data *data, t_token *new_tokens, int *i, int *j)
 		return (2);
 	}
 	if (proper_copy(new_tokens, i, j, temp) == 1)
+	{
+		free_double_p(temp);
 		return (print_error(data, "malloc", 1));
+	}
 	free_double_p(temp);
 	return (0);
 }
@@ -116,7 +119,7 @@ int	merge_words(t_data *data)
 	while (i < data->token_count)
 	{
 		if (copy_token(data, new_tokens, &i, &j) == 1)
-			return (1);
+			return (free_tokens(new_tokens, -1, data));
 		i++;
 	}
 	while (++k < data->token_count)

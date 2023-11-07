@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:01:42 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/05 15:31:47 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:46:05 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ void	free_cmdt(t_data *data)
 		{
 			if (data->cmdt[data->cmdt_count].args)
 				while (data->cmdt[data->cmdt_count].num_args-- > 0)
-					free(data->cmdt[data->cmdt_count]
-						.args[data->cmdt[data->cmdt_count].num_args]);
+					free(data->cmdt[data->cmdt_count].args[data->cmdt[data->cmdt_count].num_args]);
 			if (data->cmdt[data->cmdt_count].args)
 				free(data->cmdt[data->cmdt_count].args);
 			data->cmdt[data->cmdt_count].args = NULL;
 			if (data->cmdt[data->cmdt_count].redirs)
 				while (data->cmdt[data->cmdt_count].num_redirs-- > 0)
-					free(data->cmdt[data->cmdt_count]
-						.redirs[data->cmdt[data->cmdt_count].num_redirs].value);
+					free(data->cmdt[data->cmdt_count].redirs[data->cmdt[data->cmdt_count].num_redirs].value);
 			if (data->cmdt[data->cmdt_count].redirs)
 				free(data->cmdt[data->cmdt_count].redirs);
 			data->cmdt[data->cmdt_count].redirs = NULL;
@@ -45,6 +43,8 @@ void	free_cmdt(t_data *data)
 	etc..) */
 void	clean_stuff(t_data *data)
 {
+	int	i;
+
 	if (data->tokens)
 	{
 		while (data->token_count > 0)
@@ -56,7 +56,13 @@ void	clean_stuff(t_data *data)
 	if (data->input)
 		free(data->input);
 	data->input = NULL;
-	free_double_p(data->path);
+	i = 0;
+	if (data->path)
+	{
+		while (data->path[i])
+			free(data->path[i++]);
+		free(data->path);
+	}
 	data->path = NULL;
 }
 

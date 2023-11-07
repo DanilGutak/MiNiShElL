@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:21:13 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 19:43:43 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 15:04:14 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <unistd.h>
 // for errno
@@ -54,7 +55,8 @@ typedef enum s_mode
 {
 	INTERACTIVE,
 	NON_INTERACTIVE,
-	CHILD
+	CHILD,
+	HEREDOC
 }					t_mode;
 
 typedef struct s_token

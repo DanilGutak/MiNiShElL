@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfrants <vfrants@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 23:02:31 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/06 21:36:23 by vfrants          ###   ########.fr       */
+/*   Updated: 2023/11/07 15:08:00 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minishell.h"
+#include <stdio.h>
 
 int	replace_dollar(char *iterate, char **result, t_data *data, int ex)
 {
@@ -55,7 +56,8 @@ static char	*expand_local_token(t_data *data, char *value)
 		if (buffer == NULL)
 			return (free(res), NULL);
 		buf_res = ft_strcat(res, buffer);
-		(free(buffer), free(res));
+		free(buffer);
+		free(res);
 		if (buf_res == NULL)
 			return (NULL);
 		res = buf_res;
@@ -82,10 +84,12 @@ static int	do_while(t_data *data, int fd, char *stop)
 	static int	j = 0;
 	char		*line;
 
-	mode(data, INTERACTIVE);
+	mode(data, HEREDOC);
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal == CNTRL_C)
+			break ;
 		if (line == NULL && ft_printf_fd(STDERR_FILENO, "minishell: warning: \
 here-document at line %d delimited by end-of-file(wanted `%s')\n", j, stop))
 			break ;
@@ -115,10 +119,10 @@ int	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i)
 		return (MALLOC_F);
 	fd = open(name, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (fd < 0)
-		return (print_error(data, "Minishell: open: ", 1));
+		return (free(name), print_error(data, "Minishell: open: ", 1));
 	status = do_while(data, fd, cmd_table->redirs[i].value);
 	if (status == MALLOC_F)
-		return (MALLOC_F);
+		return (free(name), MALLOC_F);
 	close(fd);
 	if (cmd_table->redirs[i].no_space != 3)
 		unlink(name);
@@ -126,7 +130,7 @@ int	do_heredoc(t_data *data, t_cmd_table *cmd_table, int i)
 	{
 		cmd_table->in_file = open(name, O_RDONLY);
 		if (cmd_table->in_file == -1)
-			return (print_error(data, "Minishell: open: ", 1));
+			return (free(name), print_error(data, "Minishell: open: ", 1));
 		cmd_table->last_heredoc = ft_strdup(name);
 	}
 	free(name);

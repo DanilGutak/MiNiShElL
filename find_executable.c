@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:11:33 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/06 14:50:45 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:50:03 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 		temp = ft_strdup(data->path[i]);
 		if (!temp)
 			return (print_error(data, "ft_strdup", 1) + 1);
+		temp = ft_strjoin(temp, "/");
+		if (!temp)
+			return (print_error(data, "ft_strjoin", 1) + 1);
 		ret = ft_strjoin(temp, cmd_table->cmd);
 		if (!ret)
 			return (print_error(data, "ft_strjoin", 1) + 1);
@@ -64,8 +67,7 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 		{
 			temp = cmd_table->cmd;
 			cmd_table->cmd = ret;
-			free(temp);
-			return (0);
+			return (free(temp), 0);
 		}
 		free(ret);
 	}

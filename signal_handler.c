@@ -6,13 +6,14 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 12:53:04 by vfrants           #+#    #+#             */
-/*   Updated: 2023/11/05 14:39:23 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 15:03:55 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
-int	g_signal = 0;
+int		g_signal = 0;
 
 void	handler(int status)
 {
@@ -23,6 +24,18 @@ void	handler(int status)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+}
+
+void	handler_heredoc(int status)
+{
+	if (status == SIGINT)
+	{
+		g_signal = CNTRL_C;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+
 	}
 }
 
@@ -42,6 +55,11 @@ void	setup_signals(t_data *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
+	}
+	else if (data->mode == HEREDOC)
+	{
+		signal(SIGINT, &handler_heredoc);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 

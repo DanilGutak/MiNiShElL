@@ -6,7 +6,7 @@
 /*   By: dgutak <dgutak@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:18:04 by dgutak            #+#    #+#             */
-/*   Updated: 2023/11/03 16:23:02 by dgutak           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:36:41 by dgutak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ void	free_double_p(char **p)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (p)
 	{
-		while (p[++i])
-			(free(p[i]), p[i] = NULL);
+		while (p[i])
+		{
+			free(p[i]);
+			p[i] = NULL;
+			i++;
+		}
 		free(p);
+		p = NULL;
 	}
 }
 
