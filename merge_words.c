@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+/**
+ * The function `proper_copy` copies values from a temporary array `temp` into a `t_token` array
+ * `new_tokens`, with some additional logic for handling spaces and redirections.
+ * 
+ * @param new_tokens A pointer to an array of t_token structures.
+ * @param i A pointer to an integer variable.
+ * @param j The parameter `j` is a pointer to an integer. It is used as an index to access elements in
+ * the `new_tokens` array.
+ * @param temp A double pointer to a character array (string array) that contains the values to be
+ * copied into the `new_tokens` array.
+ * 
+ * @return an integer value.
+ */
 int	proper_copy(t_token *new_tokens, int *i, int *j, char **temp)
 {
 	int	k;
@@ -37,6 +50,21 @@ int	proper_copy(t_token *new_tokens, int *i, int *j, char **temp)
 	return (0);
 }
 
+/**
+ * The function "split_words" splits a string into individual words and stores them in a new array of
+ * tokens.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param new_tokens A pointer to an array of t_token structures.
+ * @param i The parameter `i` is a pointer to an integer variable.
+ * @param j The parameter `j` is a pointer to an integer. It is used to keep track of the current index
+ * in the `new_tokens` array where the split words should be stored.
+ * 
+ * @return an integer value. The possible return values are:
+ * - 0: indicating successful execution
+ * - 1: indicating an error occurred during memory allocation
+ * - 2: indicating that the split resulted in an empty array
+ */
 int	split_words(t_data *data, t_token *new_tokens, int *i, int *j)
 {
 	char	**temp;
@@ -58,6 +86,17 @@ int	split_words(t_data *data, t_token *new_tokens, int *i, int *j)
 	return (0);
 }
 
+/**
+ * The function `copy_not_word` copies a token's value to a new array of tokens, either by
+ * concatenating it with the previous token's value or by creating a new string.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param new_tokens An array of t_token structures.
+ * @param i The parameter `i` is a pointer to an integer variable.
+ * @param j The parameter `j` is a pointer to an integer variable.
+ * 
+ * @return an integer value.
+ */
 int	copy_not_word(t_data *data, t_token *new_tokens, int *i, int *j)
 {
 	if (*i > 0 && new_tokens[*j].no_space == 1)
@@ -77,9 +116,20 @@ int	copy_not_word(t_data *data, t_token *new_tokens, int *i, int *j)
 	*j = *j + 1;
 	return (0);
 }
-
-/* the copy tokens contents into new tokens,
-	if no_space = 1 concats nex elements as well */
+/**
+ * The function `copy_token` copies a token from the `data` structure to the `new_tokens` array,
+ * handling different types of tokens and splitting words if necessary.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param new_tokens A pointer to an array of t_token structures, where the copied token will be
+ * stored.
+ * @param i The parameter `i` is a pointer to an integer variable. It is used as an index to access
+ * elements in the `data->tokens` array.
+ * @param j The parameter "j" is a pointer to an integer variable. It is used to keep track of the
+ * current index in the new_tokens array where the token should be copied.
+ * 
+ * @return an integer value.
+ */
 int	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 {
 	int	ret;
@@ -103,6 +153,14 @@ int	copy_token(t_data *data, t_token *new_tokens, int *i, int *j)
 	return (0);
 }
 
+/**
+ * The function "merge_words" merges consecutive tokens with the same type into a single token.
+ * 
+ * @param data A pointer to a structure of type t_data, which contains information about the tokens and
+ * their count.
+ * 
+ * @return an integer value.
+ */
 int	merge_words(t_data *data)
 {
 	t_token	*new_tokens;

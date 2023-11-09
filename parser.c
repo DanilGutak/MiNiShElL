@@ -13,6 +13,17 @@
 #include "libft/libft.h"
 #include "minishell.h"
 
+/**
+ * The function "count_args" counts the number of arguments in a given data structure, up until a pipe
+ * token is encountered.
+ * 
+ * @param data A pointer to a struct called "t_data". This struct likely contains information about
+ * tokens and their types.
+ * @param i The parameter `i` is an integer representing the starting index for counting arguments in
+ * the `data->tokens` array.
+ * 
+ * @return the count of arguments found in the given range of tokens.
+ */
 int	count_args(t_data *data, int i)
 {
 	int	count;
@@ -28,6 +39,14 @@ int	count_args(t_data *data, int i)
 	return (count);
 }
 
+/**
+ * The function "check_last_heredoc" checks if the last redirection in a command is a heredoc or input
+ * redirection.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param j The parameter "j" is an integer that represents the index of a command in the "cmdt" array
+ * of the "data" struct.
+ */
 void	check_last_heredoc(t_data *data, int j)
 {
 	int	i;
@@ -45,10 +64,15 @@ void	check_last_heredoc(t_data *data, int j)
 	}
 }
 
-/* transforms tokens into cmd tables.
-merges words with no_spaces
-create cmd table for each pipe
-fill cmd, args and redirs in cmd table
+/**
+ * The function `fill_cmdt` initializes the fields of a `cmdt` struct in a `data` struct.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param j The parameter `j` is an integer that represents the index of the `cmdt` array in the `data`
+ * structure.
+ * @param i The parameter `i` is a pointer to an integer.
+ * 
+ * @return an integer value.
  */
 int	fill_cmdt(t_data *data, int j, int *i)
 {
@@ -79,6 +103,14 @@ int	fill_cmdt(t_data *data, int j, int *i)
 	return (0);
 }
 
+/**
+ * The function "parser" parses the input data and fills a command table structure.
+ * 
+ * @param data The parameter `data` is a pointer to a `t_data` struct.
+ * 
+ * @return an integer value. If `merge_words(data)` returns 1, then the function will return 1.
+ * Otherwise, it will return 0.
+ */
 int	parser(t_data *data)
 {
 	int	j;

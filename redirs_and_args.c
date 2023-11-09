@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+/**
+ * The function "count_redirs" counts the number of redirection tokens in a given array of tokens.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param i The parameter `i` is the starting index from where the function should start counting the
+ * number of redirections.
+ * 
+ * @return the count of redirection tokens (tokens that are not pipes) starting from index i in the
+ * data->tokens array.
+ */
 int	count_redirs(t_data *data, int i)
 {
 	int	count;
@@ -26,6 +36,17 @@ int	count_redirs(t_data *data, int i)
 	return (count);
 }
 
+/**
+ * The function `fill_redirs` fills an array of redirections in a data structure with information from
+ * a token array.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param j The parameter `j` represents the index of the command in the `cmdt` array of the `data`
+ * struct.
+ * @param i The parameter `i` is the index of the current token in the `data->tokens` array.
+ * 
+ * @return an integer value.
+ */
 int	fill_redirs(t_data *data, int j, int i)
 {
 	int	count;
@@ -55,6 +76,18 @@ int	fill_redirs(t_data *data, int j, int i)
 	return (0);
 }
 
+/**
+ * The function `fill_cmd_args` fills the command and argument arrays in a data structure based on the
+ * tokens provided.
+ * 
+ * @param data A pointer to a struct of type `t_data`.
+ * @param j The variable `j` is used as an index to access elements in the `cmdt` array of the `data`
+ * struct. It represents the current command being processed.
+ * @param i The variable `i` is used as a loop counter to iterate through the `data->tokens` array. It
+ * is passed as a parameter to the `fill_cmd_args` function.
+ * 
+ * @return the value of the variable 'i'.
+ */
 int	fill_cmd_args(t_data *data, int j, int i)
 {
 	int	k;

@@ -14,6 +14,16 @@
 
 /* if string is is arrow, searches for the second one,
 	then set type accoringl. */
+/**
+ * The function `fill_redir` determines the type of redirection based on the input character and
+ * updates the corresponding token type in the data structure.
+ * 
+ * @param data A pointer to a struct of type `t_data`.
+ * @param s The parameter `s` is a pointer to a character array (string) that represents a command or
+ * input.
+ * 
+ * @return the value of the variable 'ret'.
+ */
 int	fill_redir(t_data *data, char const *s)
 {
 	int	ret;
@@ -35,6 +45,16 @@ int	fill_redir(t_data *data, char const *s)
 	return (ret);
 }
 
+/**
+ * The function checks the syntax of redirection tokens in a given data structure.
+ * 
+ * @param data A pointer to a struct of type `t_data`.
+ * @param i The parameter `i` in the `check_syntax_dir` function represents the index of the current
+ * token in the `data->tokens` array.
+ * 
+ * @return an integer value. If any of the conditions in the if-else if statements are true, it will
+ * return 1. Otherwise, it will return 0.
+ */
 int	check_syntax_dir(t_data *data, int i)
 {
 	if (data->tokens[i].type == REDIR_APPEND
@@ -52,6 +72,16 @@ int	check_syntax_dir(t_data *data, int i)
 	return (0);
 }
 
+/**
+ * The function "check_syntax" checks the syntax of a given data structure and returns 1 if there is a
+ * syntax error, otherwise it returns 0.
+ * 
+ * @param data A pointer to a struct of type t_data, which contains information about the tokens and
+ * their types.
+ * 
+ * @return an integer value. If any of the conditions in the while loop are met, the function will
+ * return 1. Otherwise, it will return 0.
+ */
 int	check_syntax(t_data *data)
 {
 	int	i;
@@ -78,6 +108,19 @@ int	check_syntax(t_data *data)
 	return (0);
 }
 
+/**
+ * The function `fill_tokens` is responsible for parsing the input string and filling the token array
+ * with the appropriate token types.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param i The variable `i` is a pointer to an integer. It is used as an index to iterate through the
+ * `data->input` string.
+ * @param j The variable `j` is used as a temporary variable within the `fill_tokens` function. It is
+ * initialized to a value before the function is called, but its specific value is not provided in the
+ * code snippet you provided.
+ * 
+ * @return an integer value.
+ */
 int	fill_tokens(t_data *data, int *i, int j)
 {
 	if (data->token_count == data->token_max)
@@ -113,6 +156,13 @@ quotes and special charactersm,allocate memory for tokens.Checks syntax (quotes,
 token has 3 variables: TYPE - which type, VALUE
 	- if its not special character the text in it,
 NO_SPACE - whether the token is followed by token which can be concatenated.*/
+/**
+ * The lexer function tokenizes the input data and checks for syntax errors.
+ * 
+ * @param data The parameter `data` is a pointer to a `t_data` struct.
+ * 
+ * @return The function `lexer` is returning the result of the function `check_syntax(data)`.
+ */
 int	lexer(t_data *data)
 {
 	int	i;

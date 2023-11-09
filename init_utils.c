@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+/**
+ * The function creates copies of the original file descriptors for stdin and stdout.
+ * 
+ * @param data The parameter "data" is a pointer to a structure of type "t_data". This structure likely
+ * contains various data members that are used in the program.
+ */
 void	create_original_fds(t_data *data)
 {
 	data->original_stdin = dup(STDIN_FILENO);
