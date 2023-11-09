@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+/**
+ * The function "free_tokens" frees the memory allocated for an array of tokens and sets the values to
+ * NULL.
+ * 
+ * @param tokens A pointer to an array of t_token structures.
+ * @param token_max The variable `token_max` represents the index of the last token in the `tokens`
+ * array.
+ * @param data The "data" parameter is a pointer to a structure of type "t_data".
+ * 
+ * @return 1.
+ */
 int	free_tokens(t_token *tokens, int token_max, t_data *data)
 {
 	while (++token_max < data->token_count)
@@ -29,6 +40,16 @@ int	free_tokens(t_token *tokens, int token_max, t_data *data)
 
 /* reallocate memory in case
 there are nott enough space for	tokens(multiplies by 2 everytime) */
+/**
+ * The function reallocates memory for an array of tokens, doubling its size, and copies the values
+ * from the old array to the new one.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param token_max The parameter `token_max` represents the current maximum number of tokens in the
+ * `data` structure.
+ * 
+ * @return an integer value.
+ */
 int	realloc_tokens(t_data *data, int token_max)
 {
 	t_token	*new_tokens;
@@ -57,6 +78,17 @@ int	realloc_tokens(t_data *data, int token_max)
 
 /* searches for "PATH=" in env, then
 splits it by : and store it as alloced 2d array */
+/**
+ * The function "get_path" retrieves the value of the "PATH" environment variable and splits it into an
+ * array of strings using the ":" delimiter.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param i The parameter `i` is an integer that represents the index of the current element in the
+ * `data->envp` array. It is used to iterate through the array and find the element that contains the
+ * string "PATH=".
+ * 
+ * @return a pointer to a pointer to a character (char **).
+ */
 char	**get_path(t_data *data, int i)
 {
 	char	**ret;
@@ -76,6 +108,15 @@ char	**get_path(t_data *data, int i)
 	return (ret);
 }
 
+/**
+ * The function `split_dup` takes a double pointer to a string array, duplicates each string in the
+ * array, and returns a new double pointer to the duplicated array.
+ * 
+ * @param old old is a pointer to a pointer to a character (char **). It represents an array of
+ * strings.
+ * 
+ * @return a pointer to a newly allocated array of strings.
+ */
 char	**split_dup(char **old)
 {
 	char	**new;
@@ -97,6 +138,13 @@ char	**split_dup(char **old)
 }
 
 /* set variables to default values, copy envp, gets path variable */
+/**
+ * The function initializes a data structure and sets its initial values.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param envp The `envp` parameter is a pointer to an array of strings that represents the environment
+ * variables. Each string in the array is in the format "variable=value".
+ */
 void	data_init(t_data *data, char **envp)
 {
 	char	**new_env;

@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+/**
+ * The function checks if a command with a slash is a valid executable file or directory.
+ * 
+ * @param cmd_table A pointer to a structure of type t_cmd_table, which likely contains information
+ * about a command being checked.
+ * @param data The parameter `data` is of type `t_data`, which is a user-defined data structure. It
+ * likely contains information and variables related to the overall state and execution of the program.
+ * 
+ * @return an integer value.
+ */
 int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 {
 	DIR	*dir;
@@ -41,10 +51,20 @@ int	check_with_slash(t_cmd_table *cmd_table, t_data *data)
 	return (1);
 }
 
-/* tries to find the command to execute,
-	better explanation of bash logic is in README
-but if slash is present tries to run command as it is,
-	otherwise tries to connect with dirs from PAtTH */
+
+/**
+ * The function `search_in_path` searches for a command in the directories specified in the
+ * `data->path` array and updates the `cmd_table->cmd` with the full path of the command if found.
+ * 
+ * @param data A pointer to a structure of type t_data, which contains some data related to the
+ * program.
+ * @param cmd_table A structure that contains information about the command being searched for. It
+ * includes a field called "cmd" which is a string representing the command name.
+ * @param i The variable `i` is used as an index to iterate through the `data->path` array. It is
+ * incremented in each iteration of the while loop.
+ * 
+ * @return an integer value.
+ */
 int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 {
 	char	*ret;
@@ -74,6 +94,19 @@ int	search_in_path(t_data *data, t_cmd_table *cmd_table, int i)
 	return (look_in_dir(data, cmd_table));
 }
 
+/**
+ * The function searches for a command in the given directory paths and checks if it exists and has the
+ * necessary permissions.
+ * 
+ * @param data A pointer to a structure of type t_data, which contains various data related to the
+ * program.
+ * @param cmd_table A structure that contains information about the command being searched for, such as
+ * the command itself (cmd_table->cmd) and other details.
+ * @param i The variable "i" is an integer used as an index in a loop. It is incremented in each
+ * iteration of the loop to iterate through the elements of the "data->path" array.
+ * 
+ * @return an integer value.
+ */
 int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 {
 	char	*ret;
@@ -102,6 +135,15 @@ int	search_if_exist(t_data *data, t_cmd_table *cmd_table, int i)
 	return (exist_in_dir(data, cmd_table));
 }
 
+/**
+ * The function `find_executable` checks if a command is executable and returns an appropriate exit
+ * code.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param cmd_table The `cmd_table` parameter is a pointer to a structure of type `t_cmd_table`.
+ * 
+ * @return The function `find_executable` returns an integer value.
+ */
 int	find_executable(t_data *data, t_cmd_table *cmd_table)
 {
 	int	i;

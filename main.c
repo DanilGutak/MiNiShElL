@@ -14,6 +14,19 @@
 
 /* entry point, initiates data, reads the input,
 	lexer-extender-parser-executor-cleaner(repeated) */
+/**
+ * The main function initializes data, reads user input, processes it, and executes the corresponding
+ * commands.
+ * 
+ * @param argc The `argc` parameter in the `main` function represents the number of command-line
+ * arguments passed to the program. It includes the name of the program itself as the first argument.
+ * @param argv An array of strings representing the command-line arguments passed to the program. The
+ * first element (argv[0]) is the name of the program itself.
+ * @param envp The `envp` parameter is an array of strings that represents the environment variables
+ * passed to the program. Each string in the array is in the format "variable=value".
+ * 
+ * @return The main function is returning an integer value.
+ */
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;

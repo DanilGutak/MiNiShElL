@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+/**
+ * The function "len_quotes" calculates the length of a substring within a given string until a
+ * specified character is encountered.
+ * 
+ * @param str A pointer to a character array (string) that contains the input string.
+ * @param temp The parameter "temp" is a character that is used as a delimiter. The function
+ * "len_quotes" counts the number of characters in the string "str" until it reaches the delimiter
+ * character "temp".
+ * 
+ * @return the length of the substring in the given string `str` before the first occurrence of the
+ * character `temp`. If `temp` is not found in `str`, the function returns -1.
+ */
 static int	len_quotes(char const *str, char temp)
 {
 	int	len;
@@ -27,6 +39,15 @@ static int	len_quotes(char const *str, char temp)
 	return (len);
 }
 
+/**
+ * The function `len_word` calculates the length of a word in a given string, considering various
+ * delimiters.
+ * 
+ * @param str The parameter `str` is a pointer to a constant character, which means it is a string that
+ * cannot be modified.
+ * 
+ * @return the length of the word in the given string.
+ */
 static int	len_word(char const *str)
 {
 	int	len;
@@ -44,6 +65,18 @@ static int	len_word(char const *str)
 /* gets token based on the quotes, namely so 
 quoted text is not separated by anything, 
 omits quotes in the end result. Sets type and no_space*/
+/**
+ * The function `fill_quotes` fills a data structure with values from a string, based on a specified
+ * delimiter.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param s The parameter `s` is a pointer to a character array (string) that contains the input data.
+ * It is used to iterate through the characters in the string.
+ * @param temp The parameter `temp` is a character that represents the type of quotes being filled. It
+ * can be either `'` (single quote) or `"` (double quote).
+ * 
+ * @return an integer value.
+ */
 int	fill_quotes(t_data *data, char const *s, char temp)
 {
 	int	j;
@@ -73,6 +106,16 @@ int	fill_quotes(t_data *data, char const *s, char temp)
 	return (j + 2);
 }
 
+/**
+ * The function `fill_word` fills a token with characters from a string until it encounters a
+ * delimiter, and assigns the token type as WORD.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ * @param s The parameter `s` is a pointer to a constant character array (string) that represents the
+ * input string.
+ * 
+ * @return the number of characters that were filled into the `value` field of the `tokens` array.
+ */
 int	fill_word(t_data *data, char const *s)
 {
 	int	j;

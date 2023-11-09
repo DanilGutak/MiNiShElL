@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+/**
+ * The function checks if a given string is invalid, meaning it does not start with a letter or
+ * underscore, contains characters other than alphanumeric and underscore, or does not contain an equal
+ * sign.
+ * 
+ * @param str A pointer to a string that needs to be checked for validity.
+ * 
+ * @return an integer value.
+ */
 static int	is_invalid(char *str)
 {
 	if (str == NULL || !(ft_isalpha(*str) || *str == '_'))
@@ -25,6 +34,16 @@ static int	is_invalid(char *str)
 	return (0);
 }
 
+/**
+ * The function "handle_valid" takes a line of text and extracts the key-value pair separated by an
+ * equals sign, then sets the variable in the data structure with the extracted key and value.
+ * 
+ * @param data A pointer to a struct called "t_data". This struct likely contains some data that needs
+ * to be modified or updated based on the key-value pair in the "line" parameter.
+ * @param line A string containing a key-value pair in the format "key=value".
+ * 
+ * @return The function does not have a return type specified, so it is assumed to be returning void.
+ */
 static void	handle_valid(t_data *data, char *line)
 {
 	char	*value;
@@ -52,6 +71,13 @@ static void	handle_valid(t_data *data, char *line)
 	free(key);
 }
 
+/**
+ * The function "handle_empty" prints the environment variables in a specific format.
+ * 
+ * @param envp The parameter `envp` is a pointer to an array of strings. Each string in the array
+ * represents an environment variable in the form "name=value". The last element of the array is a NULL
+ * pointer, indicating the end of the array.
+ */
 static void	handle_empty(char **envp)
 {
 	int	entity;
@@ -77,6 +103,16 @@ static void	handle_empty(char **envp)
 	}
 }
 
+/**
+ * The function `builtin_export` handles the export command in a shell program, allowing users to set
+ * environment variables.
+ * 
+ * @param data A pointer to a structure of type t_data, which contains various data related to the
+ * program.
+ * @param cmd_table The `cmd_table` parameter is a pointer to a structure `t_cmd_table` which contains
+ * information about the command being executed. It includes the number of arguments (`num_args`) and
+ * an array of strings (`args`) representing the command and its arguments.
+ */
 void	builtin_export(t_data *data, t_cmd_table *cmd_table)
 {
 	int		i;

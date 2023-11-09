@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+/**
+ * The function "get_variable_value" retrieves the value of a variable from a given data structure.
+ * 
+ * @param data A pointer to a struct called "t_data" which contains various data members including
+ * "exit_code" and "envp".
+ * @param key A string representing the key of the variable whose value we want to retrieve.
+ * 
+ * @return a pointer to a character array (string).
+ */
 char	*get_variable_value(t_data *data, char *key)
 {
 	int		i;
@@ -24,7 +33,16 @@ char	*get_variable_value(t_data *data, char *key)
 	return (ft_strdup(data->envp[i] + ft_strlen(key) + 1));
 }
 
-/* delete a variable from the envp */
+/**
+ * The function `delete_variable` deletes a variable from an array of strings.
+ * 
+ * @param data A pointer to a struct of type t_data, which contains information about the environment
+ * variables.
+ * @param key The key parameter is a string that represents the variable name that you want to delete
+ * from the data structure.
+ * 
+ * @return either SUCCESS or FAILURE.
+ */
 int	delete_variable(t_data *data, char *key)
 {
 	char		**new;
@@ -50,6 +68,15 @@ int	delete_variable(t_data *data, char *key)
 	return (SUCCESS);
 }
 
+/**
+ * The function checks if a given key is valid, meaning it starts with a letter or underscore and
+ * contains only alphanumeric characters or underscores.
+ * 
+ * @param key A pointer to a character array representing the key that needs to be validated.
+ * 
+ * @return an integer value. If the key is valid, it returns 1. If the key is not valid (i.e., it is
+ * NULL or contains characters other than alphabets, digits, or underscores), it returns 0.
+ */
 int	is_valid_key(char *key)
 {
 	if (key == NULL || !(ft_isalpha(*key) || *key == '_'))
@@ -63,8 +90,20 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-/* should add one more variable to the environment.
- kinda confused about the time when you print errors */
+/**
+ * The function creates a new environment variable by appending a key-value pair to the existing
+ * environment variable list.
+ * 
+ * @param data A pointer to a structure of type t_data, which contains some data including an array of
+ * strings called envp.
+ * @param key A string representing the key of the variable to be created.
+ * @param value The `value` parameter in the `create_variable` function is a string that represents the
+ * value to be assigned to the variable.
+ * 
+ * @return an integer value. The possible return values are:
+ * - MALLOC_F: indicating a failure in memory allocation
+ * - SUCCESS: indicating a successful creation of the variable
+ */
 int	create_variable(t_data *data, char *key, char *value)
 {
 	char	**new;
@@ -94,7 +133,22 @@ int	create_variable(t_data *data, char *key, char *value)
 	return (SUCCESS);
 }
 
-/* += operator for the variables. key in format 'VAL'. IDK IF WE NEED IT*/
+/**
+ * The function appends a value to an existing variable in a data structure.
+ * 
+ * @param data A pointer to a struct of type t_data, which contains information about the environment
+ * variables.
+ * @param key A string representing the key of the variable to be appended.
+ * @param value The "value" parameter is a string that represents the value to be appended to the
+ * existing variable.
+ * 
+ * @return an integer value. The possible return values are:
+ * - `create_variable(data, key, value)`: This is a function call that is returning an integer value.
+ * The specific value depends on the implementation of the `create_variable` function.
+ * - `MALLOC_F`: This is a constant that represents a specific error code related to memory allocation
+ * failure.
+ * - `SUCCESS`: This is
+ */
 int	append_variable(t_data *data, char *key, char *value)
 {
 	char	*temp;

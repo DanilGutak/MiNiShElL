@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+/**
+ * The function sets the input and output file descriptors for a command table based on the specified
+ * input and output files or the previous and next file descriptors.
+ * 
+ * @param data A pointer to a struct called "t_data".
+ * @param cmd_table A structure containing information about the command being executed, such as input
+ * and output file descriptors.
+ * @param fd The parameter `fd` is an integer array that represents file descriptors. It is used to
+ * pass file descriptors between different commands in a pipeline.
+ * @param i The parameter "i" represents the index of the current command table in the array of command
+ * tables.
+ * 
+ * @return 0.
+ */
 int	set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd, int i)
 {
 	if (cmd_table->in_file != -1)
@@ -25,6 +39,12 @@ int	set_fd_in_out(t_data *data, t_cmd_table *cmd_table, int *fd, int i)
 	return (0);
 }
 
+/**
+ * The function "wait_children" waits for child processes to finish and updates the exit code based on
+ * the status of the child processes.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ */
 void	wait_children(t_data *data)
 {
 	int	i;
@@ -43,6 +63,18 @@ void	wait_children(t_data *data)
 	}
 }
 
+/**
+ * The function `fake_pipes` handles the redirection of input and output for a command in a pipeline.
+ * 
+ * @param data A pointer to a struct called "t_data" which contains various data related to the
+ * program.
+ * @param i The parameter `i` represents the index of the current command in the `cmdt` array.
+ * @param pip The `pip` parameter is a pointer to an integer array that represents a pipe. The pipe is
+ * used for inter-process communication between the parent process and the child process. The array
+ * contains two file descriptors: `pip[0]` for reading from the pipe and `pip[1]` for
+ * 
+ * @return 1.
+ */
 int	fake_pipes(t_data *data, int i, int *pip)
 {
 	if (data->cmdt[i].fd_in != -1
@@ -71,6 +103,15 @@ int	fake_pipes(t_data *data, int i, int *pip)
 	return (1);
 }
 
+/**
+ * The function "look_in_dir" checks if a command is executable in the current directory or in the
+ * specified path.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param cmd_table The `cmd_table` parameter is a pointer to a structure of type `t_cmd_table`.
+ * 
+ * @return an integer value.
+ */
 int	look_in_dir(t_data *data, t_cmd_table *cmd_table)
 {
 	char	*temp;
@@ -97,6 +138,16 @@ int	look_in_dir(t_data *data, t_cmd_table *cmd_table)
 	return (1);
 }
 
+/**
+ * The function checks if a command exists in the current directory or in the PATH environment
+ * variable.
+ * 
+ * @param data A pointer to a structure of type t_data.
+ * @param cmd_table A structure that contains information about the command being executed, such as the
+ * command itself (cmd_table->cmd).
+ * 
+ * @return an integer value.
+ */
 int	exist_in_dir(t_data *data, t_cmd_table *cmd_table)
 {
 	char	*ret;
