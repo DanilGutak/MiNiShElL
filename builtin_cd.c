@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+/**
+ * The function `change_dir` changes the current working directory and handles error cases.
+ * 
+ * @param data A pointer to a struct that contains various data used by the program.
+ * @param path The `path` parameter is a string that represents the directory path that we want to
+ * change to.
+ * @param init_pwd The `init_pwd` parameter is a string that represents the initial working directory
+ * before the `cd` command is executed.
+ * 
+ * @return an integer value.
+ */
 int	change_dir(t_data *data, char *path, char *init_pwd)
 {
 	if (chdir(path) == -1)
@@ -40,6 +51,15 @@ int	change_dir(t_data *data, char *path, char *init_pwd)
 	return (0);
 }
 
+/**
+ * The function `builtin_cd` is used to change the current working directory in a shell program.
+ * 
+ * @param data A pointer to a struct that contains various data used by the program.
+ * @param cmd_table A structure that contains information about the command being executed, including
+ * the command name and its arguments.
+ * 
+ * @return an integer value.
+ */
 int	builtin_cd(t_data *data, t_cmd_table *cmd_table)
 {
 	char	*path;

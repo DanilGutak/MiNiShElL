@@ -1,4 +1,0 @@
--Wall
--Wextra
--Werror
--I .

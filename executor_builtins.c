@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+/**
+ * The function sets up file descriptors for input and output in a built-in command, and closes a pipe
+ * file descriptor.
+ * 
+ * @param cmd_table A pointer to a structure of type t_cmd_table, which likely contains information
+ * about file descriptors for input and output.
+ * @param pipe_fd The parameter `pipe_fd` is an integer array that represents the file descriptors for
+ * the pipe. It is used for inter-process communication between the parent and child processes.
+ * `pipe_fd[0]` is the file descriptor for reading from the pipe, and `pipe_fd[1]` is the
+ */
 void	setup_fd_in_builtin(t_cmd_table *cmd_table, int *pipe_fd)
 {
 	if (cmd_table->fd_in != -1)

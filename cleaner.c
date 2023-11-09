@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+/**
+ * The function `free_cmdt` frees the memory allocated for the `cmdt` structure in the `data` object.
+ * 
+ * @param data A pointer to a struct of type t_data.
+ */
 void	free_cmdt(t_data *data)
 {
 	if (data->cmdt)
@@ -41,6 +46,12 @@ void	free_cmdt(t_data *data)
 
 /* clean everything regarding one read of readline(tokens, cmd tables,input,
 	etc..) */
+/**
+ * The function "clean_stuff" frees memory allocated for tokens, command data, input, and path in a
+ * struct.
+ * 
+ * @param data A pointer to a struct called t_data.
+ */
 void	clean_stuff(t_data *data)
 {
 	int	i;
@@ -66,6 +77,11 @@ void	clean_stuff(t_data *data)
 	data->path = NULL;
 }
 
+/**
+ * The function "clean_all" frees memory and closes file descriptors in a struct called "data".
+ * 
+ * @param data The parameter `data` is a pointer to a `t_data` struct.
+ */
 void	clean_all(t_data *data)
 {
 	free_double_p(data->envp);
