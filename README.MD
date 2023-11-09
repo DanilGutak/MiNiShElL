@@ -1,9 +1,8 @@
 # Hold my beer 🍺
 
 ## TODO:
-
+ALL DONE
 - export, unset не должно работать в пайпах (VITALIK)
-- пвд должна викоростовивать getcwd вместо env(done)
 - exit codes for signals (done)
 - fix heredocs (VITALIK)
 - Norminette for parser(DONE)
@@ -59,17 +58,17 @@
 
 - builtins (DONE)
 
-    ◦ echo with option -n
+    ◦ echo with option -n(DONE)
 
-    ◦ cd with only a relative or absolute path
+    ◦ cd with only a relative or absolute path(DONE)
 
-    ◦ pwd with no options
+    ◦ pwd with no options(DONE)
 
-    ◦ export with no options
+    ◦ export with no options(DONE)
 
-    ◦ unset with no options
+    ◦ unset with no options(DONE)
 
-    ◦ env with no options or arguments
+    ◦ env with no options or arguments(DONE)
 
     ◦ exit with no options (DONE)
 
