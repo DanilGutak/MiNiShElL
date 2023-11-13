@@ -147,6 +147,7 @@ int	manage_redirs(t_data *data, t_cmd_table *cmd_table)
 			&& cmd_table->redirs[i].type != REDIR_HEREDOC)
 		{
 			ft_printf_fd(2, "minishell: ambigious redirect\n");
+			data->exit_code = 1;
 			return (1);
 		}
 		if (cmd_table->redirs[i].type == REDIR_IN)
