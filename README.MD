@@ -3,10 +3,3 @@
 <img src="tester_best_try.png" alt="drawing" width="800"/>
 
 
-🌟＿＿＿＿＿＿＿＿＿ (ThinkingAboutYou..❤) 
-` ￣￣🐬￣O ￣.￣￣￣ 🐳 。 o  🐟 ＊
-╭━━━━━╮┏╮╭┓
-┃ ╰╯  ┃╰╮╭╯ 
-┣━━╯╰━╯  ┃ 
-╰━━━━━━━━╯ 
-🌀🌀🌀🌀🌀🐠🌀🌀 💙🐙💙💙💙💙💙💙
